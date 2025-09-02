@@ -40,7 +40,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -167,7 +167,7 @@
           }
         }
       ],
-      "title": "Battery Level",
+      "title": "电池电量",
       "transformations": [
         {
           "id": "configFromData",
@@ -304,7 +304,7 @@
           }
         }
       ],
-      "title": "Charging Voltage",
+      "title": "充电电压",
       "type": "gauge"
     },
     {
@@ -415,7 +415,7 @@
           }
         }
       ],
-      "title": "Charging Power",
+      "title": "充电功率",
       "transformations": [
         {
           "id": "configFromData",
@@ -505,7 +505,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Charge Level",
+          "title": "充电量",
           "url": "/d/WopVO_mgz/charge-level?${__url_time_range}"
         }
       ],
@@ -557,7 +557,7 @@
           }
         }
       ],
-      "title": "Charge Level",
+      "title": "电量水平",
       "type": "timeseries"
     },
     {
@@ -668,7 +668,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (net)",
+      "title": "平均净能耗",
       "type": "stat"
     },
     {
@@ -771,7 +771,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (gross)",
+      "title": "平均总能耗",
       "type": "stat"
     },
     {
@@ -882,7 +882,7 @@
           }
         }
       ],
-      "title": "Total Distance logged",
+      "title": "总记录里程",
       "type": "stat"
     },
     {
@@ -1003,7 +1003,7 @@
           }
         }
       ],
-      "title": "Range",
+      "title": "续航",
       "type": "stat"
     },
     {
@@ -1050,7 +1050,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Updates",
+          "title": "更新",
           "url": "/d/IiC07mgWz/updates"
         }
       ],
@@ -1108,7 +1108,7 @@
           }
         }
       ],
-      "title": "Firmware",
+      "title": "固件版本",
       "type": "stat"
     },
     {
@@ -1168,7 +1168,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Mileage",
+          "title": "里程",
           "url": "/d/NjtMTFggz/mileage"
         }
       ],
@@ -1226,7 +1226,7 @@
           }
         }
       ],
-      "title": "Odometer",
+      "title": "里程表",
       "type": "stat"
     },
     {
@@ -1313,7 +1313,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Power"
+                "value": "功率"
               },
               {
                 "id": "unit",
@@ -1393,7 +1393,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Charging Stats",
+          "title": "充电统计",
           "url": "/d/-pkIkhmRz/charging-stats?${__url_time_range}"
         }
       ],
@@ -1473,7 +1473,7 @@
           }
         }
       ],
-      "title": "Charging Details",
+      "title": "充电详情",
       "type": "timeseries"
     },
     {
@@ -1556,7 +1556,7 @@
           }
         }
       ],
-      "title": "Driver Temp",
+      "title": "主驾温度",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1650,7 +1650,7 @@
           }
         }
       ],
-      "title": "Outside Temp",
+      "title": "车外温度",
       "type": "gauge"
     },
     {
@@ -1713,7 +1713,7 @@
           "refId": "A"
         }
       ],
-      "title": "Inside Temp",
+      "title": "车内温度",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1820,7 +1820,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "States",
+          "title": "状态",
           "url": "/d/xo4BNRkZz/states?${__url_time_range}"
         }
       ],
@@ -1872,7 +1872,7 @@
           }
         }
       ],
-      "title": "States",
+      "title": "州/省",
       "type": "state-timeline"
     }
   ],
@@ -1973,7 +1973,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Overview",
+  "title": "概览",
   "uid": "kOuP_Fggz",
   "version": 1
 }

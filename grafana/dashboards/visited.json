@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -554,7 +554,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Visited",
+  "title": "到访地点",
   "uid": "RG_DxSmgk",
   "version": 1
 }

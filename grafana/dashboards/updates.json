@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -127,7 +127,7 @@
           }
         }
       ],
-      "title": "Updates",
+      "title": "更新",
       "type": "stat"
     },
     {
@@ -207,7 +207,7 @@
           }
         }
       ],
-      "title": "Median time between updates",
+      "title": "更新间隔中位时间",
       "type": "stat"
     },
     {
@@ -253,7 +253,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -273,7 +273,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -320,7 +320,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "${__data.fields[version]} release notes",
+                    "title": "${__data.fields[version]} 发布说明",
                     "url": "https://www.notateslaapp.com/software-updates/version/${__data.fields[version]}/release-notes"
                   }
                 ]
@@ -470,7 +470,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -505,7 +505,7 @@
           }
         }
       ],
-      "title": "Updates",
+      "title": "更新",
       "type": "table"
     }
   ],
@@ -602,7 +602,7 @@
     ]
   },
   "timezone": "",
-  "title": "Updates",
+  "title": "更新",
   "uid": "IiC07mgWz",
   "version": 1
 }

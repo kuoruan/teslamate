@@ -40,7 +40,7 @@
         "tesla"
       ],
       "targetBlank": false,
-      "title": "Dashboards",
+      "title": "仪表板",
       "tooltip": "",
       "type": "dashboards",
       "url": ""
@@ -210,7 +210,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Energy Diff"
+                "value": "电量变化"
               }
             ]
           },
@@ -227,6 +227,10 @@
               {
                 "id": "custom.width",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "时长"
               }
             ]
           },
@@ -241,7 +245,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path:raw}"
                   }
                 ]
@@ -267,7 +271,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path:raw}"
                   }
                 ]
@@ -374,7 +378,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.width",
@@ -390,7 +394,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "custom.width",
@@ -450,7 +454,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range"
+                "value": "续航"
               },
               {
                 "id": "custom.width",
@@ -469,7 +473,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Slot details",
+                    "title": "插槽详情",
                     "url": "${__data.fields.slotlink:raw}"
                   }
                 ]
@@ -511,7 +515,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Start"
+            "displayName": "开始"
           }
         ]
       },
@@ -546,7 +550,7 @@
           }
         }
       ],
-      "title": "Timeline",
+      "title": "时间线",
       "transformations": [
         {
           "id": "organize",
@@ -753,7 +757,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Timeline",
+  "title": "时间线",
   "uid": "SUBgwtigz",
   "version": 1
 }

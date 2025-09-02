@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -445,7 +445,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "title": "In cold weather, the estimated range loss cannot be estimated correctly and is therefore hidden.",
+                    "title": "在低温天气时，预估的续航损失可能不准确，因此会被隐藏。",
                     "url": ""
                   }
                 ]
@@ -508,7 +508,7 @@
           }
         }
       ],
-      "title": "Vampire Drain",
+      "title": "静置耗电",
       "transformations": [
         {
           "id": "merge",
@@ -649,7 +649,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Vampire Drain",
+  "title": "静置耗电",
   "uid": "zhHx2Fggk",
   "version": 1
 }

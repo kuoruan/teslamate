@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -225,7 +225,7 @@
           }
         }
       ],
-      "title": "Charge Level",
+      "title": "电量水平",
       "transformations": [
         {
           "id": "configFromData",
@@ -402,7 +402,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charge Level",
+  "title": "电量水平",
   "uid": "WopVO_mgz",
   "version": 1
 }

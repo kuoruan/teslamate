@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -57,7 +57,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Only distinguishes between online, offline and asleep.",
+      "description": "仅区分在线、离线和休眠状态。",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -135,7 +135,7 @@
           }
         }
       ],
-      "title": "Last state change",
+      "title": "最后状态变更",
       "type": "stat"
     },
     {
@@ -143,7 +143,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Only distinguishes between online, offline and asleep.",
+      "description": "仅区分在线、离线和休眠状态。",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -221,7 +221,7 @@
           }
         }
       ],
-      "title": "Current State",
+      "title": "当前状态",
       "type": "stat"
     },
     {
@@ -229,7 +229,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "based on any data ever recorded.",
+      "description": "基于所有记录的数据。",
       "fieldConfig": {
         "defaults": {
           "mappings": [
@@ -319,7 +319,7 @@
           }
         }
       ],
-      "title": "parked (%)",
+      "title": "停车 (%)",
       "type": "stat"
     },
     {
@@ -458,7 +458,7 @@
           }
         }
       ],
-      "title": "States",
+      "title": "州/省",
       "type": "state-timeline"
     }
   ],
@@ -511,7 +511,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "States",
+  "title": "状态",
   "uid": "xo4BNRkZz",
   "version": 1
 }

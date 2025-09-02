@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -167,7 +167,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Start Odometer"
+                "value": "起始里程"
               }
             ]
           },
@@ -183,7 +183,7 @@
               },
               {
                 "id": "displayName",
-                "value": "End Odometer"
+                "value": "结束里程"
               }
             ]
           },
@@ -222,7 +222,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "custom.width",
@@ -242,7 +242,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               }
             ]
           },
@@ -258,7 +258,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               }
             ]
           },
@@ -309,7 +309,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Start Time"
+            "displayName": "开始时间"
           }
         ]
       },
@@ -344,7 +344,7 @@
           }
         }
       ],
-      "title": "Drive",
+      "title": "行程",
       "type": "table"
     }
   ],
@@ -445,7 +445,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Drives - Dutch tax",
+  "title": "行程 - 荷兰税务",
   "uid": "lBIoQIggk",
   "version": 1
 }

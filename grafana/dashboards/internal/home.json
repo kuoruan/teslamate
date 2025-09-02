@@ -91,7 +91,7 @@
         "showImage": false
       },
       "pluginVersion": "12.1.1",
-      "title": "Releases",
+      "title": "发布版本",
       "type": "news"
     }
   ],
@@ -109,7 +109,7 @@
     "hidden": true
   },
   "timezone": "browser",
-  "title": "Home",
+  "title": "主页",
   "uid": "be2m9kga7b8qoc",
   "version": 1
 }

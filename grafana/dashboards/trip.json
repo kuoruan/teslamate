@@ -23,7 +23,7 @@
       "icon": "doc",
       "tags": [],
       "targetBlank": true,
-      "title": "Select last three drives",
+      "title": "选择最近三次行程",
       "type": "link",
       "url": "/d/FkUpJpQZk/trip?from=$from"
     },
@@ -41,7 +41,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -233,7 +233,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Mileage"
+                "value": "里程"
               }
             ]
           },
@@ -249,7 +249,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Mileage"
+                "value": "里程"
               }
             ]
           }
@@ -484,7 +484,7 @@
           }
         }
       ],
-      "title": "Time spent",
+      "title": "用时",
       "type": "piechart"
     },
     {
@@ -768,7 +768,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               }
             ]
           },
@@ -784,7 +784,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               }
             ]
           }
@@ -1533,7 +1533,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -1544,7 +1544,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View drive details",
+                    "title": "查看行程详情",
                     "url": "/d/zm7wN6Zgz/drive-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-drive_id=${__data.fields.drive_id.numeric}"
                   }
                 ]
@@ -1563,7 +1563,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -1587,7 +1587,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -1611,7 +1611,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -1642,7 +1642,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path}"
                   }
                 ]
@@ -1668,7 +1668,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path}"
                   }
                 ]
@@ -1687,7 +1687,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -1732,7 +1732,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -1831,7 +1831,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -1866,7 +1866,7 @@
           }
         }
       ],
-      "title": "Drives",
+      "title": "行程数",
       "type": "table"
     },
     {
@@ -1913,7 +1913,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -1924,7 +1924,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View charge details",
+                    "title": "查看充电详情",
                     "url": "/d/BHhxFeZRz/charge-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-charging_process_id=${__data.fields.id.numeric:raw}"
                   }
                 ]
@@ -2011,7 +2011,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -2035,7 +2035,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost"
+                "value": "费用"
               },
               {
                 "id": "unit",
@@ -2050,7 +2050,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "Set Cost",
+                    "title": "设置费用",
                     "url": "${base_url:raw}/charge-cost/${__data.fields.id.numeric:raw}"
                   }
                 ]
@@ -2100,7 +2100,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.path}"
                   }
                 ]
@@ -2276,7 +2276,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -2311,7 +2311,7 @@
           }
         }
       ],
-      "title": "Charges",
+      "title": "充电次数",
       "transformations": [
         {
           "id": "merge",
@@ -2504,7 +2504,7 @@
           }
         }
       ],
-      "title": "Battery Level & Range",
+      "title": "电池电量和续航",
       "type": "timeseries"
     },
     {
@@ -2667,7 +2667,7 @@
           }
         }
       ],
-      "title": "Elevation",
+      "title": "海拔",
       "type": "timeseries"
     }
   ],
@@ -2802,7 +2802,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Trip",
+  "title": "行程详情",
   "uid": "FkUpJpQZk",
   "version": 1
 }

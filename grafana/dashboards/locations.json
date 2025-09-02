@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -120,7 +120,7 @@
           }
         }
       ],
-      "title": "# of Addresses",
+      "title": "地址数量",
       "transformations": [
         {
           "id": "organize",
@@ -200,7 +200,7 @@
           "refId": "A"
         }
       ],
-      "title": "# of Cities",
+      "title": "城市数量",
       "transformations": [
         {
           "id": "organize",
@@ -280,7 +280,7 @@
           "refId": "A"
         }
       ],
-      "title": "# of States",
+      "title": "州/省数量",
       "transformations": [
         {
           "id": "organize",
@@ -360,7 +360,7 @@
           "refId": "A"
         }
       ],
-      "title": "# of Countries",
+      "title": "国家数量",
       "transformations": [
         {
           "id": "organize",
@@ -469,7 +469,7 @@
           }
         }
       ],
-      "title": "Cities",
+      "title": "城市",
       "type": "bargauge"
     },
     {
@@ -563,7 +563,7 @@
           }
         }
       ],
-      "title": "States",
+      "title": "州/省",
       "type": "bargauge"
     },
     {
@@ -616,6 +616,10 @@
               {
                 "id": "custom.width",
                 "value": 210
+              },
+              {
+                "id": "displayName",
+                "value": "日期"
               }
             ]
           },
@@ -653,7 +657,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -688,7 +692,7 @@
           }
         }
       ],
-      "title": "Last visited",
+      "title": "最后访问",
       "type": "table"
     },
     {
@@ -938,7 +942,7 @@
           }
         }
       ],
-      "title": "Addresses",
+      "title": "地址",
       "transformations": [
         {
           "id": "merge",
@@ -1104,7 +1108,7 @@
           }
         }
       ],
-      "title": "Geo-fences",
+      "title": "地理围栏",
       "transformations": [
         {
           "id": "merge",
@@ -1183,7 +1187,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Locations",
+  "title": "位置",
   "uid": "ZzhF-aRWz",
   "version": 1
 }

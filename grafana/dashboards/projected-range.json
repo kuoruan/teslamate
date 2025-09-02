@@ -48,7 +48,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -235,7 +235,7 @@
           }
         }
       ],
-      "title": "Projected Range - Mileage",
+      "title": "预计续航 - 里程",
       "type": "timeseries"
     },
     {
@@ -407,7 +407,7 @@
           }
         }
       ],
-      "title": "Projected Range - Battery Level",
+      "title": "预计续航 - 电池电量",
       "type": "timeseries"
     },
     {
@@ -607,7 +607,7 @@
           }
         }
       ],
-      "title": "Projected Range - Outdoor Temp",
+      "title": "预计续航 - 车外温度",
       "type": "timeseries"
     }
   ],
@@ -755,7 +755,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Projected Range",
+  "title": "预计续航",
   "uid": "riqUfXgRz",
   "version": 1
 }

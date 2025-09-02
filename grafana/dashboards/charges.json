@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -48,7 +48,7 @@
       },
       "id": 16,
       "panels": [],
-      "title": "Summary of this period",
+      "title": "本时间段摘要",
       "type": "row"
     },
     {
@@ -455,7 +455,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Browse your charges by Geofence, Location, Type, Cost and Duration in order to have an accurate Total of kWh added and their respective costs",
+      "description": "按地理围栏、位置、类型、费用和时长浏览您的充电记录，以获得准确的总充电量（kWh）和相应费用",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -495,14 +495,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View charge details",
+                    "title": "查看充电详情",
                     "url": "/d/BHhxFeZRz/charge-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-charging_process_id=${__data.fields.id.numeric}"
                   }
                 ]
@@ -593,7 +593,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -667,7 +667,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost"
+                "value": "费用"
               },
               {
                 "id": "decimals",
@@ -678,7 +678,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "Set Cost",
+                    "title": "设置费用",
                     "url": "${base_url:raw}/charge-cost/${__data.fields.id.numeric}"
                   }
                 ]
@@ -732,7 +732,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.path}"
                   }
                 ]
@@ -979,7 +979,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               },
               {
                 "id": "unit",
@@ -1116,7 +1116,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.minWidth",
@@ -1140,7 +1140,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.minWidth",
@@ -1205,7 +1205,7 @@
           }
         }
       ],
-      "title": "Charger type: $charge_type",
+      "title": "充电器类型：$charge_type",
       "type": "table"
     },
     {
@@ -1218,7 +1218,7 @@
       },
       "id": 18,
       "panels": [],
-      "title": "General information (All charges)",
+      "title": "总体信息（所有充电）",
       "type": "row"
     },
     {
@@ -1329,7 +1329,7 @@
           }
         }
       ],
-      "title": "Incomplete Charges 🪫",
+      "title": "不完整充电 🪫",
       "type": "table"
     }
   ],
@@ -1349,7 +1349,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1430,7 +1430,7 @@
         },
         "definition": "SELECT name AS __text, id AS __value FROM geofences ORDER BY name COLLATE \"C\" ASC;",
         "includeAll": true,
-        "label": "Geofence",
+        "label": "地理围栏",
         "multi": true,
         "name": "geofence",
         "options": [],
@@ -1444,8 +1444,8 @@
           "text": "",
           "value": ""
         },
-        "description": "Type a text contained in Location",
-        "label": "Location",
+        "description": "输入文字来搜索位置",
+        "label": "位置",
         "name": "location",
         "options": [
           {
@@ -1460,7 +1460,7 @@
       {
         "current": {},
         "includeAll": true,
-        "label": "Type",
+        "label": "类型",
         "multi": true,
         "name": "charge_type",
         "options": [
@@ -1483,7 +1483,7 @@
           "text": "",
           "value": ""
         },
-        "label": "Cost >=",
+        "label": "费用 >=",
         "name": "cost",
         "options": [
           {
@@ -1500,7 +1500,7 @@
           "text": "0",
           "value": "0"
         },
-        "label": "Duration (minutes) >=",
+        "label": "持续时间 (分钟) >=",
         "name": "min_duration_min",
         "options": [
           {
@@ -1520,7 +1520,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charges",
+  "title": "充电",
   "uid": "TSmNYvRRk",
   "version": 1
 }

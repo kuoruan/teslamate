@@ -39,7 +39,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -54,7 +54,7 @@
       },
       "id": 3,
       "panels": [],
-      "title": "Summary of this period",
+      "title": "本时间段摘要",
       "type": "row"
     },
     {
@@ -582,7 +582,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -593,7 +593,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View drive details",
+                    "title": "查看行程详情",
                     "url": "/d/zm7wN6Zgz/drive-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-drive_id=${__data.fields.drive_id.numeric}"
                   }
                 ]
@@ -612,7 +612,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -632,7 +632,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -652,7 +652,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -733,7 +733,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path}"
                   }
                 ]
@@ -759,7 +759,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑地理围栏",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path}"
                   }
                 ]
@@ -828,7 +828,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -852,7 +852,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               },
               {
                 "id": "unit",
@@ -928,7 +928,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -964,7 +964,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -1038,7 +1038,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -1310,7 +1310,7 @@
           }
         }
       ],
-      "title": "Drive",
+      "title": "行程",
       "type": "table"
     },
     {
@@ -1323,7 +1323,7 @@
       },
       "id": 10,
       "panels": [],
-      "title": "General information (All drives)",
+      "title": "基本信息 (所有行程)",
       "type": "row"
     },
     {
@@ -1434,7 +1434,7 @@
           }
         }
       ],
-      "title": "Incomplete Drives 🛣️",
+      "title": "不完整行程 🛣️",
       "type": "table"
     }
   ],
@@ -1454,7 +1454,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1470,9 +1470,9 @@
           "uid": "TeslaMate"
         },
         "definition": "SELECT name AS __text, id AS __value FROM geofences ORDER BY name COLLATE \"C\" ASC;",
-        "description": "Start or Destination Geofence",
+        "description": "起点或目的地地理围栏",
         "includeAll": true,
-        "label": "Geofence",
+        "label": "地理围栏",
         "multi": true,
         "name": "geofence",
         "options": [],
@@ -1486,8 +1486,8 @@
           "text": "",
           "value": ""
         },
-        "description": "Type a text contained in Start or Destination Location ",
-        "label": "Location",
+        "description": "输入文本来搜索起点或目的地",
+        "label": "位置",
         "name": "location",
         "options": [
           {
@@ -1508,7 +1508,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
@@ -1525,7 +1525,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -1570,7 +1570,7 @@
           "text": "0",
           "value": "0"
         },
-        "label": "Distance >=",
+        "label": "距离 >=",
         "name": "min_dist",
         "options": [
           {
@@ -1587,7 +1587,7 @@
           "text": "0",
           "value": "0"
         },
-        "label": "Speed >=",
+        "label": "速度 >=",
         "name": "min_speed",
         "options": [
           {
@@ -1602,21 +1602,21 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "slope-adjusted",
+          "text": "坡度调整",
           "value": "slope-adjusted"
         },
-        "description": "Select how Efficiency ratings should be calculated.\n\n\"by distance\" is doing a simple comparison based on distance driven and range lost while driving.\n\n\"slope-adjusted\" takes ascent / descent of the drive into account and adjusts the energy consumed accordingly. regen breaking efficiency is set to 85% and the vehicle is assumed to have a weight of 2100 kg.",
-        "label": "Efficiency",
+        "description": "选择效率评分的计算方式。\n\n“按距离” 基于行驶距离和行驶过程中损失的续航进行简单对比。\n\n“坡度调整” 会考虑行程中的上升/下降，并相应调整能耗。再生制动效率设为 85%，车辆假定质量为 2100 kg。",
+        "label": "效率",
         "name": "efficiency",
         "options": [
           {
             "selected": true,
-            "text": "slope-adjusted",
+            "text": "坡度调整",
             "value": "slope-adjusted"
           },
           {
             "selected": false,
-            "text": "by distance",
+            "text": "按距离",
             "value": "by distance"
           }
         ],
@@ -1631,7 +1631,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Drives",
+  "title": "行程",
   "uid": "Y8upc6ZRk",
   "version": 1
 }

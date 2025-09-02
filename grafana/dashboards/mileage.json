@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -146,7 +146,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Mileage"
+                "value": "车辆行驶里程"
               }
             ]
           }
@@ -207,7 +207,7 @@
           }
         }
       ],
-      "title": "Mileage",
+      "title": "里程",
       "type": "timeseries"
     }
   ],
@@ -276,7 +276,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Mileage",
+  "title": "里程",
   "uid": "NjtMTFggz",
   "version": 1
 }

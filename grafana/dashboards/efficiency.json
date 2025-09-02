@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -57,7 +57,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "(Range lost while driving * Efficiency) / Distance driven",
+      "description": "(行驶中损失的续航 * 效率) / 行驶距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -161,7 +161,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (net)",
+      "title": "平均净能耗",
       "type": "stat"
     },
     {
@@ -169,7 +169,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "(Range lost between charges * Efficiency) / Distance driven between charges",
+      "description": "(充电间隔中损失的续航 * 效率) / 充电间隔中的行驶距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -273,7 +273,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (gross)",
+      "title": "平均总能耗",
       "type": "stat"
     },
     {
@@ -281,7 +281,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Distance of all logged drives",
+      "description": "所有记录行程的距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -385,7 +385,7 @@
           }
         }
       ],
-      "title": "Logged Distance",
+      "title": "记录里程",
       "type": "stat"
     },
     {
@@ -425,7 +425,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temperature"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -445,7 +445,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temperature"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -465,7 +465,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Driving Efficiency"
+                "value": "行驶效率"
               },
               {
                 "id": "unit",
@@ -520,7 +520,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -540,7 +540,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均净能耗"
               },
               {
                 "id": "unit",
@@ -560,7 +560,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -580,7 +580,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -600,7 +600,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -620,7 +620,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -655,7 +655,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Temperature"
+            "displayName": "温度"
           }
         ]
       },
@@ -690,7 +690,7 @@
           }
         }
       ],
-      "title": "Temperature – Driving Efficiency",
+      "title": "温度 - 行驶效率",
       "type": "table"
     },
     {
@@ -801,7 +801,7 @@
           }
         }
       ],
-      "title": "Current $preferred_range efficiency",
+      "title": "当前 $preferred_range 效率",
       "type": "stat"
     },
     {
@@ -839,7 +839,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               },
               {
                 "id": "unit",
@@ -855,7 +855,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               },
               {
                 "id": "unit",
@@ -915,7 +915,7 @@
           }
         }
       ],
-      "title": "Derived ideal efficiencies",
+      "title": "推导理想效率",
       "type": "table"
     },
     {
@@ -957,7 +957,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               }
             ]
           },
@@ -969,7 +969,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "效率"
               },
               {
                 "id": "unit",
@@ -1029,7 +1029,7 @@
           }
         }
       ],
-      "title": "Derived rated efficiencies",
+      "title": "推导额定效率",
       "type": "table"
     }
   ],
@@ -1170,7 +1170,7 @@
     "hidden": true
   },
   "timezone": "",
-  "title": "Efficiency",
+  "title": "效率",
   "uid": "fu4SiQgWz",
   "version": 1
 }
