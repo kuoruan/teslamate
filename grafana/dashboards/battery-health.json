@@ -481,6 +481,10 @@
                   "fixedColor": "semi-dark-green",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "交流电"
               }
             ]
           },
@@ -496,6 +500,10 @@
                   "fixedColor": "light-orange",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "直流电"
               }
             ]
           }
@@ -772,7 +780,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "\"充电周期次数\"是通过将添加到电池的全部能量除以新电池容量来估算的。\"充电效率\"是根据充电器使用的电量和添加到电池的电量之间的差异估算的。",
+      "description": "\"充电周期次数\"是通过将添加到电池的全部能量除以新电池容量来估算的。\"充电效率\"是根据充电器使用的电量和电池充电量之间的差异估算的。",
       "fieldConfig": {
         "defaults": {
           "mappings": [],

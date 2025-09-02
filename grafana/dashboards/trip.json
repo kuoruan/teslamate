@@ -1943,7 +1943,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "增加电量"
+                "value": "充电量"
               },
               {
                 "id": "decimals",
@@ -2229,7 +2229,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "使用电量"
+                "value": "消耗电量"
               },
               {
                 "id": "decimals",
