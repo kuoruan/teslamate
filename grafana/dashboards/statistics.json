@@ -1110,7 +1110,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1127,7 +1127,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -1144,7 +1144,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
@@ -1154,31 +1154,31 @@
       },
       {
         "current": {
-          "text": "month",
+          "text": "月",
           "value": "month"
         },
         "includeAll": false,
-        "label": "Period",
+        "label": "周期",
         "name": "period",
         "options": [
           {
             "selected": false,
-            "text": "day",
+            "text": "天",
             "value": "day"
           },
           {
             "selected": false,
-            "text": "week",
+            "text": "周",
             "value": "week"
           },
           {
             "selected": true,
-            "text": "month",
+            "text": "月",
             "value": "month"
           },
           {
             "selected": false,
-            "text": "year",
+            "text": "年",
             "value": "year"
           }
         ],
@@ -1222,7 +1222,7 @@
           "text": "no",
           "value": "0"
         },
-        "description": "启用后，“Ø Consumption (gross)” 将改由位置数据计算，而非通过充电过程和行程。\n\n这种方法更为准确（尤其在较短统计周期内），但在性能较差的硬件上会运行缓慢！",
+        "description": "启用后，“平均净能耗” 将改由位置数据计算，而非通过充电过程和行程。\n\n这种方法更为准确（尤其在较短统计周期内），但在性能较差的硬件上会运行缓慢！",
         "includeAll": false,
         "label": "高精度",
         "name": "high_precision",

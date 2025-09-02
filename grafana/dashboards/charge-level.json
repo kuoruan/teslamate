@@ -278,7 +278,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -307,9 +307,9 @@
           "text": "2h",
           "value": "7200"
         },
-        "description": "Data used to calculate Moving Average / Percentiles is unevenly sampled in TeslaMate. To avoid biases towards more frequently sampled values, the data is bucketed. For buckets without sampled values, the last observed value is carried forward. Bucketing is not time-weighted but is a simple average. Increasing the bucket width results in a loss of accuracy.",
+        "description": "用于计算移动平均/分位数的数据在 TeslaMate 中采样不均。为避免对采样频率更高的值产生偏差，数据会被分桶。对于某些桶没有采样值的情况，使用最后观测到的值向前填充。分桶不是按时间加权，而是简单平均。增大分桶宽度会降低计算精度。",
         "includeAll": false,
-        "label": "Bucket Width",
+        "label": "分桶宽度",
         "name": "bucket_width",
         "options": [
           {
@@ -337,7 +337,7 @@
           "value": "1"
         },
         "includeAll": false,
-        "label": "Include Moving Average / Percentiles",
+        "label": "包含移动平均/分位数",
         "name": "include_average_percentiles",
         "options": [
           {
@@ -361,7 +361,7 @@
         },
         "description": "",
         "includeAll": false,
-        "label": "Moving Average / Percentiles Width",
+        "label": "移动平均/分位数宽度",
         "name": "intervals_moving_average_percentiles",
         "options": [
           {

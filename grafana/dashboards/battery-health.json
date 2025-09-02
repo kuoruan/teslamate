@@ -1626,7 +1626,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC",
@@ -1704,7 +1704,7 @@
           "value": "0"
         },
         "description": "设置您汽车电池全新时的容量，以防您在拥有它一段时间后才开始使用 TeslaMate。如果没有，请将其保留为 0，它将根据 TeslaMate 中记录的数据进行计算",
-        "label": "Custom Battery Capacity (kWh) when new",
+        "label": "自定义新车时的电池容量 (kWh)",
         "name": "custom_kwh_new",
         "options": [
           {
@@ -1721,8 +1721,8 @@
           "text": "0",
           "value": "0"
         },
-        "description": "设置您汽车全新时100%的最大范围，以防您在拥有它一段时间后才开始使用 TeslaMate。如果没有，请将其保留为 0，衰减将根据 TeslaMate 中记录的数据进行计算",
-        "label": "Custom Max Range when new",
+        "description": "设置您汽车全新时 100% 的最大里程，以防您在拥有它一段时间后才开始使用 TeslaMate。如果没有，请将其保留为 0，衰减将根据 TeslaMate 中记录的数据进行计算",
+        "label": "自定义新车时的最大里程",
         "name": "custom_max_range",
         "options": [
           {

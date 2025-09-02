@@ -622,7 +622,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -649,33 +649,33 @@
       {
         "current": {},
         "includeAll": true,
-        "label": "Action",
+        "label": "行为",
         "multi": true,
         "name": "action_filter",
         "options": [
           {
             "selected": false,
-            "text": "🚗 Driving",
+            "text": "🚗 行驶",
             "value": "🚗 Driving"
           },
           {
             "selected": false,
-            "text": "🔋 Charging",
+            "text": "🔋 充电",
             "value": "🔋 Charging"
           },
           {
             "selected": false,
-            "text": "🅿️ Parking",
+            "text": "🅿️ 停车",
             "value": "🅿️ Parking"
           },
           {
             "selected": false,
-            "text": "❓ Missing",
+            "text": "❓ 缺失",
             "value": "❓ Missing"
           },
           {
             "selected": false,
-            "text": "💾 Updating",
+            "text": "💾 更新",
             "value": "💾 Updating"
           }
         ],
@@ -687,7 +687,7 @@
           "text": "",
           "value": ""
         },
-        "label": "Address Filter",
+        "label": "地址过滤",
         "name": "text_filter",
         "options": [
           {
@@ -708,7 +708,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -725,7 +725,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
