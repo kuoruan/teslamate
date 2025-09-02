@@ -668,7 +668,7 @@
           }
         }
       ],
-      "title": "平均净能耗",
+      "title": "平均能耗 (净值)",
       "type": "stat"
     },
     {
@@ -1035,6 +1035,10 @@
               {
                 "id": "unit",
                 "value": "string"
+              },
+              {
+                "id": "displayName",
+                "value": "版本"
               }
             ]
           }
@@ -1302,6 +1306,10 @@
               {
                 "id": "max",
                 "value": 250
+              },
+              {
+                "id": "displayName",
+                "value": "充电电压 [V]"
               }
             ]
           },
@@ -1333,7 +1341,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Battery heater"
+                "value": "电池加热器"
               },
               {
                 "id": "custom.axisPlacement",
@@ -1353,7 +1361,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Current"
+                "value": "电流"
               },
               {
                 "id": "unit",
@@ -1373,7 +1381,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "增加电量"
               },
               {
                 "id": "unit",

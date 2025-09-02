@@ -413,9 +413,9 @@
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Range Diff"
-              },
+                  "id": "displayName",
+                  "value": "续航差异"
+                },
               {
                 "id": "custom.width",
                 "value": 100
@@ -433,9 +433,9 @@
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Temp"
-              },
+                  "id": "displayName",
+                  "value": "温度"
+                },
               {
                 "id": "custom.width",
                 "value": 75

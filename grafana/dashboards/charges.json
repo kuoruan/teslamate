@@ -455,7 +455,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "按地理围栏、位置、类型、费用和时长浏览您的充电记录，以获得准确的总充电量（kWh）和相应费用",
+      "description": "按地理围栏、位置、类型、费用和时长浏览您的充电记录，以获得准确的总充电量 (kWh)和相应费用",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -959,7 +959,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "已使用电量"
+                "value": "消耗电量"
               },
               {
                 "id": "decimals",
@@ -1044,7 +1044,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "每千瓦时费用"
+                "value": "费用 / kWh"
               },
               {
                 "id": "decimals",
@@ -1205,7 +1205,7 @@
           }
         }
       ],
-      "title": "充电器类型：$charge_type",
+      "title": "充电器类型: $charge_type",
       "type": "table"
     },
     {
@@ -1218,7 +1218,7 @@
       },
       "id": 18,
       "panels": [],
-      "title": "基础信息（所有充电）",
+      "title": "基础信息 (所有充电)",
       "type": "row"
     },
     {

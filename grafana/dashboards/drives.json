@@ -612,7 +612,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -632,7 +632,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -676,7 +676,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy consumed (net)"
+                "value": "消耗能量 (净值)"
               },
               {
                 "id": "unit",
@@ -726,7 +726,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start"
+                "value": "起始地"
               },
               {
                 "id": "links",
@@ -752,7 +752,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Destination"
+                "value": "目的地"
               },
               {
                 "id": "links",
@@ -778,7 +778,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -988,7 +988,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -1062,7 +1062,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "max Speed"
+                "value": "最高速度"
               },
               {
                 "id": "unit",
@@ -1086,7 +1086,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "max Speed"
+                "value": "最高速度"
               },
               {
                 "id": "unit",
@@ -1155,6 +1155,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 75
+              },
+              {
+                "id": "displayName",
+                "value": "起始 (%)"
               }
             ]
           },
@@ -1175,6 +1179,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 65
+              },
+              {
+                "id": "displayName",
+                "value": "结束 (%)"
               }
             ]
           },
@@ -1244,7 +1252,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "max Power"
+                "value": "最大功率"
               },
               {
                 "id": "unit",

@@ -211,7 +211,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "电池加热"
+                "value": "电池加热器"
               },
               {
                 "id": "unit",
@@ -267,7 +267,7 @@
               },
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               },
               {
                 "id": "custom.axisPlacement",
@@ -283,7 +283,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "可用 SOC"
+                "value": "可用电量"
               },
               {
                 "id": "unit",
@@ -346,6 +346,10 @@
                   "fixedColor": "semi-dark-green",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "可用电量"
               }
             ]
           },
@@ -361,6 +365,10 @@
                   "fixedColor": "light-green",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "电量"
               }
             ]
           },
@@ -376,6 +384,10 @@
                   "fixedColor": "light-purple",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "续航 (预估)"
               }
             ]
           },
@@ -391,6 +403,10 @@
                   "fixedColor": "semi-dark-purple",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "续航 (理想)"
               }
             ]
           },
@@ -406,6 +422,10 @@
                   "fixedColor": "dark-red",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "电池加热器"
               }
             ]
           },
@@ -440,6 +460,10 @@
                   "fixedColor": "semi-dark-purple",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "续航 (额定)"
               }
             ]
           }
@@ -1158,7 +1182,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Front Left"
+                "value": "左前"
               }
             ]
           },
@@ -1174,7 +1198,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Front Right"
+                "value": "右前"
               }
             ]
           },
@@ -1190,7 +1214,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Rear Left"
+                "value": "左后"
               }
             ]
           },
@@ -1206,7 +1230,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Rear Right"
+                "value": "右后"
               }
             ]
           },
@@ -1222,7 +1246,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Front Left"
+                "value": "左前"
               }
             ]
           },
@@ -1238,7 +1262,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Front Right"
+                "value": "右前"
               }
             ]
           },
@@ -1254,7 +1278,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Rear Left"
+                "value": "左后"
               }
             ]
           },
@@ -1270,7 +1294,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Rear Right"
+                "value": "右后"
               }
             ]
           }
@@ -1436,7 +1460,7 @@
           }
         }
       ],
-      "title": "里程表（起始-结束）",
+      "title": "里程表 (起始-结束)",
       "type": "stat"
     },
     {
@@ -1676,6 +1700,10 @@
               {
                 "id": "decimals",
                 "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "耗时"
               }
             ]
           }
@@ -2079,7 +2107,7 @@
           }
         }
       ],
-      "title": "净能耗",
+      "title": "能耗 (净值)",
       "type": "stat"
     },
     {
@@ -2087,7 +2115,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "显示通过能量回收制动回收的能量。\n\n“能量回收”已包含在“净能耗”中，其通过在行程中查找功率为负的时段来确定。\n\n需要为该行程启用且可用 Streaming API。",
+      "description": "显示通过能量回收制动回收的能量。\n\n“能量回收”已包含在“能耗 (净值)”中，其通过在行程中查找功率为负的时段来确定。\n\n需要为该行程启用且可用 Streaming API。",
       "fieldConfig": {
         "defaults": {
           "decimals": 2,
@@ -2287,7 +2315,7 @@
           }
         }
       ],
-      "title": "净能耗",
+      "title": "能耗 (净值)",
       "type": "stat"
     },
     {

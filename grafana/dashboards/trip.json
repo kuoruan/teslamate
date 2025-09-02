@@ -530,7 +530,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed excl. breaks"
+                "value": "平均速度 (不含停车)"
               }
             ]
           },
@@ -546,7 +546,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed excl. breaks"
+                "value": "平均速度 (不含停车)"
               }
             ]
           }
@@ -648,7 +648,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed incl. DC charging"
+                "value": "平均速度 (含直流充电)"
               }
             ]
           },
@@ -664,7 +664,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed incl. DC charging"
+                "value": "平均速度 (含直流充电)"
               }
             ]
           }
@@ -768,7 +768,7 @@
               },
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               }
             ]
           },
@@ -784,7 +784,7 @@
               },
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               }
             ]
           }
@@ -889,7 +889,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               }
             ]
           },
@@ -905,7 +905,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               }
             ]
           }
@@ -1563,7 +1563,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -1587,7 +1587,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -1635,7 +1635,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start"
+                "value": "起始地"
               },
               {
                 "id": "links",
@@ -1661,7 +1661,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Destination"
+                "value": "目的地"
               },
               {
                 "id": "links",
@@ -1943,7 +1943,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "增加电量"
               },
               {
                 "id": "decimals",
@@ -1963,7 +1963,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% Start"
+                "value": "起始 (%)"
               },
               {
                 "id": "unit",
@@ -1987,7 +1987,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% End"
+                "value": "结束 (%)"
               },
               {
                 "id": "unit",
@@ -2093,7 +2093,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "位置"
               },
               {
                 "id": "links",
@@ -2119,7 +2119,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "unit",
@@ -2143,7 +2143,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Power"
+                "value": "平均功率"
               },
               {
                 "id": "unit",
@@ -2193,7 +2193,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "unit",
@@ -2229,7 +2229,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy used"
+                "value": "使用电量"
               },
               {
                 "id": "decimals",
@@ -2395,7 +2395,7 @@
               },
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               }
             ]
           },
@@ -2431,7 +2431,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range (ideal)"
+                "value": "续航 (理想)"
               }
             ]
           },
@@ -2443,7 +2443,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range (rated)"
+                "value": "续航 (额定)"
               }
             ]
           }
@@ -2599,7 +2599,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Elevation"
+                "value": "海拔"
               },
               {
                 "id": "color",

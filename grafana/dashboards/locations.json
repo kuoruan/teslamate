@@ -631,6 +631,10 @@
             "properties": [
               {
                 "id": "custom.width"
+              },
+              {
+                "id": "displayName",
+                "value": "城市"
               }
             ]
           }
@@ -739,7 +743,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Updated at"
+                "value": "更新时间"
               },
               {
                 "id": "unit",
@@ -758,7 +762,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Name"
+                "value": "名称"
               },
               {
                 "id": "unit",
@@ -791,7 +795,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Neighbourhood"
+                "value": "街区"
               },
               {
                 "id": "unit",
@@ -814,7 +818,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "City"
+                "value": "城市"
               },
               {
                 "id": "unit",
@@ -837,7 +841,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "State"
+                "value": "省/州"
               },
               {
                 "id": "unit",
@@ -860,7 +864,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Country"
+                "value": "国家"
               },
               {
                 "id": "unit",
@@ -997,7 +1001,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Time"
+                "value": "时间"
               },
               {
                 "id": "unit",
@@ -1016,7 +1020,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Name"
+                "value": "名称"
               },
               {
                 "id": "unit",

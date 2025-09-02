@@ -318,7 +318,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Temp"
+                "value": "平均温度"
               },
               {
                 "id": "thresholds",
@@ -388,7 +388,7 @@
               },
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               }
             ]
           },
@@ -400,7 +400,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               },
               {
                 "id": "unit",
@@ -420,7 +420,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -440,7 +440,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               },
               {
                 "id": "unit",
@@ -460,7 +460,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Temp"
+                "value": "平均温度"
               },
               {
                 "id": "unit",
@@ -641,7 +641,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "开始于"
+            "displayName": "始于"
           }
         ]
       },
@@ -1222,7 +1222,7 @@
           "text": "no",
           "value": "0"
         },
-        "description": "启用后，“平均净能耗” 将改由位置数据计算，而非通过充电过程和行程。\n\n这种方法更为准确（尤其在较短统计周期内），但在性能较差的硬件上会运行缓慢！",
+        "description": "启用后，“平均能耗 (净值)” 将改由位置数据计算，而非通过充电过程和行程。\n\n这种方法更为准确 (尤其在较短统计周期内)，但在性能较差的硬件上会运行缓慢！",
         "includeAll": false,
         "label": "高精度",
         "name": "high_precision",

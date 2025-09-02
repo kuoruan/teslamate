@@ -293,7 +293,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Since Previous Update"
+                "value": "自上次更新以来"
               }
             ]
           },
@@ -305,7 +305,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Installed Version"
+                "value": "已安装版本"
               },
               {
                 "id": "custom.align",
@@ -347,7 +347,7 @@
               },
               {
                 "id": "displayName",
-                "value": "# of Charges"
+                "value": "充电次数"
               }
             ]
           },
@@ -371,7 +371,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Ideal range"
+                "value": "平均理想续航"
               }
             ]
           },
@@ -395,7 +395,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Rated range"
+                "value": "平均额定续航"
               }
             ]
           },
@@ -419,7 +419,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Ideal range"
+                "value": "平均理想续航"
               }
             ]
           },
@@ -443,7 +443,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Rated range"
+                "value": "平均额定续航"
               }
             ]
           }

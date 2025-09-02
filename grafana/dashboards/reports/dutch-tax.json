@@ -151,7 +151,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start Time"
+                "value": "开始时间"
               }
             ]
           },
@@ -195,7 +195,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "End Time"
+                "value": "结束时间"
               }
             ]
           },
@@ -270,7 +270,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start Address"
+                "value": "起始地址"
               }
             ]
           },
@@ -282,7 +282,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "End Address"
+                "value": "结束地址"
               }
             ]
           }

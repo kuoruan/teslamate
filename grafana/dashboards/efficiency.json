@@ -161,7 +161,7 @@
           }
         }
       ],
-      "title": "平均净能耗",
+      "title": "平均能耗 (净值)",
       "type": "stat"
     },
     {
@@ -520,7 +520,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -540,7 +540,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "平均净能耗"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",

@@ -902,7 +902,7 @@
               },
               {
                 "id": "displayName",
-                "value": "起始 SOC"
+                "value": "起始电量(SOC)"
               }
             ]
           },
@@ -929,7 +929,7 @@
               },
               {
                 "id": "displayName",
-                "value": "结束 SOC"
+                "value": "结束电量(SOC)"
               }
             ]
           }
@@ -1765,7 +1765,7 @@
               },
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量(SOC)"
               },
               {
                 "id": "custom.cellOptions",
@@ -1961,7 +1961,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量(SOC)"
               },
               {
                 "id": "unit",
@@ -2007,7 +2007,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "# of Discharges"
+                "value": "放电次数"
               },
               {
                 "id": "custom.cellOptions",
