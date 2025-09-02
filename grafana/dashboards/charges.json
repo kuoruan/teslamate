@@ -48,7 +48,7 @@
       },
       "id": 16,
       "panels": [],
-      "title": "本时间段摘要",
+      "title": "本期汇总",
       "type": "row"
     },
     {
@@ -92,7 +92,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Energy added:"
+                "value": "总充电量:"
               }
             ]
           }
@@ -191,7 +191,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Energy used:"
+                "value": "总用电量:"
               }
             ]
           }
@@ -291,7 +291,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Charging Cost:"
+                "value": "总充电费用:"
               }
             ]
           }
@@ -392,7 +392,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Duration:"
+                "value": "平均时长:"
               }
             ]
           }
@@ -525,7 +525,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "充电量"
               },
               {
                 "id": "decimals",
@@ -545,7 +545,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% Start"
+                "value": "起始 (%)"
               },
               {
                 "id": "unit",
@@ -569,7 +569,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% End"
+                "value": "结束 (%)"
               },
               {
                 "id": "unit",
@@ -617,7 +617,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -725,7 +725,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "位置"
               },
               {
                 "id": "links",
@@ -751,7 +751,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "里程增加"
               },
               {
                 "id": "decimals",
@@ -775,7 +775,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "里程增加"
               },
               {
                 "id": "decimals",
@@ -799,7 +799,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Power"
+                "value": "平均功率"
               },
               {
                 "id": "unit",
@@ -849,7 +849,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Charge rate"
+                "value": "平均充电速度"
               },
               {
                 "id": "unit",
@@ -873,7 +873,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -923,7 +923,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Charge rate"
+                "value": "平均充电速度"
               },
               {
                 "id": "unit",
@@ -959,7 +959,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy used"
+                "value": "已使用电量"
               },
               {
                 "id": "decimals",
@@ -1044,7 +1044,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost / kWh"
+                "value": "每千瓦时费用"
               },
               {
                 "id": "decimals",
@@ -1068,7 +1068,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Type"
+                "value": "类型"
               },
               {
                 "id": "custom.cellOptions",
@@ -1218,7 +1218,7 @@
       },
       "id": 18,
       "panels": [],
-      "title": "总体信息（所有充电）",
+      "title": "基础信息（所有充电）",
       "type": "row"
     },
     {
@@ -1329,7 +1329,7 @@
           }
         }
       ],
-      "title": "不完整充电 🪫",
+      "title": "不完全充电 🪫",
       "type": "table"
     }
   ],

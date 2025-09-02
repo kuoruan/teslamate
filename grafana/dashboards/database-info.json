@@ -590,6 +590,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 160
+              },
+              {
+                "id": "displayName",
+                "value": "表"
               }
             ]
           }
@@ -695,6 +699,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "行数"
               }
             ]
           }
@@ -801,6 +809,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "索引大小"
               }
             ]
           },
@@ -817,6 +829,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 160
+              },
+              {
+                "id": "displayName",
+                "value": "表"
               }
             ]
           },
@@ -833,6 +849,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 350
+              },
+              {
+                "id": "displayName",
+                "value": "索引"
               }
             ]
           },
@@ -845,6 +865,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 130
+              },
+              {
+                "id": "displayName",
+                "value": "获取的元组"
               }
             ]
           }
@@ -1315,6 +1339,10 @@
               {
                 "id": "custom.width",
                 "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "调用次数"
               }
             ]
           },
@@ -1327,6 +1355,10 @@
               {
                 "id": "custom.inspect",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "查询"
               }
             ]
           },
@@ -1339,6 +1371,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "平均执行时间"
               }
             ]
           },
@@ -1351,6 +1387,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "总执行时间"
               }
             ]
           }
@@ -1459,6 +1499,10 @@
               {
                 "id": "custom.width",
                 "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "调用次数"
               }
             ]
           },
@@ -1471,6 +1515,10 @@
               {
                 "id": "custom.inspect",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "查询"
               }
             ]
           },
@@ -1483,6 +1531,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "平均执行时间"
               }
             ]
           },
@@ -1495,6 +1547,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "总执行时间"
               }
             ]
           }

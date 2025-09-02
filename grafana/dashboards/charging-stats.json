@@ -305,7 +305,7 @@
           }
         }
       ],
-      "title": "超级充电成本",
+      "title": "超充费用",
       "type": "stat"
     },
     {
@@ -391,7 +391,7 @@
           }
         }
       ],
-      "title": "总充电成本",
+      "title": "总充电费用",
       "type": "stat"
     },
     {
@@ -471,7 +471,7 @@
           }
         }
       ],
-      "title": "每 100 $length_unit 平均成本",
+      "title": "每 100 $length_unit 平均费用",
       "type": "stat"
     },
     {
@@ -553,7 +553,7 @@
           }
         }
       ],
-      "title": "每千瓦时平均成本",
+      "title": "每千瓦时平均费用",
       "type": "stat"
     },
     {
@@ -635,7 +635,7 @@
           }
         }
       ],
-      "title": "直流电每千瓦时平均成本",
+      "title": "直流电每千瓦时平均费用",
       "type": "stat"
     },
     {
@@ -717,7 +717,7 @@
           }
         }
       ],
-      "title": "交流电每千瓦时平均成本",
+      "title": "交流电每千瓦时平均费用",
       "type": "stat"
     },
     {
@@ -899,6 +899,10 @@
               {
                 "id": "custom.fillBelowTo",
                 "value": "End SOC"
+              },
+              {
+                "id": "displayName",
+                "value": "起始 SOC"
               }
             ]
           },
@@ -922,6 +926,10 @@
               {
                 "id": "custom.lineWidth",
                 "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "结束 SOC"
               }
             ]
           }
@@ -1722,7 +1730,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "连续充电过程中仅考虑最后一次充电过程的结束电池电量",
+      "description": "对于连续充电过程，仅考虑最后一次充电过程的结束电池电量",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1779,7 +1787,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "# of Charges"
+                "value": "充电次数"
               },
               {
                 "id": "custom.cellOptions",
@@ -1918,7 +1926,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "连续充电过程中仅考虑第一次充电过程的开始电池电量",
+      "description": "对于连续充电过程，仅考虑第一次充电过程的开始电池电量",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -2112,7 +2120,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "位置"
               }
             ]
           },
@@ -2124,7 +2132,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Charged"
+                "value": "充电量"
               },
               {
                 "id": "custom.width",
@@ -2237,7 +2245,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "位置"
               }
             ]
           },

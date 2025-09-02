@@ -2087,7 +2087,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "显示通过再生制动回收了多少能量。\n\n“能量回收”已包含在“净能耗”中，其通过在行程中查找功率为负的时段来确定。\n\n需要为该行程启用且可用 Streaming API。",
+      "description": "显示通过能量回收制动回收的能量。\n\n“能量回收”已包含在“净能耗”中，其通过在行程中查找功率为负的时段来确定。\n\n需要为该行程启用且可用 Streaming API。",
       "fieldConfig": {
         "defaults": {
           "decimals": 2,

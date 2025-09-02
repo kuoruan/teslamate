@@ -225,7 +225,7 @@
           }
         }
       ],
-      "title": "电量水平",
+      "title": "电量",
       "transformations": [
         {
           "id": "configFromData",
@@ -307,7 +307,7 @@
           "text": "2h",
           "value": "7200"
         },
-        "description": "用于计算移动平均/分位数的数据在 TeslaMate 中采样不均。为避免对采样频率更高的值产生偏差，数据会被分桶。对于某些桶没有采样值的情况，使用最后观测到的值向前填充。分桶不是按时间加权，而是简单平均。增大分桶宽度会降低计算精度。",
+        "description": "用于计算动态平均数/分位数的数据在 TeslaMate 中采样不均。为避免对采样频率更高的值产生偏差，数据会被分桶。对于某些桶没有采样值的情况，使用最后观测到的值向前填充。分桶不是按时间加权，而是简单平均。增大分桶宽度会降低计算精度。",
         "includeAll": false,
         "label": "分桶宽度",
         "name": "bucket_width",
@@ -337,7 +337,7 @@
           "value": "1"
         },
         "includeAll": false,
-        "label": "包含移动平均/分位数",
+        "label": "包含动态平均数/分位数",
         "name": "include_average_percentiles",
         "options": [
           {
@@ -361,7 +361,7 @@
         },
         "description": "",
         "includeAll": false,
-        "label": "移动平均/分位数宽度",
+        "label": "动态平均数/分位数宽度",
         "name": "intervals_moving_average_percentiles",
         "options": [
           {
@@ -402,7 +402,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "电量水平",
+  "title": "电量",
   "uid": "WopVO_mgz",
   "version": 1
 }

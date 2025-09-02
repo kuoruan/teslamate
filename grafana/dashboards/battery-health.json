@@ -186,7 +186,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "最大里程（新车）"
+                "value": "最大续航（新车）"
               }
             ]
           },
@@ -198,7 +198,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "最大里程 (当前)"
+                "value": "最大续航 (当前)"
               }
             ]
           },
@@ -210,7 +210,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "里程损失"
+                "value": "续航损失"
               }
             ]
           }
@@ -271,7 +271,7 @@
           }
         }
       ],
-      "title": "里程范围 [$preferred_range]",
+      "title": "续航范围 [$preferred_range]",
       "type": "stat"
     },
     {
@@ -279,7 +279,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "\"系统记录里程\"是指保存在TeslaMate数据库中的行驶距离。\"车辆行驶里程\"是指自使用TeslaMate以来汽车行驶的距离。因此，如果两个值之间存在差异，则是由于某种原因导致行驶距离未被正确记录，例如由于错误或意外重启、错误连接、没有信号以及可能因为它已停止服务，导致TeslaMate无法记录。",
+      "description": "\"已记录里程\"是指保存在 TeslaMate 数据库中的行驶距离。\"总里程\"是指自使用 TeslaMate 以来汽车行驶的距离。因此，如果两个值之间存在差异，则是由于某种原因导致行驶距离未被正确记录，例如由于错误或意外重启、错误连接、没有信号以及可能因为它已停止服务，导致 TeslaMate 无法记录。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -444,7 +444,7 @@
           }
         }
       ],
-      "title": "行程统计",
+      "title": "驾驶统计",
       "type": "stat"
     },
     {
@@ -569,7 +569,7 @@
           }
         }
       ],
-      "title": "交流/直流 - 电量使用",
+      "title": "AC/DC - 电量使用",
       "type": "piechart"
     },
     {
@@ -764,7 +764,7 @@
           }
         }
       ],
-      "title": "电池健康",
+      "title": "电池健康度",
       "type": "bargauge"
     },
     {
@@ -796,6 +796,10 @@
               {
                 "id": "unit",
                 "value": "kwatth"
+              },
+              {
+                "id": "displayName",
+                "value": "总充电量"
               }
             ]
           },
@@ -808,6 +812,10 @@
               {
                 "id": "unit",
                 "value": "kwatth"
+              },
+              {
+                "id": "displayName",
+                "value": "总用电量"
               }
             ]
           },
@@ -820,6 +828,10 @@
               {
                 "id": "unit",
                 "value": "percentunit"
+              },
+              {
+                "id": "displayName",
+                "value": "充电效率"
               }
             ]
           }
@@ -1126,7 +1138,7 @@
           }
         }
       ],
-      "title": "当前SOC值",
+      "title": "当前 SOC",
       "transformations": [
         {
           "id": "configFromData",
@@ -1170,7 +1182,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "这是TeslaMate根据电池电量计算衍生的额定效率。这些信息可以在\"效率\"仪表板上更详细地看到。",
+      "description": "这是 TeslaMate 根据电池充电计算得出的额定效率。\n可在“能效”仪表板上查看更多详情。",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1270,7 +1282,7 @@
           }
         }
       ],
-      "title": "平均能效",
+      "title": "能效",
       "type": "stat"
     },
     {
@@ -1467,7 +1479,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "电池容量（KWh）"
+                "value": "电池容量 (kWh)"
               },
               {
                 "id": "unit",
@@ -1606,7 +1618,7 @@
           }
         }
       ],
-      "title": "电池容量（里程别）",
+      "title": "电池容量（按里程）",
       "type": "xychart"
     }
   ],
@@ -1721,8 +1733,8 @@
           "text": "0",
           "value": "0"
         },
-        "description": "设置您汽车全新时 100% 的最大里程，以防您在拥有它一段时间后才开始使用 TeslaMate。如果没有，请将其保留为 0，衰减将根据 TeslaMate 中记录的数据进行计算",
-        "label": "自定义新车时的最大里程",
+        "description": "设置您汽车全新时 100% 的最大续航里程，以防您在拥有它一段时间后才开始使用 TeslaMate。如果没有，请将其保留为 0，衰减将根据 TeslaMate 中记录的数据进行计算",
+        "label": "自定义新车时的最大续航",
         "name": "custom_max_range",
         "options": [
           {

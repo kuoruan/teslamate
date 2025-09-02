@@ -54,7 +54,7 @@
       },
       "id": 3,
       "panels": [],
-      "title": "本时间段摘要",
+      "title": "本期汇总",
       "type": "row"
     },
     {
@@ -98,7 +98,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Energy consumed (net):"
+                "value": "总消耗能力 (净值):"
               }
             ]
           }
@@ -199,7 +199,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Duration:"
+                "value": "总持续时间:"
               }
             ]
           }
@@ -303,7 +303,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Total Distance logged:"
+                "value": "已记录的总行驶距离:"
               }
             ]
           },
@@ -319,7 +319,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Total Distance logged:"
+                "value": "已记录的总行驶距离:"
               }
             ]
           }
@@ -425,7 +425,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net):"
+                "value": "平均能耗 (净值):"
               }
             ]
           },
@@ -441,7 +441,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net):"
+                "value": "平均能耗 (净值):"
               }
             ]
           }
@@ -1605,7 +1605,7 @@
           "text": "坡度调整",
           "value": "slope-adjusted"
         },
-        "description": "选择效率评分的计算方式。\n\n“按距离” 基于行驶距离和行驶过程中损失的续航进行简单对比。\n\n“坡度调整” 会考虑行程中的上升/下降，并相应调整能耗。再生制动效率设为 85%，车辆假定质量为 2100 kg。",
+        "description": "选择效率评分的计算方式。\n\n“按距离” 基于行驶距离和行驶过程中损失的续航进行简单对比。\n\n“坡度调整” 会考虑行程中的上升/下降，并相应调整能耗。能量回收制动效率设为 85%，车辆假定质量为 2100 kg。",
         "label": "效率",
         "name": "efficiency",
         "options": [

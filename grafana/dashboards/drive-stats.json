@@ -1016,6 +1016,10 @@
               {
                 "id": "decimals",
                 "value": 1
+              },
+              {
+                "id": "displayName",
+                "value": "耗时"
               }
             ]
           }
