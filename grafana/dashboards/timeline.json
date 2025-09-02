@@ -131,6 +131,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量"
               }
             ]
           },
@@ -147,6 +151,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量变化"
               }
             ]
           },

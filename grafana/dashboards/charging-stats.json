@@ -902,7 +902,7 @@
               },
               {
                 "id": "displayName",
-                "value": "起始电量(SOC)"
+                "value": "起始电量"
               }
             ]
           },
@@ -929,7 +929,7 @@
               },
               {
                 "id": "displayName",
-                "value": "结束电量(SOC)"
+                "value": "结束电量"
               }
             ]
           }
@@ -1582,6 +1582,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量"
               }
             ]
           }
@@ -1765,7 +1769,7 @@
               },
               {
                 "id": "displayName",
-                "value": "电量(SOC)"
+                "value": "电量"
               },
               {
                 "id": "custom.cellOptions",
@@ -1961,7 +1965,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "电量(SOC)"
+                "value": "电量"
               },
               {
                 "id": "unit",

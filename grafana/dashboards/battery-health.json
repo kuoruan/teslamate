@@ -1138,7 +1138,7 @@
           }
         }
       ],
-      "title": "当前 SOC",
+      "title": "当前电量",
       "transformations": [
         {
           "id": "configFromData",
@@ -1756,7 +1756,7 @@
     "hidden": true
   },
   "timezone": "browser",
-  "title": "电池健康",
+  "title": "电池健康度",
   "uid": "jchmRiqUfXgTM",
   "version": 1
 }
