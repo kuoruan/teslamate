@@ -10,9 +10,41 @@ defmodule TeslaMate.Locations.Geocoder do
   plug Tesla.Middleware.JSON
   plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
 
-  alias TeslaMate.Locations.Address
+  require Logger
+
+  alias TeslaMate.Locations.{Address, BaiduMap}
+
+  # 百度地图 API 密钥
+  defp baidu_keys do
+    %{
+      ak: System.get_env("BD_MAP_AK", "") |> String.trim(),
+      sk: System.get_env("BD_MAP_SK", "") |> String.trim()
+    }
+  end
 
   def reverse_lookup(lat, lon, lang \\ "en") do
+    keys = baidu_keys()
+
+    if keys.ak != "" && keys.sk != "" do
+      case BaiduMap.reverse_lookup(lat, lon, lang, keys) do
+        {:ok, address} ->
+          Logger.info("Baidu map reverse lookup succeeded: #{lat},#{lon}",
+            address_name: address.display_name
+          )
+
+          {:ok, address}
+
+        {:error, reason} ->
+          Logger.warning("Baidu map reverse lookup failed: #{inspect(reason)}")
+          osm_reverse_lookup(lat, lon, lang)
+      end
+    else
+      # 百度地图凭据不存在，使用 OpenStreetMap API
+      osm_reverse_lookup(lat, lon, lang)
+    end
+  end
+
+  def osm_reverse_lookup(lat, lon, lang) do
     opts = [
       format: :jsonv2,
       addressdetails: 1,
