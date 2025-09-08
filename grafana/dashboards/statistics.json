@@ -32,7 +32,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -97,6 +97,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 170
+              },
+              {
+                "id": "displayName",
+                "value": "行驶时间"
               }
             ]
           },
@@ -111,7 +115,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Trip",
+                    "title": "旅程",
                     "url": "/d/FkUpJpQZk/trip?from=${__data.fields.date_from}&to=${__data.fields.date_to}&var-car_id=$car_id"
                   }
                 ]
@@ -119,6 +123,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 195
+              },
+              {
+                "id": "displayName",
+                "value": "时间段"
               }
             ]
           },
@@ -169,6 +177,10 @@
               },
               {
                 "id": "decimals"
+              },
+              {
+                "id": "displayName",
+                "value": "行驶效率"
               }
             ]
           },
@@ -187,7 +199,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Charging stats",
+                    "title": "充电统计",
                     "url": "/d/-pkIkhmRz/charging-stats?from=${__data.fields.date_from}&to=${__data.fields.date_to}&var-car_id=$car_id"
                   }
                 ]
@@ -199,6 +211,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 120
+              },
+              {
+                "id": "displayName",
+                "value": "耗电量"
               }
             ]
           },
@@ -219,6 +235,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 190
+              },
+              {
+                "id": "displayName",
+                "value": "单次充电平均能耗"
               }
             ]
           },
@@ -235,6 +255,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 75
+              },
+              {
+                "id": "displayName",
+                "value": "费用"
               }
             ]
           },
@@ -249,7 +273,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Charges",
+                    "title": "充电",
                     "url": "/d/TSmNYvRRk/charges?from=${__data.fields.date_from}&to=${__data.fields.date_to}&var-car_id=$car_id"
                   }
                 ]
@@ -257,6 +281,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 110
+              },
+              {
+                "id": "displayName",
+                "value": "充电次数"
               }
             ]
           },
@@ -271,7 +299,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Drives",
+                    "title": "行程",
                     "url": "/d/Y8upc6ZRk/drives?from=${__data.fields.date_from}&to=${__data.fields.date_to}&var-car_id=$car_id"
                   }
                 ]
@@ -279,6 +307,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 95
+              },
+              {
+                "id": "displayName",
+                "value": "行程数"
               }
             ]
           },
@@ -294,7 +326,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "custom.minWidth",
@@ -314,7 +346,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Temp"
+                "value": "平均温度"
               },
               {
                 "id": "thresholds",
@@ -356,7 +388,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -384,7 +416,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               }
             ]
           },
@@ -396,7 +428,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               },
               {
                 "id": "unit",
@@ -416,7 +448,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -436,7 +468,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               },
               {
                 "id": "unit",
@@ -456,7 +488,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Temp"
+                "value": "平均温度"
               },
               {
                 "id": "unit",
@@ -503,6 +535,10 @@
               {
                 "id": "custom.hidden",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "开始时间"
               }
             ]
           },
@@ -515,6 +551,10 @@
               {
                 "id": "custom.hidden",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "结束时间"
               }
             ]
           },
@@ -545,6 +585,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 115
+              },
+              {
+                "id": "displayName",
+                "value": "平均费用 / kWh"
               }
             ]
           },
@@ -575,6 +619,10 @@
                     "type": "value"
                   }
                 ]
+              },
+              {
+                "id": "displayName",
+                "value": "平均费用 / kWh"
               }
             ]
           },
@@ -609,6 +657,10 @@
                     "type": "value"
                   }
                 ]
+              },
+              {
+                "id": "displayName",
+                "value": "停车耗电"
               }
             ]
           }
@@ -637,7 +689,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Starting at"
+            "displayName": "开始时间"
           }
         ]
       },
@@ -756,7 +808,7 @@
           }
         }
       ],
-      "title": "per ${period}",
+      "title": "每 ${period}",
       "transformations": [
         {
           "id": "merge",
@@ -1106,7 +1158,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1123,7 +1175,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -1140,7 +1192,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
@@ -1150,35 +1202,35 @@
       },
       {
         "current": {
-          "text": "month",
+          "text": "月",
           "value": "month"
         },
         "includeAll": false,
-        "label": "Period",
+        "label": "周期",
         "name": "period",
         "options": [
           {
             "selected": false,
-            "text": "day",
+            "text": "天",
             "value": "day"
           },
           {
             "selected": false,
-            "text": "week",
+            "text": "周",
             "value": "week"
           },
           {
             "selected": true,
-            "text": "month",
+            "text": "月",
             "value": "month"
           },
           {
             "selected": false,
-            "text": "year",
+            "text": "年",
             "value": "year"
           }
         ],
-        "query": "day,week,month,year",
+        "query": "天 : day,周 : week,月 : month,年 : year",
         "type": "custom"
       },
       {
@@ -1215,26 +1267,26 @@
       },
       {
         "current": {
-          "text": "no",
+          "text": "否",
           "value": "0"
         },
-        "description": "When enabled \"Ø Consumption (gross)\" will be calculated via Positions instead of Charging Processes and Drives.\n\nWhile being more accurate (especially for shorter periods) this will be slow on slow hardware!",
+        "description": "启用后，“平均能耗 (净值)” 将改由位置数据计算，而非通过充电过程和行程。\n\n这种方法更为准确 (尤其在较短统计周期内)，但在性能较差的硬件上会运行缓慢！",
         "includeAll": false,
-        "label": "High Precision",
+        "label": "高精度",
         "name": "high_precision",
         "options": [
           {
             "selected": true,
-            "text": "no",
+            "text": "否",
             "value": "0"
           },
           {
             "selected": false,
-            "text": "yes",
+            "text": "是",
             "value": "1"
           }
         ],
-        "query": "no : 0, yes : 1",
+        "query": "否 : 0, 是 : 1",
         "type": "custom"
       }
     ]
@@ -1245,7 +1297,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Statistics",
+  "title": "统计",
   "uid": "1EZnXszMk",
   "version": 1
 }

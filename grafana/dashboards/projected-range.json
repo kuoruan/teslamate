@@ -18,14 +18,36 @@
           "type": "grafana-postgresql-datasource",
           "uid": "TeslaMate"
         },
-        "enable": false,
+        "enable": true,
         "hide": false,
         "iconColor": "rgba(255, 96, 96, 1)",
         "limit": 100,
-        "name": "Charged",
-        "rawQuery": "SELECT\n$__time(start_date),\nend_date as timeend,\nconcat('Charged: ',round(cast(charge_energy_added as numeric),2),' kWh') AS text\nFROM charging_processes\nWHERE\n$__timeFilter(start_date)  AND duration_min > 5\nORDER BY start_date DESC",
+        "name": "显示充电",
         "showIn": 0,
         "tags": [],
+        "target": {
+          "editorMode": "code",
+          "format": "table",
+          "rawSql": "SELECT\n$__time(start_date),\nend_date as timeend,\nconcat('Charged: ',round(cast(charge_energy_added as numeric),2),' kWh') AS text\nFROM charging_processes\nWHERE\n$__timeFilter(start_date)  AND duration_min > 5\nORDER BY start_date DESC",
+          "refId": "Annotation",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
         "type": "tags"
       }
     ]
@@ -48,7 +70,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -142,10 +164,30 @@
               },
               {
                 "id": "custom.axisLabel",
-                "value": "Mileage"
+                "value": "里程"
               },
               {
                 "id": "min"
+              },
+              {
+                "id": "displayName",
+                "value": "里程 [$length_unit]"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Projected.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "预估续航"
+              },
+              {
+                "id": "displayName",
+                "value": "预估 ${preferred_range} 续航 [$length_unit]"
               }
             ]
           }
@@ -235,7 +277,7 @@
           }
         }
       ],
-      "title": "Projected Range - Mileage",
+      "title": "预估续航 - 里程",
       "type": "timeseries"
     },
     {
@@ -304,7 +346,7 @@
           {
             "matcher": {
               "id": "byRegexp",
-              "options": "/Battery.*/"
+              "options": "/^Battery.*/"
             },
             "properties": [
               {
@@ -317,7 +359,67 @@
               },
               {
                 "id": "custom.axisLabel",
-                "value": "Battery Level"
+                "value": "电池电量"
+              },
+              {
+                "id": "displayName",
+                "value": "电池电量 [%]"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/^Usable Battery.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "max",
+                "value": 100
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "可用电池电量"
+              },
+              {
+                "id": "displayName",
+                "value": "可用电池电量 [%]"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*using usable_battery_level.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "预估续航"
+              },
+              {
+                "id": "displayName",
+                "value": "预估续航 (基于可用电池电量) [$length_unit]"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*using battery_level.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "预估续航"
+              },
+              {
+                "id": "displayName",
+                "value": "预估续航 (基于电池电量) [$length_unit]"
               }
             ]
           }
@@ -407,7 +509,7 @@
           }
         }
       ],
-      "title": "Projected Range - Battery Level",
+      "title": "预估续航 - 电池电量",
       "type": "timeseries"
     },
     {
@@ -485,10 +587,14 @@
               },
               {
                 "id": "custom.axisLabel",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "min"
+              },
+              {
+                "id": "displayName",
+                "value": "车外温度 [°$temp_unit]"
               }
             ]
           },
@@ -504,6 +610,14 @@
                   "fixedColor": "#56A64B",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "预估续航"
+              },
+              {
+                "id": "displayName",
+                "value": "预估续航 (基于可用电池电量) [$length_unit]"
               }
             ]
           },
@@ -519,6 +633,14 @@
                   "fixedColor": "#C8F2C2",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "custom.axisLabel",
+                "value": "预估续航"
+              },
+              {
+                "id": "displayName",
+                "value": "预估续航 (基于电池电量) [$length_unit]"
               }
             ]
           }
@@ -607,7 +729,7 @@
           }
         }
       ],
-      "title": "Projected Range - Outdoor Temp",
+      "title": "预估续航 - 车外温度",
       "type": "timeseries"
     }
   ],
@@ -628,7 +750,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -708,8 +830,7 @@
           "text": "6h",
           "value": "6h"
         },
-        "hide": 1,
-        "label": "Time Resolution",
+        "label": "时间分辨率",
         "name": "interval",
         "options": [
           {
@@ -755,7 +876,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Projected Range",
+  "title": "预估续航",
   "uid": "riqUfXgRz",
   "version": 1
 }

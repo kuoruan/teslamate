@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -57,7 +57,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "(Range lost while driving * Efficiency) / Distance driven",
+      "description": "(行驶中损失的续航 * 效率) / 行驶距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -161,7 +161,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (net)",
+      "title": "平均能耗 (净值)",
       "type": "stat"
     },
     {
@@ -169,7 +169,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "(Range lost between charges * Efficiency) / Distance driven between charges",
+      "description": "(两次充电之间损失的续航 * 效率) / 两次充电之间的行驶距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -273,7 +273,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (gross)",
+      "title": "平均总能耗",
       "type": "stat"
     },
     {
@@ -281,7 +281,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Distance of all logged drives",
+      "description": "所有已记录行程的总距离",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -385,7 +385,7 @@
           }
         }
       ],
-      "title": "Logged Distance",
+      "title": "已记录距离",
       "type": "stat"
     },
     {
@@ -425,7 +425,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temperature"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -445,7 +445,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temperature"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -465,7 +465,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Driving Efficiency"
+                "value": "行驶效率"
               },
               {
                 "id": "unit",
@@ -520,7 +520,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -540,7 +540,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -560,7 +560,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -580,7 +580,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -600,7 +600,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -620,7 +620,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Speed"
+                "value": "平均速度"
               },
               {
                 "id": "unit",
@@ -655,7 +655,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Temperature"
+            "displayName": "温度"
           }
         ]
       },
@@ -690,7 +690,7 @@
           }
         }
       ],
-      "title": "Temperature – Driving Efficiency",
+      "title": "温度 - 行驶能效",
       "type": "table"
     },
     {
@@ -801,7 +801,7 @@
           }
         }
       ],
-      "title": "Current $preferred_range efficiency",
+      "title": "当前 $preferred_range 能效",
       "type": "stat"
     },
     {
@@ -839,7 +839,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "能效"
               },
               {
                 "id": "unit",
@@ -855,7 +855,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "能效"
               },
               {
                 "id": "unit",
@@ -915,7 +915,7 @@
           }
         }
       ],
-      "title": "Derived ideal efficiencies",
+      "title": "推算理想能效",
       "type": "table"
     },
     {
@@ -957,7 +957,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "能效"
               }
             ]
           },
@@ -969,7 +969,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "能效"
               },
               {
                 "id": "unit",
@@ -1029,7 +1029,7 @@
           }
         }
       ],
-      "title": "Derived rated efficiencies",
+      "title": "推算额定能效",
       "type": "table"
     }
   ],
@@ -1050,7 +1050,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1112,7 +1112,7 @@
           "value": "1"
         },
         "includeAll": false,
-        "label": "min. distance per drive",
+        "label": "单次行驶最短距离",
         "name": "min_distance",
         "options": [
           {
@@ -1170,7 +1170,7 @@
     "hidden": true
   },
   "timezone": "",
-  "title": "Efficiency",
+  "title": "能效",
   "uid": "fu4SiQgWz",
   "version": 1
 }

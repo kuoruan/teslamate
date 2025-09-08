@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -60,7 +60,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Logged"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "已记录"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Odometer"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "里程表"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -117,7 +142,7 @@
           }
         }
       ],
-      "title": "Mileage",
+      "title": "里程",
       "type": "stat"
     },
     {
@@ -142,7 +167,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Charges"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "充电次数"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Drives"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "行程数"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -227,7 +277,7 @@
           }
         }
       ],
-      "title": "Stats",
+      "title": "统计",
       "type": "stat"
     },
     {
@@ -252,7 +302,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nº Car Updates"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "车辆更新次数"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Current Car Firmware"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "当前车辆固件"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -337,7 +412,7 @@
           }
         }
       ],
-      "title": "Software",
+      "title": "软件版本",
       "type": "stat"
     },
     {
@@ -345,7 +420,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "This means you have some **Drives** or **Charges** not closed.\nIf so, you may follow the official guide: \n<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>Manually fixing data</a>",
+      "description": "这表示你有一些 **行程** 或 **充电** 记录没有被正确结束。如果是这种情况，你可以参照官方指南: \n<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -362,7 +437,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Charges not closed"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "未关闭的充电"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Drives not closed"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "未关闭的行程"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -447,7 +547,7 @@
           }
         }
       ],
-      "title": "Incomplete Data",
+      "title": "不完整数据",
       "type": "stat"
     },
     {
@@ -526,7 +626,7 @@
           }
         }
       ],
-      "title": "PostgreSQL Version",
+      "title": "PostgreSQL 版本",
       "type": "stat"
     },
     {
@@ -539,7 +639,7 @@
       },
       "id": 34,
       "panels": [],
-      "title": "Database Information",
+      "title": "数据库信息",
       "type": "row"
     },
     {
@@ -590,6 +690,46 @@
               {
                 "id": "custom.minWidth",
                 "value": 160
+              },
+              {
+                "id": "displayName",
+                "value": "表"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Data"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "数据"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Indexes"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "索引"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "总大小"
               }
             ]
           }
@@ -685,6 +825,18 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "Table Name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "表名"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "Row Count"
             },
             "properties": [
@@ -695,6 +847,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "行数"
               }
             ]
           }
@@ -758,7 +914,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "These statistics can help you evaluate the efficiency of your indexes.\n\nIf your database experiences a lot of updates or deletions, like importing data from other sources or deleting a loaner car or some other similar situation, you might encounter index bloat, which can degrade performance. In such cases, reindexing could be beneficial.\n\nCheck <a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data#reindex-database' target='_blank'>Reindex Database</a>",
+      "description": "这些统计信息可以帮助您评估索引的效率。\n\n如果您的数据库经历了大量更新或删除操作，例如从其他来源导入数据、删除借用车辆记录或其他类似情况，可能会出现索引膨胀，从而影响性能。在这种情况下，重建索引可能会有所帮助。\n\n查看<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data#reindex-database' target='_blank'>重建数据库索引</a>",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -801,6 +957,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "索引大小"
               }
             ]
           },
@@ -817,6 +977,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 160
+              },
+              {
+                "id": "displayName",
+                "value": "表"
               }
             ]
           },
@@ -833,6 +997,38 @@
               {
                 "id": "custom.minWidth",
                 "value": 350
+              },
+              {
+                "id": "displayName",
+                "value": "索引"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Index Scans"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "索引扫描数"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tuples Read"
+            },
+            "properties": [
+              {
+                "id": "custom.minWidth",
+                "value": 130
+              },
+              {
+                "id": "displayName",
+                "value": "已读取元组数"
               }
             ]
           },
@@ -845,6 +1041,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 130
+              },
+              {
+                "id": "displayName",
+                "value": "提取元组数"
               }
             ]
           }
@@ -901,7 +1101,7 @@
           }
         }
       ],
-      "title": "Indexes",
+      "title": "索引",
       "type": "table"
     },
     {
@@ -984,7 +1184,7 @@
           }
         }
       ],
-      "title": "Database Total Size",
+      "title": "数据库总大小",
       "type": "stat"
     },
     {
@@ -1066,7 +1266,7 @@
           }
         }
       ],
-      "title": "Timezone",
+      "title": "时区",
       "type": "stat"
     },
     {
@@ -1079,7 +1279,7 @@
       },
       "id": 44,
       "panels": [],
-      "title": "Statistics of SQL planning and execution",
+      "title": "SQL 规划与执行统计数据",
       "type": "row"
     },
     {
@@ -1159,7 +1359,7 @@
           }
         }
       ],
-      "title": "Time at which all statistics in the pg_stat_statements view were last reset",
+      "title": "pg_stat_statements 视图中所有统计信息的最后重置时间",
       "type": "stat"
     },
     {
@@ -1239,7 +1439,7 @@
           }
         }
       ],
-      "title": "Number of Statements tracked via pg_stat_statements",
+      "title": "通过 pg_stat_statements 跟踪的语句数量",
       "type": "stat"
     },
     {
@@ -1260,11 +1460,11 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "Check the [contribution docs](https://docs.teslamate.org/docs/development#enable-pg_stat_statements-to-collect-query-statistics) on how to enable tracking planning and execution statistics of all SQL statements executed by a server.\n",
+        "content": "查阅 [贡献文档](https://docs.teslamate.org/docs/development#enable-pg_stat_statements-to-collect-query-statistics) 以了解如何启用对服务器执行的所有 SQL 语句的规划和执行统计信息的跟踪。\n",
         "mode": "markdown"
       },
       "pluginVersion": "12.1.1",
-      "title": "About pg_stat_statements (track statistics of SQL planning and execution)",
+      "title": "关于 pg_stat_statements (跟踪 SQL 规划与执行统计数据)",
       "type": "text"
     },
     {
@@ -1315,6 +1515,10 @@
               {
                 "id": "custom.width",
                 "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "调用次数"
               }
             ]
           },
@@ -1327,6 +1531,10 @@
               {
                 "id": "custom.inspect",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "查询"
               }
             ]
           },
@@ -1339,6 +1547,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "平均执行时间"
               }
             ]
           },
@@ -1351,6 +1563,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "总执行时间"
               }
             ]
           }
@@ -1408,7 +1624,7 @@
           }
         }
       ],
-      "title": "Top 20 Statements (by mean time spent executing the statement)",
+      "title": "前 20 个语句 (按执行语句的平均时间)",
       "type": "table"
     },
     {
@@ -1459,6 +1675,10 @@
               {
                 "id": "custom.width",
                 "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "调用次数"
               }
             ]
           },
@@ -1471,6 +1691,10 @@
               {
                 "id": "custom.inspect",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "查询"
               }
             ]
           },
@@ -1483,6 +1707,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "平均执行时间"
               }
             ]
           },
@@ -1495,6 +1723,10 @@
               {
                 "id": "custom.width",
                 "value": 140
+              },
+              {
+                "id": "displayName",
+                "value": "总执行时间"
               }
             ]
           }
@@ -1552,7 +1784,7 @@
           }
         }
       ],
-      "title": "Top 20 Statements (by total time spent executing the statement)",
+      "title": "前 20 个语句 (按执行语句的总时间)",
       "type": "table"
     }
   ],
@@ -1588,7 +1820,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1703,7 +1935,7 @@
     "refresh_intervals": []
   },
   "timezone": "browser",
-  "title": "Database Information",
+  "title": "数据库信息",
   "uid": "jchmDbInfo",
   "version": 1
 }

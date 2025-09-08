@@ -40,7 +40,7 @@
         "tesla"
       ],
       "targetBlank": false,
-      "title": "Dashboards",
+      "title": "仪表板",
       "tooltip": "",
       "type": "dashboards",
       "url": ""
@@ -76,7 +76,33 @@
             "filterable": false,
             "inspect": false
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "🚗 Driving": {
+                  "index": 0,
+                  "text": "🚗 行驶中"
+                },
+                "🔋 Charging": {
+                  "index": 1,
+                  "text": "🔋 充电中"
+                },
+                "🅿️ Parking": {
+                  "index": 2,
+                  "text": "🅿️ 停车中"
+                },
+                "❓ Missing": {
+                  "index": 3,
+                  "text": "❓ 丢失"
+                },
+                "💾 Updating": {
+                  "index": 4,
+                  "text": "💾 更新中"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -115,6 +141,10 @@
                     "url": "/d/FkUpJpQZk/trip?from=${__data.fields.start_date_ts}&to=${__data.fields.end_date_ts}&var-car_id=$car_id"
                   }
                 ]
+              },
+              {
+                "id": "displayName",
+                "value": "开始时间"
               }
             ]
           },
@@ -131,6 +161,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量"
               }
             ]
           },
@@ -147,6 +181,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量变化"
               }
             ]
           },
@@ -187,6 +225,10 @@
               {
                 "id": "custom.filterable",
                 "value": true
+              },
+              {
+                "id": "displayName",
+                "value": "动作"
               }
             ]
           },
@@ -210,7 +252,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Energy Diff"
+                "value": "电量变化"
               }
             ]
           },
@@ -227,6 +269,10 @@
               {
                 "id": "custom.width",
                 "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "时长"
               }
             ]
           },
@@ -241,7 +287,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path:raw}"
                   }
                 ]
@@ -253,6 +299,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 200
+              },
+              {
+                "id": "displayName",
+                "value": "起点地址"
               }
             ]
           },
@@ -267,7 +317,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path:raw}"
                   }
                 ]
@@ -279,6 +329,10 @@
               {
                 "id": "custom.minWidth",
                 "value": 200
+              },
+              {
+                "id": "displayName",
+                "value": "终点地址"
               }
             ]
           },
@@ -374,7 +428,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.width",
@@ -390,7 +444,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "custom.width",
@@ -410,7 +464,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range Diff"
+                "value": "续航差异"
               },
               {
                 "id": "custom.width",
@@ -430,7 +484,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "custom.width",
@@ -450,7 +504,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range"
+                "value": "续航"
               },
               {
                 "id": "custom.width",
@@ -469,7 +523,7 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Slot details",
+                    "title": "插槽详情",
                     "url": "${__data.fields.slotlink:raw}"
                   }
                 ]
@@ -511,7 +565,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Start"
+            "displayName": "开始时间"
           }
         ]
       },
@@ -546,7 +600,7 @@
           }
         }
       ],
-      "title": "Timeline",
+      "title": "时间线",
       "transformations": [
         {
           "id": "organize",
@@ -618,7 +672,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -645,37 +699,37 @@
       {
         "current": {},
         "includeAll": true,
-        "label": "Action",
+        "label": "动作",
         "multi": true,
         "name": "action_filter",
         "options": [
           {
             "selected": false,
-            "text": "🚗 Driving",
+            "text": "🚗 行驶中",
             "value": "🚗 Driving"
           },
           {
             "selected": false,
-            "text": "🔋 Charging",
+            "text": "🔋 充电中",
             "value": "🔋 Charging"
           },
           {
             "selected": false,
-            "text": "🅿️ Parking",
+            "text": "🅿️ 停车中",
             "value": "🅿️ Parking"
           },
           {
             "selected": false,
-            "text": "❓ Missing",
+            "text": "❓ 丢失",
             "value": "❓ Missing"
           },
           {
             "selected": false,
-            "text": "💾 Updating",
+            "text": "💾 更新中",
             "value": "💾 Updating"
           }
         ],
-        "query": "🚗 Driving,🔋 Charging,🅿️ Parking,❓ Missing,💾 Updating",
+        "query": "🚗 行驶中 : 🚗 Driving,🔋 充电中 : 🔋 Charging,🅿️ 停车中 : 🅿️ Parking,❓ 丢失 : ❓ Missing,💾 更新中 : 💾 Updating",
         "type": "custom"
       },
       {
@@ -683,7 +737,8 @@
           "text": "",
           "value": ""
         },
-        "label": "Address Filter",
+        "description": "输入文本来搜索地址",
+        "label": "地址过滤",
         "name": "text_filter",
         "options": [
           {
@@ -704,7 +759,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -721,7 +776,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
@@ -753,7 +808,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Timeline",
+  "title": "时间线",
   "uid": "SUBgwtigz",
   "version": 1
 }

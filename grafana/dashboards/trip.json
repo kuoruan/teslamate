@@ -23,7 +23,7 @@
       "icon": "doc",
       "tags": [],
       "targetBlank": true,
-      "title": "Select last three drives",
+      "title": "选择最近三次行程",
       "type": "link",
       "url": "/d/FkUpJpQZk/trip?from=$from"
     },
@@ -41,7 +41,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -100,9 +100,12 @@
       "maxDataPoints": 500,
       "options": {
         "basemap": {
-          "config": {},
+          "config": {
+            "attribution": "Open street map",
+            "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          },
           "name": "Layer 0",
-          "type": "osm-standard"
+          "type": "xyz"
         },
         "controls": {
           "mouseWheelZoom": true,
@@ -233,7 +236,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Mileage"
+                "value": "里程"
               }
             ]
           },
@@ -249,7 +252,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Mileage"
+                "value": "里程"
               }
             ]
           }
@@ -353,6 +356,10 @@
                   "fixedColor": "#73BF69",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "充电 (交流电)"
               }
             ]
           },
@@ -368,6 +375,10 @@
                   "fixedColor": "#FADE2A",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "充电 (直流电)"
               }
             ]
           },
@@ -383,6 +394,10 @@
                   "fixedColor": "#5794F2",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "行驶"
               }
             ]
           }
@@ -484,7 +499,7 @@
           }
         }
       ],
-      "title": "Time spent",
+      "title": "用时",
       "type": "piechart"
     },
     {
@@ -530,7 +545,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed excl. breaks"
+                "value": "平均速度 (不含休息)"
               }
             ]
           },
@@ -546,7 +561,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed excl. breaks"
+                "value": "平均速度 (不含休息)"
               }
             ]
           }
@@ -648,7 +663,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed incl. DC charging"
+                "value": "平均速度 (含直流充电)"
               }
             ]
           },
@@ -664,7 +679,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Speed incl. DC charging"
+                "value": "平均速度 (含直流充电)"
               }
             ]
           }
@@ -768,7 +783,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               }
             ]
           },
@@ -784,7 +799,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               }
             ]
           }
@@ -889,7 +904,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               }
             ]
           },
@@ -905,7 +920,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Ø Consumption (gross)"
+                "value": "平均能耗 (总计)"
               }
             ]
           }
@@ -1020,7 +1035,20 @@
           },
           "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Charging Cost"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "总充电费用"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 2,
@@ -1117,7 +1145,20 @@
           },
           "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Cost per 100.*/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "每 100 $length_unit 平均费用"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 2,
@@ -1243,7 +1284,25 @@
           "decimals": 2,
           "displayName": "${__cell_0}",
           "links": [],
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "Total Energy consumed (gross)": {
+                  "index": 0,
+                  "text": "总能耗 (净值)"
+                },
+                "Total Energy added (AC)": {
+                  "index": 1,
+                  "text": "总充电量 (交流)"
+                },
+                "Total Energy added (DC)": {
+                  "index": 2,
+                  "text": "总充电量 (直流)"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -1378,37 +1437,37 @@
                 "0": {
                   "color": "#6ED0E0",
                   "index": 0,
-                  "text": "online"
+                  "text": "在线"
                 },
                 "1": {
                   "color": "#8F3BB8",
                   "index": 1,
-                  "text": "driving"
+                  "text": "行驶中"
                 },
                 "2": {
                   "color": "#F2CC0C",
                   "index": 2,
-                  "text": "charging"
+                  "text": "充电中"
                 },
                 "3": {
                   "color": "#FFB357",
                   "index": 3,
-                  "text": "offline"
+                  "text": "离线"
                 },
                 "4": {
                   "color": "#56A64B",
                   "index": 4,
-                  "text": "asleep"
+                  "text": "休眠"
                 },
                 "5": {
                   "color": "#6ED0E0",
                   "index": 5,
-                  "text": "online"
+                  "text": "在线"
                 },
                 "6": {
                   "color": "#E02F44",
                   "index": 6,
-                  "text": "updating"
+                  "text": "更新中"
                 },
                 "null": {
                   "index": 7,
@@ -1428,7 +1487,20 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "状态"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 2,
@@ -1533,7 +1605,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -1544,7 +1616,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View drive details",
+                    "title": "查看行程详情",
                     "url": "/d/zm7wN6Zgz/drive-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-drive_id=${__data.fields.drive_id.numeric}"
                   }
                 ]
@@ -1563,7 +1635,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -1587,7 +1659,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Consumption (net)"
+                "value": "平均能耗 (净值)"
               },
               {
                 "id": "unit",
@@ -1611,7 +1683,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -1635,14 +1707,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start"
+                "value": "起点"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.start_path}"
                   }
                 ]
@@ -1661,14 +1733,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Destination"
+                "value": "终点"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.end_path}"
                   }
                 ]
@@ -1687,7 +1759,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -1732,7 +1804,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Distance"
+                "value": "距离"
               },
               {
                 "id": "unit",
@@ -1768,7 +1840,11 @@
               },
               {
                 "id": "custom.width",
-                "value": 75
+                "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "起始电量 (%)"
               }
             ]
           },
@@ -1792,7 +1868,11 @@
               },
               {
                 "id": "custom.width",
-                "value": 65
+                "value": 100
+              },
+              {
+                "id": "displayName",
+                "value": "结束电量 (%)"
               }
             ]
           },
@@ -1831,7 +1911,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -1866,7 +1946,7 @@
           }
         }
       ],
-      "title": "Drives",
+      "title": "行程数",
       "type": "table"
     },
     {
@@ -1913,7 +1993,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "unit",
@@ -1924,7 +2004,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View charge details",
+                    "title": "查看充电详情",
                     "url": "/d/BHhxFeZRz/charge-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-charging_process_id=${__data.fields.id.numeric:raw}"
                   }
                 ]
@@ -1943,7 +2023,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "充电量"
               },
               {
                 "id": "decimals",
@@ -1963,7 +2043,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% Start"
+                "value": "起始电量 (%)"
               },
               {
                 "id": "unit",
@@ -1975,7 +2055,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 72
+                "value": 100
               }
             ]
           },
@@ -1987,7 +2067,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% End"
+                "value": "结束电量 (%)"
               },
               {
                 "id": "unit",
@@ -1999,7 +2079,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 62
+                "value": 100
               }
             ]
           },
@@ -2011,7 +2091,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -2035,7 +2115,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost"
+                "value": "费用"
               },
               {
                 "id": "unit",
@@ -2050,7 +2130,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "Set Cost",
+                    "title": "设置费用",
                     "url": "${base_url:raw}/charge-cost/${__data.fields.id.numeric:raw}"
                   }
                 ]
@@ -2093,14 +2173,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "地点"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.path}"
                   }
                 ]
@@ -2119,7 +2199,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "unit",
@@ -2143,7 +2223,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Power"
+                "value": "平均功率"
               },
               {
                 "id": "unit",
@@ -2193,7 +2273,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "unit",
@@ -2229,7 +2309,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy used"
+                "value": "耗电量"
               },
               {
                 "id": "decimals",
@@ -2276,7 +2356,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Date"
+            "displayName": "日期"
           }
         ]
       },
@@ -2311,7 +2391,7 @@
           }
         }
       ],
-      "title": "Charges",
+      "title": "充电次数",
       "transformations": [
         {
           "id": "merge",
@@ -2395,7 +2475,7 @@
               },
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               }
             ]
           },
@@ -2431,7 +2511,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range (ideal)"
+                "value": "续航 (理想)"
               }
             ]
           },
@@ -2443,7 +2523,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range (rated)"
+                "value": "续航 (额定)"
               }
             ]
           }
@@ -2504,7 +2584,7 @@
           }
         }
       ],
-      "title": "Battery Level & Range",
+      "title": "电池电量和续航",
       "type": "timeseries"
     },
     {
@@ -2599,7 +2679,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Elevation"
+                "value": "海拔"
               },
               {
                 "id": "color",
@@ -2667,7 +2747,7 @@
           }
         }
       ],
-      "title": "Elevation",
+      "title": "海拔",
       "type": "timeseries"
     }
   ],
@@ -2688,7 +2768,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -2705,7 +2785,7 @@
         "definition": "select unit_of_temperature from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "temperature unit",
+        "label": "温度单位",
         "name": "temp_unit",
         "options": [],
         "query": "select unit_of_temperature from settings limit 1;",
@@ -2722,7 +2802,7 @@
         "definition": "select unit_of_length from settings limit 1;",
         "hide": 2,
         "includeAll": false,
-        "label": "length unit",
+        "label": "长度单位",
         "name": "length_unit",
         "options": [],
         "query": "select unit_of_length from settings limit 1;",
@@ -2802,7 +2882,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Trip",
+  "title": "旅程",
   "uid": "FkUpJpQZk",
   "version": 1
 }

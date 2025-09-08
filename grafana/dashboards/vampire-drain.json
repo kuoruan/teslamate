@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -93,7 +93,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start"
+                "value": "开始"
               },
               {
                 "id": "unit",
@@ -123,7 +123,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "End"
+                "value": "结束"
               },
               {
                 "id": "unit",
@@ -143,7 +143,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range loss"
+                "value": "续航损失"
               },
               {
                 "id": "unit",
@@ -167,7 +167,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Period"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -213,7 +213,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Range loss / h"
+                "value": "续航损失 / h"
               },
               {
                 "id": "unit",
@@ -249,7 +249,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Standby"
+                "value": "待机"
               },
               {
                 "id": "unit",
@@ -299,7 +299,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy drained"
+                "value": "耗电量"
               },
               {
                 "id": "unit",
@@ -323,7 +323,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Power"
+                "value": "平均功率"
               },
               {
                 "id": "unit",
@@ -347,7 +347,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Range loss / h"
+                "value": "续航损失 / h"
               },
               {
                 "id": "unit",
@@ -371,7 +371,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range loss"
+                "value": "续航损失"
               },
               {
                 "id": "unit",
@@ -395,7 +395,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "SoC Diff"
+                "value": "电量差异"
               },
               {
                 "id": "unit",
@@ -445,7 +445,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "title": "In cold weather, the estimated range loss cannot be estimated correctly and is therefore hidden.",
+                    "title": "在低温天气时，预估的续航损失可能不准确，因此会被隐藏。",
                     "url": ""
                   }
                 ]
@@ -508,7 +508,7 @@
           }
         }
       ],
-      "title": "Vampire Drain",
+      "title": "停车耗电",
       "transformations": [
         {
           "id": "merge",
@@ -537,7 +537,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -551,7 +551,7 @@
           "value": "6"
         },
         "includeAll": false,
-        "label": "min. Idle Time (h)",
+        "label": "最短空闲时间 (h)",
         "name": "duration",
         "options": [
           {
@@ -649,7 +649,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Vampire Drain",
+  "title": "停车耗电",
   "uid": "zhHx2Fggk",
   "version": 1
 }

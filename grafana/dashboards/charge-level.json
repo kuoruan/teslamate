@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -111,7 +111,104 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Battery Level"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "电池电量"
+              },
+              {
+                "id": "displayName",
+                "value": "电池电量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Usable Battery Level"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "可用电池电量"
+              },
+              {
+                "id": "displayName",
+                "value": "可用电池电量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Day Moving 7.5% Percentile.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "$days_moving_average_percentiles 天移动 7.5% 百分位"
+              },
+              {
+                "id": "displayName",
+                "value": "$days_moving_average_percentiles 天移动 7.5% 百分位 (${bucket_width:text} 分桶)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Day Moving Average.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "$days_moving_average_percentiles 天移动平均值"
+              },
+              {
+                "id": "displayName",
+                "value": "$days_moving_average_percentiles 天移动平均值 (${bucket_width:text} 分桶)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Day Moving Median.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "$days_moving_average_percentiles 天移动中位数"
+              },
+              {
+                "id": "displayName",
+                "value": "$days_moving_average_percentiles 天移动中位数 (${bucket_width:text} 分桶)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Day Moving 92.5% Percentile.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.axisLabel",
+                "value": "$days_moving_average_percentiles 天移动 92.5% 百分位"
+              },
+              {
+                "id": "displayName",
+                "value": "$days_moving_average_percentiles 天移动 92.5% 百分位 (${bucket_width:text} 分桶)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 21,
@@ -225,7 +322,7 @@
           }
         }
       ],
-      "title": "Charge Level",
+      "title": "充电电量",
       "transformations": [
         {
           "id": "configFromData",
@@ -278,7 +375,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -307,9 +404,9 @@
           "text": "2h",
           "value": "7200"
         },
-        "description": "Data used to calculate Moving Average / Percentiles is unevenly sampled in TeslaMate. To avoid biases towards more frequently sampled values, the data is bucketed. For buckets without sampled values, the last observed value is carried forward. Bucketing is not time-weighted but is a simple average. Increasing the bucket width results in a loss of accuracy.",
+        "description": "TeslaMate 用于计算移动平均值/百分位数的数据采样不均匀。为避免偏向于采样频率更高的数值，数据会被进行分桶处理。对于没有采样值的桶，会沿用上一个已观测到的数值。分桶处理并非按时间加权，而是简单的平均计算。增加桶的宽度会导致精度降低。",
         "includeAll": false,
-        "label": "Bucket Width",
+        "label": "分桶宽度",
         "name": "bucket_width",
         "options": [
           {
@@ -333,49 +430,49 @@
       },
       {
         "current": {
-          "text": "yes",
+          "text": "是",
           "value": "1"
         },
         "includeAll": false,
-        "label": "Include Moving Average / Percentiles",
+        "label": "包含移动平均值/百分位数",
         "name": "include_average_percentiles",
         "options": [
           {
             "selected": false,
-            "text": "no",
+            "text": "否",
             "value": "0"
           },
           {
             "selected": true,
-            "text": "yes",
+            "text": "是",
             "value": "1"
           }
         ],
-        "query": "no : 0, yes : 1",
+        "query": "否 : 0, 是 : 1",
         "type": "custom"
       },
       {
         "current": {
-          "text": "1/6 of interval",
+          "text": "1/6 间隔",
           "value": "6"
         },
         "description": "",
         "includeAll": false,
-        "label": "Moving Average / Percentiles Width",
+        "label": "移动平均值/百分位数窗口宽度",
         "name": "intervals_moving_average_percentiles",
         "options": [
           {
             "selected": true,
-            "text": "1/6 of interval",
+            "text": "1/6 间隔",
             "value": "6"
           },
           {
             "selected": false,
-            "text": "1/12 of interval",
+            "text": "1/12 间隔",
             "value": "12"
           }
         ],
-        "query": "1/6 of interval : 6, 1/12 of interval : 12",
+        "query": "1/6 间隔 : 6, 1/12 间隔 : 12",
         "type": "custom"
       },
       {
@@ -402,7 +499,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charge Level",
+  "title": "充电电量",
   "uid": "WopVO_mgz",
   "version": 1
 }

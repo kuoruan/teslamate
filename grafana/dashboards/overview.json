@@ -40,7 +40,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -167,7 +167,7 @@
           }
         }
       ],
-      "title": "Battery Level",
+      "title": "电池电量",
       "transformations": [
         {
           "id": "configFromData",
@@ -304,7 +304,7 @@
           }
         }
       ],
-      "title": "Charging Voltage",
+      "title": "充电电压",
       "type": "gauge"
     },
     {
@@ -415,7 +415,7 @@
           }
         }
       ],
-      "title": "Charging Power",
+      "title": "充电功率",
       "transformations": [
         {
           "id": "configFromData",
@@ -493,7 +493,20 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SOC"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "电量"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 7,
@@ -505,7 +518,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Charge Level",
+          "title": "电量",
           "url": "/d/WopVO_mgz/charge-level?${__url_time_range}"
         }
       ],
@@ -557,7 +570,7 @@
           }
         }
       ],
-      "title": "Charge Level",
+      "title": "电量",
       "type": "timeseries"
     },
     {
@@ -668,7 +681,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (net)",
+      "title": "平均能耗 (净值)",
       "type": "stat"
     },
     {
@@ -771,7 +784,7 @@
           }
         }
       ],
-      "title": "Ø Consumption (gross)",
+      "title": "平均总能耗",
       "type": "stat"
     },
     {
@@ -882,7 +895,7 @@
           }
         }
       ],
-      "title": "Total Distance logged",
+      "title": "已记录总距离",
       "type": "stat"
     },
     {
@@ -1003,7 +1016,7 @@
           }
         }
       ],
-      "title": "Range",
+      "title": "续航",
       "type": "stat"
     },
     {
@@ -1050,7 +1063,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Updates",
+          "title": "更新",
           "url": "/d/IiC07mgWz/updates"
         }
       ],
@@ -1108,7 +1121,7 @@
           }
         }
       ],
-      "title": "Firmware",
+      "title": "固件版本",
       "type": "stat"
     },
     {
@@ -1168,7 +1181,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Mileage",
+          "title": "里程",
           "url": "/d/NjtMTFggz/mileage"
         }
       ],
@@ -1226,7 +1239,7 @@
           }
         }
       ],
-      "title": "Odometer",
+      "title": "里程表",
       "type": "stat"
     },
     {
@@ -1302,6 +1315,10 @@
               {
                 "id": "max",
                 "value": 250
+              },
+              {
+                "id": "displayName",
+                "value": "充电电压 [V]"
               }
             ]
           },
@@ -1313,7 +1330,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Power"
+                "value": "功率"
               },
               {
                 "id": "unit",
@@ -1333,7 +1350,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Battery heater"
+                "value": "电池加热器"
               },
               {
                 "id": "custom.axisPlacement",
@@ -1353,7 +1370,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Current"
+                "value": "电流"
               },
               {
                 "id": "unit",
@@ -1373,7 +1390,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "充电量"
               },
               {
                 "id": "unit",
@@ -1393,7 +1410,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "Charging Stats",
+          "title": "充电统计",
           "url": "/d/-pkIkhmRz/charging-stats?${__url_time_range}"
         }
       ],
@@ -1473,7 +1490,7 @@
           }
         }
       ],
-      "title": "Charging Details",
+      "title": "充电详情",
       "type": "timeseries"
     },
     {
@@ -1556,7 +1573,7 @@
           }
         }
       ],
-      "title": "Driver Temp",
+      "title": "主驾温度",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1650,7 +1667,7 @@
           }
         }
       ],
-      "title": "Outside Temp",
+      "title": "车外温度",
       "type": "gauge"
     },
     {
@@ -1713,7 +1730,7 @@
           "refId": "A"
         }
       ],
-      "title": "Inside Temp",
+      "title": "车内温度",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1754,37 +1771,37 @@
                 "0": {
                   "color": "#6ED0E0",
                   "index": 0,
-                  "text": "online"
+                  "text": "在线"
                 },
                 "1": {
                   "color": "#8F3BB8",
                   "index": 1,
-                  "text": "driving"
+                  "text": "驾驶中"
                 },
                 "2": {
                   "color": "#F2CC0C",
                   "index": 2,
-                  "text": "charging"
+                  "text": "充电中"
                 },
                 "3": {
                   "color": "#FFB357",
                   "index": 3,
-                  "text": "offline"
+                  "text": "离线"
                 },
                 "4": {
                   "color": "#56A64B",
                   "index": 4,
-                  "text": "asleep"
+                  "text": "休眠"
                 },
                 "5": {
                   "color": "#6ED0E0",
                   "index": 5,
-                  "text": "online"
+                  "text": "在线"
                 },
                 "6": {
                   "color": "#E02F44",
                   "index": 6,
-                  "text": "updating"
+                  "text": "更新中"
                 },
                 "null": {
                   "index": 7,
@@ -1808,7 +1825,32 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "状态"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "时间"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 5,
@@ -1820,7 +1862,7 @@
       "links": [
         {
           "targetBlank": true,
-          "title": "States",
+          "title": "状态",
           "url": "/d/xo4BNRkZz/states?${__url_time_range}"
         }
       ],
@@ -1872,7 +1914,7 @@
           }
         }
       ],
-      "title": "States",
+      "title": "状态",
       "type": "state-timeline"
     }
   ],
@@ -1893,7 +1935,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1973,7 +2015,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Overview",
+  "title": "概览",
   "uid": "kOuP_Fggz",
   "version": 1
 }

@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -134,7 +134,7 @@
           }
         }
       ],
-      "title": "# of Charges",
+      "title": "充电次数",
       "type": "stat"
     },
     {
@@ -219,7 +219,7 @@
           }
         }
       ],
-      "title": "Total Energy added",
+      "title": "总充电量",
       "type": "stat"
     },
     {
@@ -305,7 +305,7 @@
           }
         }
       ],
-      "title": "SuC Charging Cost",
+      "title": "超充费用",
       "type": "stat"
     },
     {
@@ -391,7 +391,7 @@
           }
         }
       ],
-      "title": "Total Charging Cost",
+      "title": "总充电费用",
       "type": "stat"
     },
     {
@@ -471,7 +471,7 @@
           }
         }
       ],
-      "title": "Ø Cost per 100 $length_unit",
+      "title": "每 100 $length_unit 平均费用",
       "type": "stat"
     },
     {
@@ -553,7 +553,7 @@
           }
         }
       ],
-      "title": "Ø Cost per kWh",
+      "title": "每千瓦时平均费用",
       "type": "stat"
     },
     {
@@ -635,7 +635,7 @@
           }
         }
       ],
-      "title": "Ø Cost per kWh DC",
+      "title": "每千瓦时平均费用 (直流电)",
       "type": "stat"
     },
     {
@@ -717,7 +717,7 @@
           }
         }
       ],
-      "title": "Ø Cost per kWh AC",
+      "title": "每千瓦时平均费用 (交流电)",
       "type": "stat"
     },
     {
@@ -825,7 +825,7 @@
         }
       ],
       "timeFrom": "6M",
-      "title": "Charge Heatmap",
+      "title": "充电热力图",
       "type": "heatmap"
     },
     {
@@ -899,6 +899,10 @@
               {
                 "id": "custom.fillBelowTo",
                 "value": "End SOC"
+              },
+              {
+                "id": "displayName",
+                "value": "初始电量"
               }
             ]
           },
@@ -922,6 +926,10 @@
               {
                 "id": "custom.lineWidth",
                 "value": 0
+              },
+              {
+                "id": "displayName",
+                "value": "结束电量"
               }
             ]
           }
@@ -1008,7 +1016,7 @@
         }
       ],
       "timeFrom": "6M",
-      "title": "Charge Delta",
+      "title": "充电增量",
       "transformations": [
         {
           "id": "configFromData",
@@ -1077,6 +1085,10 @@
                   "fixedColor": "#73BF69",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "交流电"
               }
             ]
           },
@@ -1092,6 +1104,10 @@
                   "fixedColor": "light-orange",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "直流电"
               }
             ]
           }
@@ -1165,7 +1181,7 @@
           }
         }
       ],
-      "title": "AC/DC - Energy Used",
+      "title": "交流/直流 - 电量使用",
       "type": "piechart"
     },
     {
@@ -1208,6 +1224,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "占比"
               }
             ]
           },
@@ -1220,6 +1240,10 @@
               {
                 "id": "unit",
                 "value": "kwatth"
+              },
+              {
+                "id": "displayName",
+                "value": "总充电量"
               }
             ]
           }
@@ -1235,10 +1259,13 @@
       "maxDataPoints": 1,
       "options": {
         "basemap": {
-          "config": {},
+          "config": {
+            "attribution": "Open street map",
+            "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          },
           "name": "Layer 0",
           "tooltip": true,
-          "type": "osm-standard"
+          "type": "xyz"
         },
         "controls": {
           "mouseWheelZoom": true,
@@ -1342,7 +1369,7 @@
           }
         }
       ],
-      "title": "Charging heat map by kWh",
+      "title": "充电热力图 (按千瓦时)",
       "type": "geomap"
     },
     {
@@ -1379,6 +1406,10 @@
                   "fixedColor": "#73BF69",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "交流电"
               }
             ]
           },
@@ -1394,6 +1425,10 @@
                   "fixedColor": "light-orange",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "直流电"
               }
             ]
           }
@@ -1467,7 +1502,7 @@
           }
         }
       ],
-      "title": "AC/DC - Duration",
+      "title": "交流/直流 - 时长",
       "type": "piechart"
     },
     {
@@ -1530,7 +1565,7 @@
                 "id": "links",
                 "value": [
                   {
-                    "title": "Show charge details",
+                    "title": "显示充电详情",
                     "url": "/d/BHhxFeZRz/charge-details?from=${__data.fields.start_date.numeric}&to=${__data.fields.end_date.numeric}&var-car_id=${car_id}&var-charging_process_id=${__data.fields.charging_process_id.numeric}"
                   }
                 ]
@@ -1558,6 +1593,10 @@
               {
                 "id": "unit",
                 "value": "kwatt"
+              },
+              {
+                "id": "displayName",
+                "value": "功率"
               }
             ]
           },
@@ -1570,6 +1609,10 @@
               {
                 "id": "unit",
                 "value": "percent"
+              },
+              {
+                "id": "displayName",
+                "value": "电量"
               }
             ]
           }
@@ -1710,7 +1753,7 @@
           }
         }
       ],
-      "title": "DC Charging Curve",
+      "title": "充电曲线 - 直流",
       "type": "xychart"
     },
     {
@@ -1718,7 +1761,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Only End Battery Level of last Charging Process considered for consecutive Charging Processes",
+      "description": "对于连续充电过程，仅考虑最后一次充电过程的结束电池电量",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1753,7 +1796,7 @@
               },
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               },
               {
                 "id": "custom.cellOptions",
@@ -1775,7 +1818,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "# of Charges"
+                "value": "充电次数"
               },
               {
                 "id": "custom.cellOptions",
@@ -1879,7 +1922,7 @@
           }
         }
       ],
-      "title": "Charge Stats",
+      "title": "充电统计",
       "transformations": [
         {
           "id": "configFromData",
@@ -1914,7 +1957,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Only Start Battery Level of first Charging Process considered for consecutive Charging Processes",
+      "description": "对于连续充电过程，仅考虑第一次充电过程的开始电池电量",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1949,7 +1992,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               },
               {
                 "id": "unit",
@@ -1995,7 +2038,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "# of Discharges"
+                "value": "放电次数"
               },
               {
                 "id": "custom.cellOptions",
@@ -2067,7 +2110,7 @@
           }
         }
       ],
-      "title": "Discharge Stats",
+      "title": "放电统计",
       "type": "table"
     },
     {
@@ -2108,7 +2151,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "地点"
               }
             ]
           },
@@ -2120,7 +2163,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Charged"
+                "value": "充电量"
               },
               {
                 "id": "custom.width",
@@ -2192,7 +2235,7 @@
           }
         }
       ],
-      "title": "Top Charging Stations (Charged)",
+      "title": "充电站排行 (充电量)",
       "type": "table"
     },
     {
@@ -2233,7 +2276,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "地点"
               }
             ]
           },
@@ -2245,7 +2288,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost"
+                "value": "费用"
               },
               {
                 "id": "custom.width",
@@ -2313,7 +2356,7 @@
           }
         }
       ],
-      "title": "Top Charging Stations (Cost)",
+      "title": "充电站排行 (费用)",
       "type": "table"
     }
   ],
@@ -2334,7 +2377,7 @@
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "hide": 2,
         "includeAll": true,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -2376,7 +2419,7 @@
       },
       {
         "current": {},
-        "label": "Duration >=",
+        "label": "持续时间 >=",
         "name": "min_duration",
         "options": [
           {
@@ -2411,7 +2454,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charging Stats",
+  "title": "充电统计",
   "uid": "-pkIkhmRz",
   "version": 1
 }

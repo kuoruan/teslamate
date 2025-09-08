@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -113,7 +113,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Charging Voltage"
+                "value": "充电电压"
               },
               {
                 "id": "unit",
@@ -133,7 +133,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "SOC"
+                "value": "电量"
               },
               {
                 "id": "unit",
@@ -149,7 +149,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Power"
+                "value": "功率"
               },
               {
                 "id": "unit",
@@ -169,7 +169,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Battery heater"
+                "value": "电池加热"
               },
               {
                 "id": "unit",
@@ -221,7 +221,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range"
+                "value": "续航"
               }
             ]
           },
@@ -233,7 +233,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Current"
+                "value": "电流"
               },
               {
                 "id": "unit",
@@ -253,7 +253,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Current (pilot)"
+                "value": "电流 (试验)"
               },
               {
                 "id": "unit",
@@ -305,7 +305,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Outdoor Temperature"
+                "value": "车外温度"
               }
             ]
           },
@@ -317,7 +317,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Phases"
+                "value": "相位"
               },
               {
                 "id": "custom.axisPlacement",
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "title": "Charge Details",
+      "title": "充电详情",
       "type": "timeseries"
     },
     {
@@ -396,7 +396,7 @@
             "mode": "fixed"
           },
           "decimals": 2,
-          "displayName": "Cost",
+          "displayName": "费用",
           "mappings": [
             {
               "options": {
@@ -430,7 +430,7 @@
       "id": 6,
       "links": [
         {
-          "title": "Set cost",
+          "title": "设置费用",
           "url": "${base_url:raw}/charge-cost/${charging_process_id}"
         }
       ],
@@ -483,7 +483,7 @@
           }
         }
       ],
-      "title": "Cost",
+      "title": "费用",
       "type": "stat"
     },
     {
@@ -607,7 +607,7 @@
           ]
         }
       ],
-      "title": "Duration",
+      "title": "时长",
       "type": "stat"
     },
     {
@@ -750,6 +750,34 @@
               {
                 "id": "unit",
                 "value": "%"
+              },
+              {
+                "id": "displayName",
+                "value": "效率"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Added"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "增加"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Used"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "消耗"
               }
             ]
           }
@@ -867,7 +895,7 @@
           }
         }
       ],
-      "title": "Charge Energy",
+      "title": "充电量",
       "type": "stat"
     },
     {
@@ -914,9 +942,12 @@
       "maxDataPoints": 500,
       "options": {
         "basemap": {
-          "config": {},
+          "config": {
+            "attribution": "Open street map",
+            "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          },
           "name": "Layer 0",
-          "type": "osm-standard"
+          "type": "xyz"
         },
         "controls": {
           "mouseWheelZoom": true,
@@ -1055,7 +1086,44 @@
           },
           "unit": "%"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Start"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "初始"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Added"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "增加"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "End"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "结束"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 4,
@@ -1169,7 +1237,7 @@
           }
         }
       ],
-      "title": "Battery Level",
+      "title": "电池电量",
       "type": "stat"
     },
     {
@@ -1253,7 +1321,7 @@
           }
         }
       ],
-      "title": "Ø Power",
+      "title": "平均功率",
       "type": "stat"
     },
     {
@@ -1361,7 +1429,7 @@
           }
         }
       ],
-      "title": "Ø Outdoor Temperature",
+      "title": "车外平均温度",
       "type": "stat"
     },
     {
@@ -1420,7 +1488,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Start"
+                "value": "起始"
               }
             ]
           },
@@ -1432,7 +1500,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Added"
+                "value": "增加"
               }
             ]
           },
@@ -1444,7 +1512,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "End"
+                "value": "结束"
               }
             ]
           }
@@ -1562,7 +1630,7 @@
           }
         }
       ],
-      "title": "Ranges ($preferred_range)",
+      "title": "里程范围 ($preferred_range)",
       "type": "stat"
     },
     {
@@ -1639,6 +1707,30 @@
                   "fixedColor": "blue",
                   "mode": "fixed"
                 }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SOC [%]"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "电量 [%]"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Power [kW]"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "功率 [kW]"
               }
             ]
           }
@@ -1766,7 +1858,7 @@
           }
         }
       ],
-      "title": "Charging curve",
+      "title": "充电曲线",
       "type": "xychart"
     }
   ],
@@ -1817,7 +1909,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1881,7 +1973,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charge Details",
+  "title": "充电详情",
   "uid": "BHhxFeZRz",
   "version": 1
 }

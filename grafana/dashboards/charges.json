@@ -33,7 +33,7 @@
       "tags": [
         "tesla"
       ],
-      "title": "Dashboards",
+      "title": "仪表板",
       "type": "dashboards"
     }
   ],
@@ -48,7 +48,7 @@
       },
       "id": 16,
       "panels": [],
-      "title": "Summary of this period",
+      "title": "本期概况",
       "type": "row"
     },
     {
@@ -92,7 +92,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Energy added:"
+                "value": "总充电量:"
               }
             ]
           }
@@ -191,7 +191,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Energy used:"
+                "value": "总用电量:"
               }
             ]
           }
@@ -291,7 +291,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Total Charging Cost:"
+                "value": "总充电费用:"
               }
             ]
           }
@@ -392,7 +392,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Duration:"
+                "value": "平均时长:"
               }
             ]
           }
@@ -455,7 +455,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "Browse your charges by Geofence, Location, Type, Cost and Duration in order to have an accurate Total of kWh added and their respective costs",
+      "description": "按收藏点、地点、类型、费用和时长浏览你的充电记录，以便准确掌握总充电量 (kWh) 和相应费用",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -495,14 +495,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Date"
+                "value": "日期"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "View charge details",
+                    "title": "查看充电详情",
                     "url": "/d/BHhxFeZRz/charge-details?from=${__data.fields.start_date_ts.numeric}&to=${__data.fields.end_date_ts.numeric}&var-car_id=${__data.fields.car_id.numeric}&var-charging_process_id=${__data.fields.id.numeric}"
                   }
                 ]
@@ -525,7 +525,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy added"
+                "value": "充电量"
               },
               {
                 "id": "decimals",
@@ -545,7 +545,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% Start"
+                "value": "初始电量 (%)"
               },
               {
                 "id": "unit",
@@ -557,7 +557,7 @@
               },
               {
                 "id": "custom.minWidth",
-                "value": 70
+                "value": 100
               }
             ]
           },
@@ -569,7 +569,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "% End"
+                "value": "结束电量 (%)"
               },
               {
                 "id": "unit",
@@ -581,7 +581,7 @@
               },
               {
                 "id": "custom.minWidth",
-                "value": 65
+                "value": 100
               }
             ]
           },
@@ -593,7 +593,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Duration"
+                "value": "时长"
               },
               {
                 "id": "unit",
@@ -617,7 +617,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -667,7 +667,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost"
+                "value": "费用"
               },
               {
                 "id": "decimals",
@@ -678,7 +678,7 @@
                 "value": [
                   {
                     "targetBlank": false,
-                    "title": "Set Cost",
+                    "title": "设置费用",
                     "url": "${base_url:raw}/charge-cost/${__data.fields.id.numeric}"
                   }
                 ]
@@ -725,14 +725,14 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Location"
+                "value": "地点"
               },
               {
                 "id": "links",
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Create or edit geo-fence",
+                    "title": "创建或编辑收藏点",
                     "url": "${base_url:raw}/geo-fences/${__data.fields.path}"
                   }
                 ]
@@ -751,7 +751,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "decimals",
@@ -775,7 +775,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Range gained"
+                "value": "续航增加"
               },
               {
                 "id": "decimals",
@@ -799,7 +799,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Power"
+                "value": "平均功率"
               },
               {
                 "id": "unit",
@@ -849,7 +849,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Charge rate"
+                "value": "平均充电速度"
               },
               {
                 "id": "unit",
@@ -873,7 +873,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Temp"
+                "value": "温度"
               },
               {
                 "id": "unit",
@@ -923,7 +923,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Ø Charge rate"
+                "value": "平均充电速度"
               },
               {
                 "id": "unit",
@@ -959,7 +959,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Energy used"
+                "value": "耗电量"
               },
               {
                 "id": "decimals",
@@ -979,7 +979,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Efficiency"
+                "value": "充电效率"
               },
               {
                 "id": "unit",
@@ -1044,7 +1044,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Cost / kWh"
+                "value": "费用 / kWh"
               },
               {
                 "id": "decimals",
@@ -1068,7 +1068,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "Type"
+                "value": "类型"
               },
               {
                 "id": "custom.cellOptions",
@@ -1116,7 +1116,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.minWidth",
@@ -1140,7 +1140,7 @@
               },
               {
                 "id": "displayName",
-                "value": "Odometer"
+                "value": "里程表"
               },
               {
                 "id": "custom.minWidth",
@@ -1205,7 +1205,7 @@
           }
         }
       ],
-      "title": "Charger type: $charge_type",
+      "title": "充电器类型: $charge_type",
       "type": "table"
     },
     {
@@ -1218,7 +1218,7 @@
       },
       "id": 18,
       "panels": [],
-      "title": "General information (All charges)",
+      "title": "基本信息 (全部充电)",
       "type": "row"
     },
     {
@@ -1239,7 +1239,7 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "From here you can check if you have \nincomplete data of **Charges** (charges without ending date)\nIf so, you may follow the official \nguide by <a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>Manually fixing data</a>",
+        "content": "你可以从这里查看是否存在不完整的 **充电** 数据（指没有结束日期的充电记录）\n如果存在，你可以按照官方指南<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
         "mode": "markdown"
       },
       "pluginVersion": "12.1.1",
@@ -1276,7 +1276,104 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Charging Process ID"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "充电进程 ID"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "start_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "开始时间"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "结束时间"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "charge_energy_added"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "充电量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "charge_energy_used"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "耗电量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "start_battery_level"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "初始电量 (%)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "end_battery_level"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "结束电量 (%)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration_min"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "时长"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 6,
@@ -1329,7 +1426,7 @@
           }
         }
       ],
-      "title": "Incomplete Charges 🪫",
+      "title": "不完整充电 🪫",
       "type": "table"
     }
   ],
@@ -1349,7 +1446,7 @@
         },
         "definition": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "includeAll": false,
-        "label": "Car",
+        "label": "车辆",
         "name": "car_id",
         "options": [],
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
@@ -1430,7 +1527,7 @@
         },
         "definition": "SELECT name AS __text, id AS __value FROM geofences ORDER BY name COLLATE \"C\" ASC;",
         "includeAll": true,
-        "label": "Geofence",
+        "label": "收藏点",
         "multi": true,
         "name": "geofence",
         "options": [],
@@ -1444,8 +1541,8 @@
           "text": "",
           "value": ""
         },
-        "description": "Type a text contained in Location",
-        "label": "Location",
+        "description": "输入文字来搜索地点",
+        "label": "地点",
         "name": "location",
         "options": [
           {
@@ -1460,7 +1557,7 @@
       {
         "current": {},
         "includeAll": true,
-        "label": "Type",
+        "label": "类型",
         "multi": true,
         "name": "charge_type",
         "options": [
@@ -1483,7 +1580,7 @@
           "text": "",
           "value": ""
         },
-        "label": "Cost >=",
+        "label": "费用 >=",
         "name": "cost",
         "options": [
           {
@@ -1500,7 +1597,7 @@
           "text": "0",
           "value": "0"
         },
-        "label": "Duration (minutes) >=",
+        "label": "持续时间 (分钟) >=",
         "name": "min_duration_min",
         "options": [
           {
@@ -1520,7 +1617,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Charges",
+  "title": "充电",
   "uid": "TSmNYvRRk",
   "version": 1
 }
