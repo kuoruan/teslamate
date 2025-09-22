@@ -544,7 +544,7 @@ msgid "GitHub"
 msgstr "GitHub"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:355
-#: lib/teslamate_web/templates/layout/root.html.heex:176
+#: lib/teslamate_web/templates/layout/root.html.heex:181
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "มีการอัปเดต"
@@ -610,22 +610,22 @@ msgstr "บัญชี Tesla ของคุณถูกล็อคเนื�
 msgid "Downloading update"
 msgstr "กำลังดาวน์โหลดอัปเดต"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:133
+#: lib/teslamate_web/templates/layout/root.html.heex:138
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr "ไม่มีคีย์เข้ารหัสให้มา"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:153
+#: lib/teslamate_web/templates/layout/root.html.heex:158
 #, elixir-autogen, elixir-format
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr "สำหรับข้อมูลเพิ่มเติม โปรดดูคู่มือการติดตั้งที่อัปเดตที่ %{link}"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:146
+#: lib/teslamate_web/templates/layout/root.html.heex:151
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr "คีย์การเข้ารหัสที่สร้างขึ้นโดยอัตโนมัติที่ใช้สำหรับเซสชันปัจจุบันสามารถพบได้<strong>ในบันทึกแอปพลิเคชัน</strong>"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:139
+#: lib/teslamate_web/templates/layout/root.html.heex:144
 #, elixir-autogen, elixir-format
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr "เพื่อให้แน่ใจว่า <strong>โทเค็น Tesla API ของคุณจะถูกเก็บไว้อย่างปลอดภัย</strong> จะต้องมอบคีย์การเข้ารหัสให้กับ TeslaMate ผ่านทางตัวแปรสภาพแวดล้อม <code>ENCRYPTION_KEY</code> มิฉะนั้น <strong>จะต้องเข้าสู่ระบบหลังจากรีสตาร์ททุกครั้ง</strong>"
@@ -679,3 +679,39 @@ msgstr "การบันทึกใน Sentry โหมด"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "View car location on Google Maps"
 msgstr "ดูตำแหน่งรถบน Google Maps"
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Enter password to access"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:56
+#, elixir-autogen, elixir-format
+msgid "If you forgot your password, please contact the administrator"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:33
+#, elixir-autogen, elixir-format
+msgid "Input your access password"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:9
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:48
+#, elixir-autogen, elixir-format
+msgid "Login"
+msgstr ""
+
+#: lib/teslamate_web/templates/layout/root.html.heex:111
+#, elixir-autogen, elixir-format
+msgid "Logout"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:28
+#, elixir-autogen, elixir-format
+msgid "Password"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.ex:15
+#, elixir-autogen, elixir-format
+msgid "Web Access Authentication"
+msgstr ""

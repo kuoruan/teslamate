@@ -545,7 +545,7 @@ msgid "GitHub"
 msgstr "GitHub"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:355
-#: lib/teslamate_web/templates/layout/root.html.heex:176
+#: lib/teslamate_web/templates/layout/root.html.heex:181
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "Mise à jour disponible"
@@ -611,22 +611,22 @@ msgstr "Votre compte Tesla est verrouillé en raison d'un trop grand nombre de t
 msgid "Downloading update"
 msgstr "Mise à jour en cours de téléchargement"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:133
+#: lib/teslamate_web/templates/layout/root.html.heex:138
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr "Aucune clé de chiffrement renseignée"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:153
+#: lib/teslamate_web/templates/layout/root.html.heex:158
 #, elixir-autogen, elixir-format, fuzzy
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr "Pour plus d'informations, dirigez-vous vers le guide d'installation en suivant le lien %{link}"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:146
+#: lib/teslamate_web/templates/layout/root.html.heex:151
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr "La clé de chiffrement générée automatiquement pour la session actuelle peut être trouvée dans <strong>les logs de l'application</strong>"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:139
+#: lib/teslamate_web/templates/layout/root.html.heex:144
 #, elixir-autogen, elixir-format, fuzzy
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr "Pour s'assurer que votre <strong>jeton d'API Tesla est stocké de façon sécurisée</strong>, une clé de chiffrement doit être renseignée à TeslaMate via la variable d'environnement <code>ENCRYPTION_KEY</code>. Sinon, <strong>une authentification sera requise à chaque redémarrage</strong>."
@@ -679,4 +679,40 @@ msgstr "Mode sentinelle"
 #: lib/teslamate_web/live/car_live/summary.html.heex:99
 #, elixir-autogen, elixir-format, fuzzy
 msgid "View car location on Google Maps"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Enter password to access"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:56
+#, elixir-autogen, elixir-format
+msgid "If you forgot your password, please contact the administrator"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:33
+#, elixir-autogen, elixir-format
+msgid "Input your access password"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:9
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:48
+#, elixir-autogen, elixir-format
+msgid "Login"
+msgstr ""
+
+#: lib/teslamate_web/templates/layout/root.html.heex:111
+#, elixir-autogen, elixir-format
+msgid "Logout"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:28
+#, elixir-autogen, elixir-format
+msgid "Password"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.ex:15
+#, elixir-autogen, elixir-format
+msgid "Web Access Authentication"
 msgstr ""

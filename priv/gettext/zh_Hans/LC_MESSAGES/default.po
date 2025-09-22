@@ -546,7 +546,7 @@ msgid "GitHub"
 msgstr "GitHub"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:355
-#: lib/teslamate_web/templates/layout/root.html.heex:176
+#: lib/teslamate_web/templates/layout/root.html.heex:181
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "有可用更新"
@@ -612,22 +612,22 @@ msgstr "您的 Tesla 帐户因登录尝试失败次数过多而被锁定。要�
 msgid "Downloading update"
 msgstr "正在下载更新程序"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:133
+#: lib/teslamate_web/templates/layout/root.html.heex:138
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr "没有提供密钥"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:153
+#: lib/teslamate_web/templates/layout/root.html.heex:158
 #, elixir-autogen, elixir-format, fuzzy
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr "获取更多信息,可查看更新安装指引:%{link}"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:146
+#: lib/teslamate_web/templates/layout/root.html.heex:151
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr "当前会话自动生成的密钥可在<strong>应用程序日志</strong>中找到"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:139
+#: lib/teslamate_web/templates/layout/root.html.heex:144
 #, elixir-autogen, elixir-format, fuzzy
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr "为确保你的<strong>Tesla API令牌安全存储</strong>,密钥必须通过<code>ENCRYPTION_KEY</code>环境变量提供给Teslamate.否则每次重启都会被要求登录."
@@ -681,3 +681,39 @@ msgstr "哨兵模式录制中"
 #, elixir-autogen, elixir-format, fuzzy
 msgid "View car location on Google Maps"
 msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:10
+#, elixir-autogen, elixir-format
+msgid "Enter password to access"
+msgstr "请输入密码以访问"
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:56
+#, elixir-autogen, elixir-format
+msgid "If you forgot your password, please contact the administrator"
+msgstr "如果您忘记了密码，请联系管理员"
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:33
+#, elixir-autogen, elixir-format
+msgid "Input your access password"
+msgstr "请输入您的访问密码"
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:9
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:48
+#, elixir-autogen, elixir-format
+msgid "Login"
+msgstr "登录"
+
+#: lib/teslamate_web/templates/layout/root.html.heex:111
+#, elixir-autogen, elixir-format
+msgid "Logout"
+msgstr "登出"
+
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:28
+#, elixir-autogen, elixir-format
+msgid "Password"
+msgstr "密码"
+
+#: lib/teslamate_web/live/web_auth_live/index.ex:15
+#, elixir-autogen, elixir-format
+msgid "Web Access Authentication"
+msgstr "Web 访问认证"
