@@ -1,7 +1,7 @@
-defmodule TeslaMate.Locations.BaiduMapTest do
+defmodule TeslaMate.Locations.BaiduApiTest do
   use ExUnit.Case, async: true
 
-  alias TeslaMate.Locations.BaiduMap
+  alias TeslaMate.Locations.BaiduApi
 
   import Mock
 
@@ -110,7 +110,7 @@ defmodule TeslaMate.Locations.BaiduMapTest do
            status: 200
          }}
       end do
-      assert BaiduMap.reverse_lookup(39.907333, 116.391083, "zh", %{
+      assert BaiduApi.reverse_lookup(39.907333, 116.391083, "zh", %{
                ak: "test",
                sk: "test"
              }) ==
@@ -122,14 +122,15 @@ defmodule TeslaMate.Locations.BaiduMapTest do
                    county: "东城区",
                    display_name: "北京市东城区东华门街道天安门",
                    house_number: "甲10号",
-                   latitude: 39.907336,
-                   longitude: 116.391086,
+                   latitude: 39.907333,
+                   longitude: 116.391083,
                    name: "天安门",
                    neighbourhood: "东华门街道",
-                   osm_id: 3_065_298_148,
+                   osm_id: 3_886_875_743,
                    osm_type: "node",
                    postcode: "",
                    raw: %{
+                     "source" => "Baidu",
                      "addressComponent" => %{
                        "adcode" => "110101",
                        "city" => "北京市",
@@ -151,6 +152,7 @@ defmodule TeslaMate.Locations.BaiduMapTest do
                      "formatted_address" => "北京市东城区东华门街道中华路甲10号",
                      "formatted_address_poi" => "北京市东城区东华门街道天安门",
                      "location" => %{"lat" => 39.90873911887158, "lng" => 116.39732983405372},
+                     "origin_location" => %{lat: 39.907333, lon: 116.391083},
                      "pois" => [
                        %{
                          "addr" => "北京市东城区长安街",

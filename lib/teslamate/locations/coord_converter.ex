@@ -1,4 +1,4 @@
-defmodule TeslaMate.Locations.CoordinateConverter do
+defmodule TeslaMate.Locations.CoordConverter do
   @moduledoc """
   经纬度转换工具
   支持 WGS84、GCJ02、BD09 之间的相互转换
@@ -7,8 +7,11 @@ defmodule TeslaMate.Locations.CoordinateConverter do
   @see https://github.com/Artoria2e5/PRCoords
   """
 
+  @pi :math.pi()
+
   # Krasovsky 1940 椭球体常数
   @gcj_a 6_378_245
+  # f = 1/298.3; e^2 = 2f - f^2
   @gcj_ee 0.00669342162296594323
 
   # "精确"迭代的误差值
@@ -31,10 +34,10 @@ defmodule TeslaMate.Locations.CoordinateConverter do
   def distance(%{lat: lat1} = a, %{lat: lat2} = b) do
     delta = coord_diff(a, b)
 
-    lat1_rad = lat1 * :math.pi() / 180
-    lat2_rad = lat2 * :math.pi() / 180
-    delta_lat_rad = delta.lat * :math.pi() / 180
-    delta_lon_rad = delta.lon * :math.pi() / 180
+    lat1_rad = lat1 * @pi / 180
+    lat2_rad = lat2 * @pi / 180
+    delta_lat_rad = delta.lat * @pi / 180
+    delta_lon_rad = delta.lon * @pi / 180
 
     a =
       haversine(delta_lat_rad) +
@@ -68,11 +71,11 @@ defmodule TeslaMate.Locations.CoordinateConverter do
 
       {d_lat_m, d_lon_m} = calculate_distortions(x, y)
 
-      rad_lat = lat / 180 * :math.pi()
+      rad_lat = lat / 180 * @pi
       magic = 1 - @gcj_ee * :math.pow(:math.sin(rad_lat), 2)
 
-      lat_deg_arclen = :math.pi() / 180 * (@gcj_a * (1 - @gcj_ee)) / :math.pow(magic, 1.5)
-      lon_deg_arclen = :math.pi() / 180 * (@gcj_a * :math.cos(rad_lat) / :math.sqrt(magic))
+      lat_deg_arclen = @pi / 180 * (@gcj_a * (1 - @gcj_ee)) / :math.pow(magic, 1.5)
+      lon_deg_arclen = @pi / 180 * (@gcj_a * :math.cos(rad_lat) / :math.sqrt(magic))
 
       %{
         lat: lat + d_lat_m / lat_deg_arclen,
@@ -98,8 +101,8 @@ defmodule TeslaMate.Locations.CoordinateConverter do
     x = lon
     y = lat
 
-    r = :math.sqrt(x * x + y * y) + 0.00002 * :math.sin(y * :math.pi() * 3000 / 180)
-    theta = :math.atan2(y, x) + 0.000003 * :math.cos(x * :math.pi() * 3000 / 180)
+    r = :math.sqrt(x * x + y * y) + 0.00002 * :math.sin(y * @pi * 3000 / 180)
+    theta = :math.atan2(y, x) + 0.000003 * :math.cos(x * @pi * 3000 / 180)
 
     %{
       lat: r * :math.sin(theta) + @bd_dlat,
@@ -115,8 +118,8 @@ defmodule TeslaMate.Locations.CoordinateConverter do
     x = lon - @bd_dlon
     y = lat - @bd_dlat
 
-    r = :math.sqrt(x * x + y * y) - 0.00002 * :math.sin(y * :math.pi() * 3000 / 180)
-    theta = :math.atan2(y, x) - 0.000003 * :math.cos(x * :math.pi() * 3000 / 180)
+    r = :math.sqrt(x * x + y * y) - 0.00002 * :math.sin(y * @pi * 3000 / 180)
+    theta = :math.atan2(y, x) - 0.000003 * :math.cos(x * @pi * 3000 / 180)
 
     %{
       lat: r * :math.sin(theta),
@@ -183,16 +186,16 @@ defmodule TeslaMate.Locations.CoordinateConverter do
     d_lat_m =
       -100 + 2 * x + 3 * y + 0.2 * y * y + 0.1 * x * y +
         0.2 * :math.sqrt(abs(x)) +
-        (2 * :math.sin(x * 6 * :math.pi()) + 2 * :math.sin(x * 2 * :math.pi()) +
-           2 * :math.sin(y * :math.pi()) + 4 * :math.sin(y / 3 * :math.pi()) +
-           16 * :math.sin(y / 12 * :math.pi()) + 32 * :math.sin(y / 30 * :math.pi())) * 20 / 3
+        (2 * :math.sin(x * 6 * @pi) + 2 * :math.sin(x * 2 * @pi) +
+           2 * :math.sin(y * @pi) + 4 * :math.sin(y / 3 * @pi) +
+           16 * :math.sin(y / 12 * @pi) + 32 * :math.sin(y / 30 * @pi)) * 20 / 3
 
     d_lon_m =
       300 + x + 2 * y + 0.1 * x * x + 0.1 * x * y +
         0.1 * :math.sqrt(abs(x)) +
-        (2 * :math.sin(x * 6 * :math.pi()) + 2 * :math.sin(x * 2 * :math.pi()) +
-           2 * :math.sin(x * :math.pi()) + 4 * :math.sin(x / 3 * :math.pi()) +
-           15 * :math.sin(x / 12 * :math.pi()) + 30 * :math.sin(x / 30 * :math.pi())) * 20 / 3
+        (2 * :math.sin(x * 6 * @pi) + 2 * :math.sin(x * 2 * @pi) +
+           2 * :math.sin(x * @pi) + 4 * :math.sin(x / 3 * @pi) +
+           15 * :math.sin(x / 12 * @pi) + 30 * :math.sin(x / 30 * @pi)) * 20 / 3
 
     {d_lat_m, d_lon_m}
   end
@@ -240,12 +243,14 @@ defmodule TeslaMate.Locations.CoordinateConverter do
   @doc """
   格式化坐标输出（保留指定小数位）
   """
-  def format({lat, lon}, precision \\ 6) do
-    {Float.round(lat, precision), Float.round(lon, precision)}
+  @spec format(coordinate(), non_neg_integer()) :: coordinate()
+  def format(%{lat: lat, lon: lon}, precision \\ 6) do
+    %{lat: Float.round(lat, precision), lon: Float.round(lon, precision)}
   end
 
   @doc """
   生成坐标唯一标识符（哈希值）
   """
-  def hash(lat, lon), do: :erlang.phash2({lat, lon}, 0xFFFFFFFF)
+  @spec hash(coordinate()) :: integer()
+  def hash(%{lat: lat, lon: lon}), do: :erlang.phash2({lat, lon}, 0xFFFFFFFF)
 end

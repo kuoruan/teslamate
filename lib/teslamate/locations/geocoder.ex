@@ -12,35 +12,31 @@ defmodule TeslaMate.Locations.Geocoder do
 
   require Logger
 
-  alias TeslaMate.Locations.{Address, BaiduMap}
-
-  # 百度地图 API 密钥
-  defp baidu_keys do
-    %{
-      ak: System.get_env("BD_MAP_AK", "") |> String.trim(),
-      sk: System.get_env("BD_MAP_SK", "") |> String.trim()
-    }
-  end
+  alias TeslaMate.Locations.{Address, BaiduApi}
 
   def reverse_lookup(lat, lon, lang \\ "en") do
-    keys = baidu_keys()
-
-    if keys.ak != "" && keys.sk != "" do
-      case BaiduMap.reverse_lookup(lat, lon, lang, keys) do
-        {:ok, address} ->
-          Logger.info("Baidu map reverse lookup succeeded: #{lat},#{lon}",
-            address_name: address.display_name
-          )
-
-          {:ok, address}
-
-        {:error, reason} ->
-          Logger.warning("Baidu map reverse lookup failed: #{inspect(reason)}")
-          osm_reverse_lookup(lat, lon, lang)
-      end
-    else
-      # 百度地图凭据不存在，使用 OpenStreetMap API
+    with {:error, _} <- try_baidu_map(lat, lon, lang) do
       osm_reverse_lookup(lat, lon, lang)
+    end
+  end
+
+  defp try_baidu_map(lat, lon, lang) do
+    # 百度地图 API 密钥
+    with ak when ak != "" <- System.get_env("BD_MAP_AK", ""),
+         sk when sk != "" <- System.get_env("BD_MAP_SK", ""),
+         {:ok, address} <- BaiduApi.reverse_lookup(lat, lon, lang, %{ak: ak, sk: sk}) do
+      Logger.info(
+        "Baidu map reverse lookup succeeded: #{lat},#{lon}, address: #{address.display_name}"
+      )
+
+      {:ok, address}
+    else
+      "" ->
+        {:error, :no_baidu_credentials}
+
+      {:error, reason} ->
+        Logger.warning("Baidu map reverse lookup failed: #{inspect(reason)}")
+        {:error, reason}
     end
   end
 

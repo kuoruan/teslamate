@@ -1,4 +1,4 @@
-defmodule TeslaMate.Locations.BaiduMap do
+defmodule TeslaMate.Locations.BaiduApi do
   use Tesla, only: [:get]
 
   @version Mix.Project.config()[:version]
@@ -10,18 +10,22 @@ defmodule TeslaMate.Locations.BaiduMap do
   plug Tesla.Middleware.JSON
   plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
 
-  require Logger
+  alias TeslaMate.Locations.CoordConverter
 
-  alias TeslaMate.Locations.{CoordinateConverter}
+  @doc """
+  使用百度地图 API 进行逆地理编码查询。
+  返回符合 OSM 格式的地址结构。
+  """
+  def reverse_lookup(lat, lon, lang, %{ak: ak, sk: sk}) do
+    wgs_coord = %{lat: lat, lon: lon}
 
-  def reverse_lookup(lat, lon, lang, keys) do
     base_params = [
-      ak: keys.ak,
+      ak: ak,
       coordtype: :wgs84ll,
       extensions_poi: 1,
       # 返回国测局坐标
       ret_coordtype: :gcj02ll,
-      location: "#{lat},#{lon}",
+      location: "#{wgs_coord.lat},#{wgs_coord.lon}",
       output: :json
     ]
 
@@ -32,14 +36,14 @@ defmodule TeslaMate.Locations.BaiduMap do
 
     uri_path = "/reverse_geocoding/v3"
 
-    raw_for_sign = "#{uri_path}?#{query_str}#{keys.sk}"
+    raw_for_sign = "#{uri_path}?#{query_str}#{sk}"
     encoded_for_sign = URI.encode_www_form(raw_for_sign)
     sn = :crypto.hash(:md5, encoded_for_sign) |> Base.encode16(case: :lower)
 
     params = base_params ++ [sn: sn]
 
     with {:ok, address_raw} <- query(uri_path, lang, params),
-         {:ok, address} <- into_address_baidu(address_raw) do
+         {:ok, address} <- into_address_baidu(address_raw, %{origin: wgs_coord}) do
       {:ok, address}
     end
   end
@@ -67,16 +71,17 @@ defmodule TeslaMate.Locations.BaiduMap do
     default_country: "中国"
   }
 
-  defp into_address_baidu(%{"status" => 0, "result" => result}) do
+  defp into_address_baidu(%{"status" => 0, "result" => result}, %{origin: wgs_coord}) do
     lat = get_in(result, ["location", "lat"]) || 0.0
     lon = get_in(result, ["location", "lng"]) || 0.0
 
-    # 安全获取第一个POI
-    poi = get_in(result, ["pois", Access.at(0)]) || %{}
-
-    poi_name = Map.get(poi, "name")
     formatted_address_poi = Map.get(result, "formatted_address_poi")
     formatted_address = Map.get(result, "formatted_address")
+    address_component = Map.get(result, "addressComponent", %{})
+
+    # 安全获取第一个POI
+    poi = get_in(result, ["pois", Access.at(0)]) || %{}
+    poi_name = Map.get(poi, "name")
 
     # 显示名称优先级：格式化地址 > POI名称 > 默认值
     display_name =
@@ -90,21 +95,16 @@ defmodule TeslaMate.Locations.BaiduMap do
     # 名称字段优先级：POI 名称 > 商圈名称 > 默认值
     name = poi_name || business || @baidu_defaults.unknown_area
 
-    address_component = Map.get(result, "addressComponent", %{})
-
-    # 将 GCJ-02 坐标转换为 WGS-84 坐标
-    wgs_coord = CoordinateConverter.gcj_to_wgs_precise(%{lat: lat, lon: lon})
-
     # 格式化坐标，保留6位小数
-    {formatted_lat, formatted_lon} = CoordinateConverter.format({wgs_coord.lat, wgs_coord.lon}, 6)
+    formatted_wgs_coord = CoordConverter.format(wgs_coord, 6)
 
     # 构造 OSM 地址结构
     address = %{
       display_name: display_name,
-      osm_id: CoordinateConverter.hash(formatted_lat, formatted_lon),
+      osm_id: CoordConverter.hash(formatted_wgs_coord),
       osm_type: "node",
-      latitude: formatted_lat,
-      longitude: formatted_lon,
+      latitude: formatted_wgs_coord.lat,
+      longitude: formatted_wgs_coord.lon,
       name: name,
       house_number: Map.get(address_component, "street_number"),
       road: Map.get(address_component, "street") || @baidu_defaults.unknown_street,
@@ -118,11 +118,13 @@ defmodule TeslaMate.Locations.BaiduMap do
       state_district: nil,
       country: Map.get(address_component, "country") || @baidu_defaults.default_country,
       raw: %{
+        "source" => "Baidu",
         "formatted_address_poi" => formatted_address_poi,
         "formatted_address" => formatted_address,
         "pois" => [poi],
         "business" => business,
         "location" => %{"lat" => lat, "lng" => lon},
+        "origin_location" => formatted_wgs_coord,
         "addressComponent" => address_component
       }
     }
@@ -130,11 +132,11 @@ defmodule TeslaMate.Locations.BaiduMap do
     {:ok, address}
   end
 
-  defp into_address_baidu(%{"status" => code, "message" => reason}) do
+  defp into_address_baidu(%{"status" => code, "message" => reason}, _coords) do
     {:error, {:baidu_api_failure, code, reason}}
   end
 
-  defp into_address_baidu(_unexpected) do
+  defp into_address_baidu(_unexpected, _coords) do
     {:error, {:invalid_response_format, reason: "Unexpected response"}}
   end
 

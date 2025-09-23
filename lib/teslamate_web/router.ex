@@ -72,6 +72,10 @@ defmodule TeslaMateWeb.Router do
     put "/car/:id/logging/suspend", CarController, :suspend_logging
   end
 
+  scope "/maps", TeslaMateWeb do
+    get "/tile/:zoom/:x/:y", MapsController, :tile
+  end
+
   def fetch_settings(conn, _opts) do
     settings = Settings.get_global_settings!()
 
