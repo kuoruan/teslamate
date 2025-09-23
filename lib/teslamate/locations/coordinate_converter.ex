@@ -14,12 +14,24 @@ defmodule TeslaMate.Locations.CoordinateConverter do
   # "精确"迭代的误差值
   @prc_eps 1.0e-5
 
+  # 地球平均半径
+  @earth_r 6_371_000
+
   # 百度的人工偏差
   @bd_dlat 0.0060
   @bd_dlon 0.0065
 
-  # 地球平均半径
-  @earth_r 6_371_000
+  # 百度地图椭球体参数 (Krasovsky 1940)
+  @baidu_a 6_378_206.0
+
+  # 百度地图分辨率计算基础值
+  @baidu_resolution_base 18
+
+  # 百度地图最大范围
+  @baidu_max_extent 20_037_508.342789244
+
+  # 瓦片大小
+  @tile_size 256
 
   @type coordinate :: %{lat: float(), lon: float()}
 
@@ -248,4 +260,118 @@ defmodule TeslaMate.Locations.CoordinateConverter do
   生成坐标唯一标识符（哈希值）
   """
   def hash(lat, lon), do: :erlang.phash2({lat, lon}, 0xFFFFFFFF)
+
+  # Tile坐标转换方法
+
+  @doc """
+  将 WGS-84 坐标的 tile 坐标 (z, x, y) 转换为 GCJ-02 坐标系下的 tile 坐标
+  """
+  @spec wgs_tile_to_gcj_tile(integer(), integer(), integer()) :: {integer(), integer(), integer()}
+  def wgs_tile_to_gcj_tile(z, x, y) do
+    wgs_coord = tile_to_coord(z, x, y)
+
+    gcj_coord = wgs_to_gcj(wgs_coord)
+
+    coord_to_tile(gcj_coord.lat, gcj_coord.lon, z)
+  end
+
+  @doc """
+  将 WGS-84 坐标的 tile 坐标 (z, x, y) 转换为 BD09 坐标系下的 tile 坐标
+  百度地图使用特殊的瓦片坐标系统，需要特殊处理
+  """
+  @spec wgs_tile_to_bd_tile(integer(), integer(), integer()) :: {integer(), integer(), integer()}
+  def wgs_tile_to_bd_tile(z, x, y) do
+    wgs_coord = tile_to_coord(z, x, y)
+
+    bd_coord = wgs_to_bd(wgs_coord)
+
+    baidu_coord_to_tile(bd_coord.lat, bd_coord.lon, z)
+  end
+
+  @doc """
+  将 BD09 坐标转换为百度地图的瓦片坐标
+  基于 leaflet-tileLayer-baidugaode 的百度地图 CRS 配置
+  https://github.com/muyao1987/leaflet-tileLayer-baidugaode/blob/master/src/tileLayer.baidu.js
+  """
+  @spec baidu_coord_to_tile(float(), float(), integer()) :: {integer(), integer(), integer()}
+  def baidu_coord_to_tile(lat, lon, zoom) do
+    # 转换为墨卡托投影坐标
+    lat_rad = lat * :math.pi() / 180
+    lon_rad = lon * :math.pi() / 180
+
+    # 百度地图的墨卡托投影
+    x_merc = @baidu_a * lon_rad
+    y_merc = @baidu_a * :math.log(:math.tan(:math.pi() / 4 + lat_rad / 2))
+
+    # 百度地图的分辨率定义
+    # res[0] = Math.pow(2, 18), res[i] = Math.pow(2, (18 - i))
+    resolution = :math.pow(2, @baidu_resolution_base - zoom)
+
+    # 计算像素坐标 (原点在左上角)
+    pixel_x = (x_merc + @baidu_max_extent) / resolution
+    pixel_y = (@baidu_max_extent - y_merc) / resolution
+
+    # 计算瓦片坐标
+    tile_x = trunc(pixel_x / @tile_size)
+    tile_y = trunc(pixel_y / @tile_size)
+
+    # 确保瓦片坐标在有效范围内
+    max_tile = trunc(:math.pow(2, zoom))
+    tile_x = max(0, min(tile_x, max_tile - 1))
+    tile_y = max(0, min(tile_y, max_tile - 1))
+
+    {zoom, tile_x, tile_y}
+  end
+
+  @doc """
+  将 GCJ02 坐标的 tile 坐标 (z, x, y) 转换为 WGS84 坐标系下的 tile 坐标
+  """
+  @spec gcj_tile_to_wgs_tile(integer(), integer(), integer()) :: {integer(), integer(), integer()}
+  def gcj_tile_to_wgs_tile(z, x, y) do
+    gcj_coord = tile_to_coord(z, x, y)
+
+    wgs_coord = gcj_to_wgs(gcj_coord)
+
+    coord_to_tile(wgs_coord.lat, wgs_coord.lon, z)
+  end
+
+  @doc """
+  将 BD09 坐标的 tile 坐标 (z, x, y) 转换为 WGS84 坐标系下的 tile 坐标
+  """
+  @spec bd_tile_to_wgs_tile(integer(), integer(), integer()) :: {integer(), integer(), integer()}
+  def bd_tile_to_wgs_tile(z, x, y) do
+    bd_coord = tile_to_coord(z, x, y)
+
+    wgs_coord = bd_to_wgs(bd_coord)
+
+    coord_to_tile(wgs_coord.lat, wgs_coord.lon, z)
+  end
+
+  @doc """
+  将经纬度坐标转换为 tile 坐标 (Web Mercator 投影)
+  """
+  @spec coord_to_tile(float(), float(), integer()) :: {integer(), integer(), integer()}
+  def coord_to_tile(lat, lon, zoom) do
+    lat_rad = lat * :math.pi() / 180
+    n = :math.pow(2, zoom)
+
+    x = trunc((lon + 180) / 360 * n)
+    y = trunc((1 - :math.asinh(:math.tan(lat_rad)) / :math.pi()) / 2 * n)
+
+    {zoom, x, y}
+  end
+
+  @doc """
+  将 tile 坐标转换为经纬度坐标 (Web Mercator 投影)
+  """
+  @spec tile_to_coord(integer(), integer(), integer()) :: coordinate()
+  def tile_to_coord(zoom, x, y) do
+    n = :math.pow(2, zoom)
+
+    lon = x / n * 360 - 180
+    lat_rad = :math.atan(:math.sinh(:math.pi() * (1 - 2 * y / n)))
+    lat = lat_rad * 180 / :math.pi()
+
+    %{lat: lat, lon: lon}
+  end
 end

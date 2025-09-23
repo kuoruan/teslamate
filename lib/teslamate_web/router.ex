@@ -47,6 +47,12 @@ defmodule TeslaMateWeb.Router do
     end
   end
 
+  scope "/maps", TeslaMateWeb do
+    pipe_through :browser
+
+    get "/tile/:z/:x/:y", MapsController, :tile
+  end
+
   scope "/api", TeslaMateWeb do
     pipe_through :api
 
