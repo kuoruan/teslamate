@@ -147,7 +147,8 @@ defmodule TeslaMate.WebAuthTest do
     test "returns false when password contains only whitespace" do
       System.put_env("WEB_AUTH_PASS", "   ")
 
-      assert WebAuth.password_required?()  # 空格仍然是有效密码
+      # 空格仍然是有效密码
+      assert WebAuth.password_required?()
 
       System.delete_env("WEB_AUTH_PASS")
     end
@@ -342,7 +343,8 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "session_remaining_time/1 returns 0 for expired session" do
-      expired_time = System.system_time(:second) - 7200  # 2 hours ago
+      # 2 hours ago
+      expired_time = System.system_time(:second) - 7200
 
       conn =
         build_conn_with_session(%{
@@ -636,22 +638,25 @@ defmodule TeslaMate.WebAuthTest do
       System.put_env("WEB_AUTH_PASS", "correct_password")
 
       # Run multiple iterations to get more stable timing
-      correct_times = for _ <- 1..10 do
-        {time, _} = :timer.tc(fn -> WebAuth.verify_password("correct_password") end)
-        time
-      end
+      correct_times =
+        for _ <- 1..10 do
+          {time, _} = :timer.tc(fn -> WebAuth.verify_password("correct_password") end)
+          time
+        end
 
-      incorrect_times = for _ <- 1..10 do
-        {time, _} = :timer.tc(fn -> WebAuth.verify_password("wrong_password") end)
-        time
-      end
+      incorrect_times =
+        for _ <- 1..10 do
+          {time, _} = :timer.tc(fn -> WebAuth.verify_password("wrong_password") end)
+          time
+        end
 
       # Calculate averages to reduce noise
       avg_correct = Enum.sum(correct_times) / length(correct_times)
       avg_incorrect = Enum.sum(incorrect_times) / length(incorrect_times)
 
       # Both should execute in reasonable time (function should not be instantaneous)
-      assert avg_correct > 1  # More than 1 microsecond
+      # More than 1 microsecond
+      assert avg_correct > 1
       assert avg_incorrect > 1
 
       System.delete_env("WEB_AUTH_PASS")
