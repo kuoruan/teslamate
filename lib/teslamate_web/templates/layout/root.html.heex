@@ -94,22 +94,22 @@
                 </div>
               </div>
             <% end %>
-            <.link
-              navigate={Routes.live_path(@conn, TeslaMateWeb.GeoFenceLive.Index)}
-              class="navbar-item  mr-5"
-            >
-              <span class="icon"><i class="mdi mdi-map-marker-radius"></i></span>&nbsp;<span><%= gettext("Geo-Fences") %></span>
-            </.link>
-            <.link
-              navigate={Routes.live_path(@conn, TeslaMateWeb.SettingsLive.Index)}
-              class="navbar-item  mr-5"
-            >
-              <span class="icon"><i class="mdi mdi-cog"></i></span>&nbsp;<span><%= gettext("Settings") %></span>
-            </.link>
             <%= if TeslaMate.WebAuth.password_required?() and TeslaMate.WebAuth.authenticated?(@conn) do %>
-              <%= link to: Routes.auth_path(@conn, :logout), method: :delete, class: "navbar-item mr-5" do %>
+              <.link
+                navigate={Routes.live_path(@conn, TeslaMateWeb.GeoFenceLive.Index)}
+                class="navbar-item  mr-5"
+              >
+                <span class="icon"><i class="mdi mdi-map-marker-radius"></i></span>&nbsp;<span><%= gettext("Geo-Fences") %></span>
+              </.link>
+              <.link
+                navigate={Routes.live_path(@conn, TeslaMateWeb.SettingsLive.Index)}
+                class="navbar-item  mr-5"
+              >
+                <span class="icon"><i class="mdi mdi-cog"></i></span>&nbsp;<span><%= gettext("Settings") %></span>
+              </.link>
+              <.link to: Routes.auth_path(@conn, :logout), method: :delete, class: "navbar-item" do %>
                 <span class="icon"><i class="mdi mdi-logout"></i></span>&nbsp;<span><%= gettext("Logout") %></span>
-              <% end %>
+              </.link>
             <% end %>
           </div>
         </div>

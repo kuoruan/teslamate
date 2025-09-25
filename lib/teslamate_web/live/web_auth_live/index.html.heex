@@ -18,9 +18,11 @@
         phx-change="validate"
         class="field"
       >
-        <%= if @error do %>
+        <%= csrf_input_tag(@socket) %>
+
+        <%= if @flash["error"] do %>
           <div class="notification is-danger">
-            <%= @error %>
+            <%= @flash["error"] %>
           </div>
         <% end %>
 
@@ -29,7 +31,7 @@
           <div class="control has-icons-left">
             <%= password_input(f, :password,
               value: @password,
-              class: "input is-rounded",
+              class: "input is-rounded #{if @password_error, do: "is-danger"}",
               placeholder: gettext("Input your access password"),
               required: true
             ) %>
@@ -37,11 +39,21 @@
               <i class="mdi mdi-lock"></i>
             </span>
           </div>
+          <%= if @password_error do %>
+            <p class="help is-danger">
+              <i class="mdi mdi-alert-circle-outline"></i>
+              <%= @password_error %>
+            </p>
+          <% end %>
         </div>
 
         <div class="field">
           <div class="control">
-            <button type="submit" class="button is-primary is-fullwidth is-rounded">
+            <button
+              type="submit"
+              class="button is-primary is-fullwidth is-rounded"
+              disabled={@password_error != nil || @password == ""}
+            >
               <span class="icon">
                 <i class="mdi mdi-login"></i>
               </span>
