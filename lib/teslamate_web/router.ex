@@ -52,11 +52,11 @@ defmodule TeslaMateWeb.Router do
   end
 
   # 认证相关路由
-  scope "/auth", TeslaMateWeb do
+  scope "/web-auth", TeslaMateWeb do
     pipe_through :browser
 
-    post "/authenticate", AuthController, :authenticate
-    delete "/logout", AuthController, :logout
+    post "/authenticate", WebAuthController, :authenticate
+    delete "/logout", WebAuthController, :logout
 
     live_session :web_auth, on_mount: [{TeslaMateWeb.InitAssigns, :locale}] do
       live "/index", WebAuthLive.Index

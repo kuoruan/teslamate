@@ -107,9 +107,9 @@
               >
                 <span class="icon"><i class="mdi mdi-cog"></i></span>&nbsp;<span><%= gettext("Settings") %></span>
               </.link>
-              <.link to: Routes.auth_path(@conn, :logout), method: :delete, class: "navbar-item" do %>
+              <%= link to: Routes.web_auth_path(@conn, :logout), method: :delete, class: "navbar-item" do %>
                 <span class="icon"><i class="mdi mdi-logout"></i></span>&nbsp;<span><%= gettext("Logout") %></span>
-              </.link>
+              <% end %>
             <% end %>
           </div>
         </div>

@@ -9,9 +9,11 @@ defmodule TeslaMateWeb.WebAuthLive.Status do
   def mount(_params, _session, socket) do
     # 只有已认证用户才能查看状态页面
     if WebAuth.authenticated?(socket) do
+      remaining = WebAuth.session_remaining_time(socket)
+
       assigns = %{
         page_title: gettext("Authentication Status"),
-        session_remaining: WebAuth.session_remaining_time(socket),
+        session_remaining: format_time_remaining(remaining),
         refresh_timer: nil
       }
 
@@ -53,6 +55,7 @@ defmodule TeslaMateWeb.WebAuthLive.Status do
   end
 
   defp format_time_remaining(seconds) when seconds <= 0, do: gettext("Expired")
+
   defp format_time_remaining(seconds) do
     hours = div(seconds, 3600)
     minutes = div(rem(seconds, 3600), 60)

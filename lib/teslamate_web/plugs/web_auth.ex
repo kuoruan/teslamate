@@ -10,10 +10,12 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
   import Phoenix.Controller, only: [redirect: 2]
 
   alias TeslaMate.WebAuth
+  alias TeslaMateWeb.Router.Helpers, as: Routes
 
   require Logger
 
-  @refresh_threshold 5 * 60  # 5分钟阈值
+  # 5分钟阈值
+  @refresh_threshold 5 * 60
 
   def init(_options) do
     []
@@ -41,11 +43,12 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
   # 处理未认证的请求
   defp handle_unauthenticated_request(conn) do
     # 保存原始请求路径（仅对 GET 请求）
-    conn = if conn.method == "GET" and conn.request_path != "/" do
-      WebAuth.set_redirect_path(conn, conn.request_path)
-    else
-      conn
-    end
+    conn =
+      if conn.method == "GET" and conn.request_path != "/" do
+        WebAuth.set_redirect_path(conn, conn.request_path)
+      else
+        conn
+      end
 
     # 记录未授权访问尝试
     Logger.info("Unauthorized access attempt", %{

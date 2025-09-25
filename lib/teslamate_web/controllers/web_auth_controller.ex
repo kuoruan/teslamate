@@ -1,4 +1,4 @@
-defmodule TeslaMateWeb.AuthController do
+defmodule TeslaMateWeb.WebAuthController do
   use TeslaMateWeb, :controller
 
   alias TeslaMate.WebAuth

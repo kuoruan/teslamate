@@ -25,10 +25,14 @@ defmodule TeslaMateWeb.WebAuthLive.Index do
   def handle_event("validate", %{"password" => password}, socket) do
     password_error =
       case password do
-        "" -> gettext("Password is required")
+        "" ->
+          gettext("Password is required")
+
         p when is_binary(p) ->
           if String.trim(p) == "", do: gettext("Password is required"), else: nil
-        _ -> gettext("Password is required")
+
+        _ ->
+          gettext("Password is required")
       end
 
     {:noreply, assign(socket, password: password, password_error: password_error)}
