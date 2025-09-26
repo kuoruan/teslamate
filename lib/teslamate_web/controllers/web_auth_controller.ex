@@ -15,7 +15,7 @@ defmodule TeslaMateWeb.WebAuthController do
 
     case WebAuth.verify_password(password) do
       {:ok, :authenticated} ->
-        Logger.info("User authenticated successfully", remote_ip: remote_ip)
+        Logger.info("User authenticated successfully, remote ip: #{remote_ip}")
 
         {conn, redirect_path} = WebAuth.get_and_clear_redirect_path(conn)
 
@@ -25,32 +25,32 @@ defmodule TeslaMateWeb.WebAuthController do
         |> redirect(to: redirect_path)
 
       {:ok, :no_password_set} ->
-        Logger.info("No password set, allowing access", remote_ip: remote_ip)
+        Logger.info("No password set, allowing access, remote ip: #{remote_ip}")
         redirect(conn, to: Routes.car_path(conn, :index))
 
       {:error, :invalid_password} ->
-        Logger.warning("Invalid password attempt", remote_ip: remote_ip)
+        Logger.warning("Invalid password attempt, remote ip: #{remote_ip}")
 
         conn
         |> put_flash(:warning, gettext("Invalid password"))
         |> redirect(to: auth_page(conn))
 
       {:error, :invalid_input} ->
-        Logger.warning("Invalid input format", remote_ip: remote_ip)
+        Logger.warning("Invalid input format, remote ip: #{remote_ip}")
 
         conn
         |> put_flash(:warning, gettext("Invalid input format"))
         |> redirect(to: auth_page(conn))
 
       {:error, :invalid_encoding} ->
-        Logger.warning("Invalid password encoding", remote_ip: remote_ip)
+        Logger.warning("Invalid password encoding, remote ip: #{remote_ip}")
 
         conn
         |> put_flash(:warning, gettext("Invalid password format"))
         |> redirect(to: auth_page(conn))
 
       {:error, reason} ->
-        Logger.error("Authentication error", reason: reason, remote_ip: remote_ip)
+        Logger.error("Authentication error, reason: #{reason}, remote ip: #{remote_ip}")
 
         conn
         |> put_flash(:warning, gettext("Authentication failed. Please try again."))
@@ -74,7 +74,7 @@ defmodule TeslaMateWeb.WebAuthController do
   """
   def renew(conn, _params) do
     if WebAuth.authenticated?(conn) do
-      Logger.info("Session renewed", remote_ip: WebAuth.get_remote_ip(conn))
+      Logger.info("Session renewed, remote ip: #{WebAuth.get_remote_ip(conn)}")
 
       conn
       # 重新设置认证时间戳
@@ -98,7 +98,7 @@ defmodule TeslaMateWeb.WebAuthController do
   清除认证状态并重定向到登录页面
   """
   def logout(conn, _params) do
-    Logger.info("User logout", remote_ip: WebAuth.get_remote_ip(conn))
+    Logger.info("User logout, remote ip: #{WebAuth.get_remote_ip(conn)}")
 
     conn
     |> WebAuth.unauthenticate()

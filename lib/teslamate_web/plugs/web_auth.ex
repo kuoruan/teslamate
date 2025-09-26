@@ -47,13 +47,15 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
         conn
       end
 
-    # 记录未授权访问尝试
-    Logger.info("Unauthorized access attempt", %{
+    info = %{
       path: conn.request_path,
       method: conn.method,
       remote_ip: WebAuth.get_remote_ip(conn),
       user_agent: WebAuth.get_user_agent(conn)
-    })
+    }
+
+    # 记录未授权访问尝试
+    Logger.info("Unauthorized access attempt, #{inspect(info, pretty: true)}")
 
     conn
     |> redirect(to: Routes.live_path(conn, TeslaMateWeb.WebAuthLive.Index))
