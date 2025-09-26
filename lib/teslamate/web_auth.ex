@@ -3,18 +3,15 @@ defmodule TeslaMate.WebAuth do
   Web 访问认证模块，用于保护 Web 界面不被未授权用户访问
   """
 
-  import Bitwise
-
   require Logger
 
   alias TeslaMateWeb.Router.Helpers, as: Routes
 
   @session_timeout_hours 1
+  @dummy_password "dummy"
 
   @doc """
   验证 Web 访问密码
-
-  使用常时比较算法防止时序攻击
 
   ## 返回值
   - `{:ok, :authenticated}` - 密码正确，认证成功
@@ -28,11 +25,15 @@ defmodule TeslaMate.WebAuth do
     case expected_password do
       nil ->
         # 执行假的密码比较以防止时序攻击
-        secure_compare(password, "dummy")
-        if password == "", do: {:ok, :no_password_set}, else: {:error, :invalid_password}
+        secure_compare(password, @dummy_password)
+        if password == "" do
+          {:ok, :no_password_set}
+        else
+          {:error, :invalid_password}
+        end
 
       "" ->
-        secure_compare(password, "dummy")
+        secure_compare(password, @dummy_password)
         {:ok, :no_password_set}
 
       expected ->
@@ -50,18 +51,19 @@ defmodule TeslaMate.WebAuth do
   检查是否设置了密码
   """
   def password_required?() do
-    case get_password() do
-      pwd when is_binary(pwd) and pwd != "" -> true
-      _ -> false
-    end
+    pwd = get_password()
+
+    is_binary(pwd) and pwd != ""
   end
 
   @doc """
   检查用户是否通过认证且会话仍然有效
   """
   def authenticated?(conn) do
-    Plug.Conn.get_session(conn, :web_authenticated) == true and
-      session_valid?(Plug.Conn.get_session(conn, :web_auth_time))
+    case {Plug.Conn.get_session(conn, :web_authenticated), Plug.Conn.get_session(conn, :web_auth_time)} do
+      {true, auth_time} when is_integer(auth_time) -> session_valid?(auth_time)
+      _ -> false
+    end
   end
 
   @doc """
@@ -100,26 +102,10 @@ defmodule TeslaMate.WebAuth do
 
   # 常时比较算法防止时序攻击
   defp secure_compare(left, right) when is_binary(left) and is_binary(right) do
-    if byte_size(left) == byte_size(right) do
-      secure_compare_bytes(left, right, 0, 0) == 0
-    else
-      # 即使长度不同也要执行比较以防止时序攻击
-      secure_compare_bytes(left, right <> <<0>>, 0, 1)
-      false
-    end
+    :crypto.hash_equals(left, right)
   end
 
-  defp secure_compare_bytes(<<x, left::binary>>, <<y, right::binary>>, index, acc) do
-    secure_compare_bytes(left, right, index + 1, acc ||| bxor(x, y))
-  end
-
-  defp secure_compare_bytes(<<>>, <<>>, _index, acc), do: acc
-
-  defp secure_compare_bytes(left, right, _index, acc) when byte_size(left) != byte_size(right) do
-    # 处理长度不同的情况
-    diff = abs(byte_size(left) - byte_size(right))
-    acc ||| diff
-  end
+  defp secure_compare(_, _), do: false
 
   # 会话有效性检查
   defp session_valid?(auth_time) when is_integer(auth_time) do
@@ -134,7 +120,7 @@ defmodule TeslaMate.WebAuth do
   def get_remote_ip(%Plug.Conn{} = conn) do
     case Plug.Conn.get_req_header(conn, "x-forwarded-for") do
       [ip | _] -> ip |> String.split(",") |> hd() |> String.trim()
-      [] -> conn.remote_ip |> :inet.ntoa() |> to_string()
+      _ -> to_string(:inet.ntoa(conn.remote_ip))
     end
   end
 
@@ -144,7 +130,10 @@ defmodule TeslaMate.WebAuth do
   获取客户端用户代理信息
   """
   def get_user_agent(conn) do
-    conn |> Plug.Conn.get_req_header("user-agent") |> List.first() || "Unknown"
+    case Plug.Conn.get_req_header(conn, "user-agent") do
+      [user_agent | _] -> user_agent
+      _ -> "unknown"
+    end
   end
 
   @doc """
@@ -160,7 +149,10 @@ defmodule TeslaMate.WebAuth do
   获取认证后重定向路径
   """
   def get_redirect_path(conn) do
-    Plug.Conn.get_session(conn, :redirect_after_auth) || default_redirect_path(conn)
+    case Plug.Conn.get_session(conn, :redirect_after_auth) do
+      path when is_binary(path) -> path
+      _ -> default_redirect_path(conn)
+    end
   end
 
   @doc """

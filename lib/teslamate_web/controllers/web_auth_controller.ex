@@ -81,7 +81,5 @@ defmodule TeslaMateWeb.WebAuthController do
     |> redirect(to: auth_page(conn))
   end
 
-  # 私有辅助函数
-
   defp auth_page(conn), do: Routes.live_path(conn, TeslaMateWeb.WebAuthLive.Index)
 end

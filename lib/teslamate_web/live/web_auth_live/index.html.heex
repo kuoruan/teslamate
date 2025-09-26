@@ -20,9 +20,9 @@
       >
         <%= csrf_input_tag(@socket) %>
 
-        <%= if @flash["error"] do %>
+        <%= if @error do %>
           <div class="notification is-danger">
-            <%= @flash["error"] %>
+            <%= @error %>
           </div>
         <% end %>
 
