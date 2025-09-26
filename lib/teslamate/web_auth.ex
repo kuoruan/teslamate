@@ -26,6 +26,7 @@ defmodule TeslaMate.WebAuth do
       nil ->
         # 执行假的密码比较以防止时序攻击
         secure_compare(password, @dummy_password)
+
         if password == "" do
           {:ok, :no_password_set}
         else
@@ -59,12 +60,29 @@ defmodule TeslaMate.WebAuth do
   @doc """
   检查用户是否通过认证且会话仍然有效
   """
-  def authenticated?(conn) do
-    case {Plug.Conn.get_session(conn, :web_authenticated), Plug.Conn.get_session(conn, :web_auth_time)} do
+  def authenticated?(%Plug.Conn{} = conn) do
+    session = Plug.Conn.get_session(conn)
+    authenticated_from_session?(session)
+  end
+
+  def authenticated?(session) when is_map(session) do
+    authenticated_from_session?(session)
+  end
+
+  def authenticated?(_), do: false
+
+  # 从 session map 中检查认证状态
+  defp authenticated_from_session?(session) when is_map(session) do
+    web_authenticated = Map.get(session, "web_authenticated")
+    web_auth_time = Map.get(session, "web_auth_time")
+
+    case {web_authenticated, web_auth_time} do
       {true, auth_time} when is_integer(auth_time) -> session_valid?(auth_time)
       _ -> false
     end
   end
+
+  defp authenticated_from_session?(_), do: false
 
   @doc """
   标记用户为已认证，设置会话时间戳
@@ -87,12 +105,29 @@ defmodule TeslaMate.WebAuth do
   @doc """
   获取会话剩余时间（秒）
   """
-  def session_remaining_time(conn) do
-    case Plug.Conn.get_session(conn, :web_auth_time) do
-      nil -> 0
-      auth_time -> max(0, auth_time + @session_timeout_hours * 3600 - System.system_time(:second))
+  def session_remaining_time(%Plug.Conn{} = conn) do
+    session = Plug.Conn.get_session(conn)
+    get_session_remaining_time(session)
+  end
+
+  def session_remaining_time(session) when is_map(session) do
+    get_session_remaining_time(session)
+  end
+
+  def session_remaining_time(_), do: 0
+
+  # 从 session map 中获取剩余时间
+  defp get_session_remaining_time(session) when is_map(session) do
+    case Map.get(session, "web_auth_time") do
+      auth_time when is_integer(auth_time) ->
+        max(0, auth_time + @session_timeout_hours * 3600 - System.system_time(:second))
+
+      _ ->
+        0
     end
   end
+
+  defp get_session_remaining_time(_), do: 0
 
   # 私有辅助函数
 
@@ -102,7 +137,10 @@ defmodule TeslaMate.WebAuth do
 
   # 常时比较算法防止时序攻击
   defp secure_compare(left, right) when is_binary(left) and is_binary(right) do
-    :crypto.hash_equals(left, right)
+    left_hash = :crypto.hash(:sha256, left)
+    right_hash = :crypto.hash(:sha256, right)
+
+    :crypto.hash_equals(left_hash, right_hash)
   end
 
   defp secure_compare(_, _), do: false
@@ -124,17 +162,19 @@ defmodule TeslaMate.WebAuth do
     end
   end
 
-  def get_remote_ip(_), do: "unknown"
+  def get_remote_ip(_), do: "Unknown"
 
   @doc """
   获取客户端用户代理信息
   """
-  def get_user_agent(conn) do
+  def get_user_agent(%Plug.Conn{} = conn) do
     case Plug.Conn.get_req_header(conn, "user-agent") do
       [user_agent | _] -> user_agent
-      _ -> "unknown"
+      _ -> "Unknown"
     end
   end
+
+  def get_user_agent(_), do: "Unknown"
 
   @doc """
   设置认证后重定向路径
@@ -151,7 +191,7 @@ defmodule TeslaMate.WebAuth do
   def get_redirect_path(conn) do
     case Plug.Conn.get_session(conn, :redirect_after_auth) do
       path when is_binary(path) -> path
-      _ -> default_redirect_path(conn)
+      _ -> Routes.car_path(conn, :index)
     end
   end
 
@@ -169,14 +209,5 @@ defmodule TeslaMate.WebAuth do
     path = get_redirect_path(conn)
     conn = clear_redirect_path(conn)
     {conn, path}
-  end
-
-  # 默认重定向路径
-  defp default_redirect_path(conn) do
-    try do
-      Routes.car_path(conn, :index)
-    rescue
-      _ -> "/"
-    end
   end
 end

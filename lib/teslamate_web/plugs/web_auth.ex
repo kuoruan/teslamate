@@ -29,10 +29,7 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
 
       # 检查用户认证状态
       WebAuth.authenticated?(conn) ->
-        # 认证有效，添加会话剩余时间到 assigns
-        conn
-        |> assign(:session_remaining, WebAuth.session_remaining_time(conn))
-        |> maybe_refresh_session()
+        maybe_renew_session(conn)
 
       # 需要认证，保存原始路径并重定向
       true ->
@@ -64,7 +61,7 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
   end
 
   # 在会话接近过期时刷新会话
-  defp maybe_refresh_session(conn) do
+  defp maybe_renew_session(conn) do
     remaining = WebAuth.session_remaining_time(conn)
 
     # 如果剩余时间少于配置的阈值，刷新会话

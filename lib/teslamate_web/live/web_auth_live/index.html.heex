@@ -15,23 +15,14 @@
         for={%{}}
         action={Routes.web_auth_path(@socket, :authenticate)}
         method="post"
-        phx-change="validate"
+        phx-change="change"
         class="field"
       >
-        <%= csrf_input_tag(@socket) %>
-
-        <%= if @error do %>
-          <div class="notification is-danger">
-            <%= @error %>
-          </div>
-        <% end %>
-
         <div class="field">
-          <label class="label"><%= gettext("Password") %></label>
           <div class="control has-icons-left">
             <%= password_input(f, :password,
               value: @password,
-              class: "input is-rounded #{if @password_error, do: "is-danger"}",
+              class: "input is-rounded",
               placeholder: gettext("Input your access password"),
               required: true
             ) %>
@@ -39,12 +30,6 @@
               <i class="mdi mdi-lock"></i>
             </span>
           </div>
-          <%= if @password_error do %>
-            <p class="help is-danger">
-              <i class="mdi mdi-alert-circle-outline"></i>
-              <%= @password_error %>
-            </p>
-          <% end %>
         </div>
 
         <div class="field">
@@ -52,7 +37,7 @@
             <button
               type="submit"
               class="button is-primary is-fullwidth is-rounded"
-              disabled={@password_error != nil || @password == ""}
+              disabled={@password == ""}
             >
               <span class="icon">
                 <i class="mdi mdi-login"></i>

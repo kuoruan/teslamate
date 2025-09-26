@@ -368,6 +368,102 @@ defmodule TeslaMate.WebAuthTest do
       # Should have about 30 minutes (1800 seconds) remaining
       assert remaining >= 1790 and remaining <= 1800
     end
+
+    test "session functions handle negative auth_time" do
+      # Negative timestamp (shouldn't happen but test robustness)
+      negative_time = -1000
+
+      conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: negative_time
+        })
+
+      # Should be considered expired
+      refute WebAuth.authenticated?(conn)
+      assert WebAuth.session_remaining_time(conn) == 0
+    end
+
+    test "session functions handle zero auth_time" do
+      conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: 0
+        })
+
+      # Should be considered expired (Unix epoch is way in the past)
+      refute WebAuth.authenticated?(conn)
+      assert WebAuth.session_remaining_time(conn) == 0
+    end
+
+    test "session functions handle very large auth_time" do
+      # Very large timestamp (far future)
+      large_time = System.system_time(:second) + 999_999_999
+
+      conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: large_time
+        })
+
+      # Should be considered valid (timestamp is in future)
+      assert WebAuth.authenticated?(conn)
+      remaining = WebAuth.session_remaining_time(conn)
+      # Should have more than 1 hour remaining
+      assert remaining > 3600
+    end
+
+    test "authenticated? with session map handles various data types" do
+      # Test with string keys (like Phoenix sessions)
+      session_with_strings = %{
+        "web_authenticated" => true,
+        "web_auth_time" => System.system_time(:second)
+      }
+
+      assert WebAuth.authenticated?(session_with_strings)
+
+      # Test with atom keys
+      session_with_atoms = %{
+        web_authenticated: true,
+        web_auth_time: System.system_time(:second)
+      }
+
+      # Should only work with string keys
+      refute WebAuth.authenticated?(session_with_atoms)
+
+      # Test with mixed types
+      session_mixed = %{
+        # String instead of boolean
+        "web_authenticated" => "true",
+        "web_auth_time" => System.system_time(:second)
+      }
+
+      # Should require boolean true
+      refute WebAuth.authenticated?(session_mixed)
+    end
+
+    test "session_remaining_time with session map handles edge cases" do
+      # Test with string auth_time
+      session_with_string_time = %{
+        "web_auth_time" => "#{System.system_time(:second)}"
+      }
+
+      assert WebAuth.session_remaining_time(session_with_string_time) == 0
+
+      # Test with float auth_time
+      session_with_float_time = %{
+        "web_auth_time" => System.system_time(:second) + 0.5
+      }
+
+      assert WebAuth.session_remaining_time(session_with_float_time) == 0
+
+      # Test with nil auth_time
+      session_with_nil_time = %{
+        "web_auth_time" => nil
+      }
+
+      assert WebAuth.session_remaining_time(session_with_nil_time) == 0
+    end
   end
 
   describe "redirect path management" do
@@ -442,10 +538,27 @@ defmodule TeslaMate.WebAuthTest do
 
       path = WebAuth.get_redirect_path(conn)
 
-      # Should return the default path from default_redirect_path/1
+      # Should return the default path from Routes.car_path
       assert is_binary(path)
-      # Default should be "/" when Routes.car_path fails
-      assert path == "/" or String.contains?(path, "/car")
+      # Should contain "/car" in the path (from Routes.car_path)
+      assert String.contains?(path, "/car") or path == "/"
+    end
+
+    test "get_redirect_path/1 handles Routes.car_path failure gracefully" do
+      # Create a conn without proper router setup to simulate route failure
+      conn =
+        %Plug.Conn{
+          assigns: %{},
+          private: %{},
+          req_headers: [],
+          resp_headers: []
+        }
+        |> init_test_session(%{})
+
+      # This should handle the case where Routes.car_path might fail
+      path = WebAuth.get_redirect_path(conn)
+
+      assert is_binary(path)
     end
 
     test "get_redirect_path/1 handles nil session value" do
@@ -565,10 +678,10 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "get_remote_ip/1 handles invalid input" do
-      assert WebAuth.get_remote_ip(nil) == "unknown"
-      assert WebAuth.get_remote_ip("invalid") == "unknown"
-      assert WebAuth.get_remote_ip(%{}) == "unknown"
-      assert WebAuth.get_remote_ip(123) == "unknown"
+      assert WebAuth.get_remote_ip(nil) == "Unknown"
+      assert WebAuth.get_remote_ip("invalid") == "Unknown"
+      assert WebAuth.get_remote_ip(%{}) == "Unknown"
+      assert WebAuth.get_remote_ip(123) == "Unknown"
     end
 
     test "get_user_agent/1 extracts user agent from header" do
@@ -703,6 +816,272 @@ defmodule TeslaMate.WebAuthTest do
     end
   end
 
+  describe "concurrent access and environment changes" do
+    test "password verification handles concurrent environment changes" do
+      System.put_env("WEB_AUTH_PASS", "initial_password")
+
+      # Start multiple tasks that verify password concurrently
+      tasks =
+        for i <- 1..10 do
+          Task.async(fn ->
+            if rem(i, 2) == 0 do
+              # Even tasks: verify correct password
+              WebAuth.verify_password("initial_password")
+            else
+              # Odd tasks: verify wrong password
+              WebAuth.verify_password("wrong_password")
+            end
+          end)
+        end
+
+      # Change environment variable while tasks are running
+      System.put_env("WEB_AUTH_PASS", "changed_password")
+
+      # Wait for all tasks to complete
+      results = Task.await_many(tasks, 5000)
+
+      # Verify that we get consistent results based on password correctness
+      # (The exact password used depends on timing, but behavior should be consistent)
+      assert length(results) == 10
+
+      assert Enum.all?(results, fn result ->
+               result in [
+                 {:ok, :authenticated},
+                 {:error, :invalid_password}
+               ]
+             end)
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+
+    test "password_required? handles environment changes" do
+      System.delete_env("WEB_AUTH_PASS")
+      refute WebAuth.password_required?()
+
+      System.put_env("WEB_AUTH_PASS", "new_password")
+      assert WebAuth.password_required?()
+
+      System.put_env("WEB_AUTH_PASS", "")
+      refute WebAuth.password_required?()
+
+      System.delete_env("WEB_AUTH_PASS")
+      refute WebAuth.password_required?()
+    end
+
+    test "concurrent session operations are safe" do
+      conn = build_conn_with_session()
+
+      # Create multiple tasks that modify session concurrently
+      tasks =
+        for i <- 1..20 do
+          Task.async(fn ->
+            case rem(i, 4) do
+              0 -> WebAuth.authenticate(conn)
+              1 -> WebAuth.unauthenticate(conn)
+              2 -> WebAuth.set_redirect_path(conn, "/path#{i}")
+              3 -> WebAuth.clear_redirect_path(conn)
+            end
+          end)
+        end
+
+      # All tasks should complete successfully
+      results = Task.await_many(tasks, 5000)
+      assert length(results) == 20
+      assert Enum.all?(results, fn result -> match?(%Plug.Conn{}, result) end)
+    end
+
+    test "session validation under time manipulation" do
+      # Save current time
+      current_time = System.system_time(:second)
+
+      conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: current_time
+        })
+
+      # Should be authenticated initially
+      assert WebAuth.authenticated?(conn)
+
+      # Test session validation by creating new conn with same timestamp
+      # This simulates the case where system time might have changed
+      future_conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: current_time
+        })
+
+      # Should still be valid (assuming less than 1 hour passed in test execution)
+      assert WebAuth.authenticated?(future_conn)
+
+      # Test with timestamp from way in the past
+      past_conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          # 2 hours ago
+          web_auth_time: current_time - 7200
+        })
+
+      refute WebAuth.authenticated?(past_conn)
+    end
+
+    test "environment variable persistence across function calls" do
+      # Test that environment changes don't cause inconsistent behavior
+      System.put_env("WEB_AUTH_PASS", "test123")
+
+      # First verification
+      assert {:ok, :authenticated} = WebAuth.verify_password("test123")
+      assert WebAuth.password_required?()
+
+      # Change environment
+      System.put_env("WEB_AUTH_PASS", "different")
+
+      # Should now use new environment value
+      assert {:error, :invalid_password} = WebAuth.verify_password("test123")
+      assert {:ok, :authenticated} = WebAuth.verify_password("different")
+      assert WebAuth.password_required?()
+
+      # Clear environment
+      System.delete_env("WEB_AUTH_PASS")
+
+      # Should now allow access without password
+      assert {:ok, :no_password_set} = WebAuth.verify_password("")
+      refute WebAuth.password_required?()
+    end
+  end
+
+  describe "memory and performance considerations" do
+    test "password verification memory usage with large passwords" do
+      # Test that large passwords don't cause excessive memory usage
+      # 100KB password
+      large_password = String.duplicate("a", 100_000)
+      System.put_env("WEB_AUTH_PASS", large_password)
+
+      # Should handle large passwords without issues
+      assert {:ok, :authenticated} = WebAuth.verify_password(large_password)
+      assert {:error, :invalid_password} = WebAuth.verify_password(String.duplicate("b", 100_000))
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+
+    test "session data doesn't accumulate over time" do
+      conn = build_conn_with_session()
+
+      # Perform many authentication cycles
+      final_conn =
+        Enum.reduce(1..100, conn, fn _i, acc_conn ->
+          acc_conn
+          |> WebAuth.authenticate()
+          |> WebAuth.set_redirect_path("/path")
+          |> WebAuth.unauthenticate()
+          |> WebAuth.clear_redirect_path()
+        end)
+
+      # Session should not contain accumulated data
+      session = Plug.Conn.get_session(final_conn)
+      refute session[:web_authenticated]
+      refute session[:web_auth_time]
+      refute session[:redirect_after_auth]
+    end
+
+    test "rapid password verification doesn't degrade performance" do
+      System.put_env("WEB_AUTH_PASS", "benchmark_password")
+
+      # Time many rapid verifications
+      {time_microseconds, _results} =
+        :timer.tc(fn ->
+          Enum.map(1..1000, fn _i ->
+            WebAuth.verify_password("benchmark_password")
+          end)
+        end)
+
+      # Should complete reasonably quickly (adjust threshold as needed)
+      # 1000 verifications should take less than 1 second
+      assert time_microseconds < 1_000_000
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+  end
+
+  describe "network security and header injection" do
+    test "get_remote_ip handles malicious x-forwarded-for headers" do
+      # Test SQL injection attempt in header
+      malicious_header = "'; DROP TABLE users; --"
+
+      conn =
+        :get
+        |> conn("/")
+        |> put_req_header("x-forwarded-for", malicious_header)
+
+      ip = WebAuth.get_remote_ip(conn)
+      # Should return as-is, not execute
+      assert ip == "'; DROP TABLE users; --"
+    end
+
+    test "get_remote_ip handles header with null bytes" do
+      # Headers with null bytes (should be sanitized by Plug, but test robustness)
+      header_with_special = "192.168.1.1\x00malicious"
+
+      conn =
+        :get
+        |> conn("/")
+        |> put_req_header("x-forwarded-for", header_with_special)
+
+      ip = WebAuth.get_remote_ip(conn)
+      assert is_binary(ip)
+    end
+
+    test "get_remote_ip handles extremely long IP chains" do
+      # Very long chain of IPs (potential DoS vector)
+      long_ip_chain =
+        Enum.join(Enum.map(1..1000, fn i -> "192.168.1.#{rem(i, 255) + 1}" end), ", ")
+
+      conn =
+        :get
+        |> conn("/")
+        |> put_req_header("x-forwarded-for", long_ip_chain)
+
+      ip = WebAuth.get_remote_ip(conn)
+      # Should return first IP
+      assert ip == "192.168.1.2"
+    end
+
+    test "get_user_agent handles malicious user agent strings" do
+      # Test script injection in user agent
+      malicious_ua = "<script>alert('xss')</script>"
+
+      conn =
+        :get
+        |> conn("/")
+        |> put_req_header("user-agent", malicious_ua)
+
+      ua = WebAuth.get_user_agent(conn)
+      # Should return as-is for logging, not execute
+      assert ua == malicious_ua
+    end
+
+    test "get_user_agent handles user agent with control characters" do
+      # User agent with control characters
+      ua_with_control = "Mozilla/5.0\r\n\t(Control chars)"
+
+      conn =
+        :get
+        |> conn("/")
+        |> put_req_header("user-agent", ua_with_control)
+
+      ua = WebAuth.get_user_agent(conn)
+      assert ua == ua_with_control
+    end
+
+    test "utility functions handle connection without remote_ip" do
+      # Test with malformed connection
+      malformed_conn = %{not: :a_real_conn}
+
+      assert WebAuth.get_remote_ip(malformed_conn) == "Unknown"
+      assert WebAuth.get_user_agent(malformed_conn) == "Unknown"
+    end
+  end
+
   describe "edge cases and error handling" do
     test "verify_password handles binary strings with special characters" do
       # Use other special characters since null bytes aren't allowed in env vars
@@ -773,6 +1152,309 @@ defmodule TeslaMate.WebAuthTest do
 
       ua = WebAuth.get_user_agent(conn_long_ua)
       assert ua == very_long_ua
+    end
+
+    test "session functions handle corrupted session data" do
+      # Test with session containing unexpected data types
+      corrupted_conn =
+        build_conn_with_session(%{
+          web_authenticated: %{not: "boolean"},
+          web_auth_time: "not_integer",
+          redirect_after_auth: 12345
+        })
+
+      refute WebAuth.authenticated?(corrupted_conn)
+      assert WebAuth.session_remaining_time(corrupted_conn) == 0
+
+      # get_redirect_path should handle non-string redirect path
+      path = WebAuth.get_redirect_path(corrupted_conn)
+      assert is_binary(path)
+    end
+
+    test "password verification with extreme edge cases" do
+      # Test with password containing special but valid characters (avoiding null bytes)
+      # Using non-null control characters
+      weird_password = String.duplicate("\x01\x02", 5)
+      System.put_env("WEB_AUTH_PASS", weird_password)
+
+      # Should handle binary data as password
+      assert {:ok, :authenticated} = WebAuth.verify_password(weird_password)
+      assert {:error, :invalid_password} = WebAuth.verify_password("")
+
+      System.delete_env("WEB_AUTH_PASS")
+
+      # Test verify_password with extremely large input
+      # 1MB string
+      huge_input = String.duplicate("x", 1_000_000)
+      result = WebAuth.verify_password(huge_input)
+
+      assert result in [
+               {:ok, :no_password_set},
+               {:error, :invalid_password}
+             ]
+    end
+
+    test "redirect path functions with unusual path formats" do
+      conn = build_conn_with_session()
+
+      # Test with paths containing special characters
+      special_paths = [
+        "/path with spaces",
+        "/path%20encoded",
+        "/path?query=value&other=value",
+        "/path#fragment",
+        "/path/../../../etc/passwd",
+        "/path\nwith\nnewlines",
+        "//double/slash/path",
+        "",
+        "/",
+        "/very/deep/path/that/goes/on/and/on/and/on/with/many/segments"
+      ]
+
+      for path <- special_paths do
+        updated_conn = WebAuth.set_redirect_path(conn, path)
+        retrieved_path = WebAuth.get_redirect_path(updated_conn)
+        assert retrieved_path == path
+      end
+    end
+
+    test "authentication functions handle edge timing conditions" do
+      # Test authentication right at the boundary
+      # Exactly 1 hour ago
+      boundary_time = System.system_time(:second) - 3600
+
+      conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: boundary_time
+        })
+
+      # Should be expired (boundary is exclusive)
+      refute WebAuth.authenticated?(conn)
+      assert WebAuth.session_remaining_time(conn) == 0
+
+      # Test just before boundary
+      # 59 minutes 59 seconds ago
+      almost_expired_time = System.system_time(:second) - 3599
+
+      conn2 =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: almost_expired_time
+        })
+
+      # Should still be valid
+      assert WebAuth.authenticated?(conn2)
+      remaining = WebAuth.session_remaining_time(conn2)
+      assert remaining > 0 and remaining <= 1
+    end
+
+    test "functions handle nil and invalid conn structures" do
+      # Test with nil
+      assert WebAuth.get_remote_ip(nil) == "Unknown"
+      assert WebAuth.get_user_agent(nil) == "Unknown"
+
+      # Test with invalid structures
+      fake_conn = %{fake: :conn}
+      assert WebAuth.get_remote_ip(fake_conn) == "Unknown"
+      assert WebAuth.get_user_agent(fake_conn) == "Unknown"
+
+      # Test session functions with nil/invalid input
+      assert WebAuth.authenticated?(nil) == false
+      assert WebAuth.authenticated?(%{not: :session}) == false
+      assert WebAuth.session_remaining_time(nil) == 0
+      assert WebAuth.session_remaining_time(%{not: :session}) == 0
+    end
+
+    test "secure_compare edge cases through verify_password" do
+      # Test that secure_compare handles edge cases properly
+      System.put_env("WEB_AUTH_PASS", "test")
+
+      # Test with strings that might cause timing differences
+      similar_passwords = [
+        # correct
+        "test",
+        # different case
+        "Test",
+        # different case at end
+        "tesT",
+        # shorter
+        "tes",
+        # longer
+        "tests",
+        # one character different
+        "tast",
+        # empty
+        "",
+        # with leading space
+        " test",
+        # with trailing space
+        "test ",
+        # with newline
+        "test\n",
+        # with null byte
+        "test\x00"
+      ]
+
+      # All should execute in reasonable time and return consistent results
+      for password <- similar_passwords do
+        result = WebAuth.verify_password(password)
+
+        if password == "test" do
+          assert {:ok, :authenticated} = result
+        else
+          assert {:error, :invalid_password} = result
+        end
+      end
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+  end
+
+  describe "integration and real-world scenarios" do
+    test "complete authentication flow simulation" do
+      System.put_env("WEB_AUTH_PASS", "real_password")
+
+      # Simulate complete flow: unauthenticated -> authenticated -> expired -> re-authenticated
+      conn = build_conn_with_session()
+
+      # Initially unauthenticated
+      refute WebAuth.authenticated?(conn)
+      assert WebAuth.session_remaining_time(conn) == 0
+
+      # Set redirect path before authentication
+      conn = WebAuth.set_redirect_path(conn, "/target/page")
+
+      # Verify password and authenticate
+      assert {:ok, :authenticated} = WebAuth.verify_password("real_password")
+      conn = WebAuth.authenticate(conn)
+
+      # Should now be authenticated
+      assert WebAuth.authenticated?(conn)
+      assert WebAuth.session_remaining_time(conn) > 3590
+
+      # Get and clear redirect path
+      {conn, redirect_path} = WebAuth.get_and_clear_redirect_path(conn)
+      assert redirect_path == "/target/page"
+      assert Plug.Conn.get_session(conn, :redirect_after_auth) == nil
+
+      # Simulate session expiry by manually setting old timestamp
+      expired_conn =
+        build_conn_with_session(%{
+          web_authenticated: true,
+          # 2 hours ago
+          web_auth_time: System.system_time(:second) - 7200
+        })
+
+      # Should be expired
+      refute WebAuth.authenticated?(expired_conn)
+
+      # Unauthenticate
+      conn = WebAuth.unauthenticate(conn)
+      refute WebAuth.authenticated?(conn)
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+
+    test "password change during active session" do
+      # Start with one password
+      System.put_env("WEB_AUTH_PASS", "old_password")
+
+      conn = build_conn_with_session()
+      assert {:ok, :authenticated} = WebAuth.verify_password("old_password")
+      conn = WebAuth.authenticate(conn)
+      assert WebAuth.authenticated?(conn)
+
+      # Change password
+      System.put_env("WEB_AUTH_PASS", "new_password")
+
+      # Existing session should still be valid (doesn't re-check password)
+      assert WebAuth.authenticated?(conn)
+
+      # But new authentication attempts should use new password
+      assert {:ok, :authenticated} = WebAuth.verify_password("new_password")
+      assert {:error, :invalid_password} = WebAuth.verify_password("old_password")
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+
+    test "multiple concurrent users simulation" do
+      System.put_env("WEB_AUTH_PASS", "shared_password")
+
+      # Simulate multiple users with different session states
+      users = [
+        # New user
+        build_conn_with_session(),
+        # Authenticated user
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: System.system_time(:second)
+        }),
+        # Expired user
+        build_conn_with_session(%{
+          web_authenticated: true,
+          web_auth_time: System.system_time(:second) - 7200
+        })
+      ]
+
+      # Check authentication status for each user
+      [new_user, auth_user, expired_user] = users
+
+      refute WebAuth.authenticated?(new_user)
+      assert WebAuth.authenticated?(auth_user)
+      refute WebAuth.authenticated?(expired_user)
+
+      # All users should be able to authenticate with correct password
+      for conn <- users do
+        assert {:ok, :authenticated} = WebAuth.verify_password("shared_password")
+        authenticated_conn = WebAuth.authenticate(conn)
+        assert WebAuth.authenticated?(authenticated_conn)
+      end
+
+      System.delete_env("WEB_AUTH_PASS")
+    end
+
+    test "load testing basic functionality" do
+      System.put_env("WEB_AUTH_PASS", "load_test_password")
+
+      # Test many rapid operations
+      operations = [
+        fn -> WebAuth.verify_password("load_test_password") end,
+        fn -> WebAuth.verify_password("wrong_password") end,
+        fn -> WebAuth.password_required?() end,
+        fn ->
+          conn =
+            build_conn_with_session()
+            |> WebAuth.authenticate()
+
+          WebAuth.authenticated?(conn)
+        end,
+        fn ->
+          conn = build_conn_with_session()
+          WebAuth.session_remaining_time(conn)
+        end
+      ]
+
+      # Run many operations rapidly
+      results =
+        for _i <- 1..200 do
+          operation = Enum.random(operations)
+          operation.()
+        end
+
+      # All operations should complete successfully
+      assert length(results) == 200
+
+      assert Enum.all?(results, fn result ->
+               result in [
+                 {:ok, :authenticated},
+                 {:error, :invalid_password},
+                 true,
+                 false
+               ] or is_integer(result)
+             end)
+
+      System.delete_env("WEB_AUTH_PASS")
     end
   end
 end

@@ -56,9 +56,10 @@ defmodule TeslaMateWeb.Router do
     pipe_through :browser
 
     post "/authenticate", WebAuthController, :authenticate
+    post "/renew", WebAuthController, :renew
     delete "/logout", WebAuthController, :logout
 
-    live_session :web_auth, on_mount: [{TeslaMateWeb.InitAssigns, :locale}] do
+    live_session :web_auth do
       live "/index", WebAuthLive.Index
       live "/status", WebAuthLive.Status
     end

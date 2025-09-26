@@ -82,7 +82,7 @@ msgstr "Додому"
 
 #: lib/teslamate_web/live/settings_live/index.ex:21
 #: lib/teslamate_web/live/settings_live/index.html.heex:4
-#: lib/teslamate_web/templates/layout/root.html.heex:107
+#: lib/teslamate_web/templates/layout/root.html.heex:108
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr "Налаштування"
@@ -142,7 +142,7 @@ msgstr "Гео-позиція \"%{name}\" створена"
 #: lib/teslamate_web/live/geofence_live/form.html.heex:4
 #: lib/teslamate_web/live/geofence_live/index.ex:22
 #: lib/teslamate_web/live/geofence_live/index.html.heex:5
-#: lib/teslamate_web/templates/layout/root.html.heex:101
+#: lib/teslamate_web/templates/layout/root.html.heex:102
 #, elixir-autogen, elixir-format
 msgid "Geo-Fences"
 msgstr "Гео-позиції"
@@ -547,7 +547,7 @@ msgid "GitHub"
 msgstr ""
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:355
-#: lib/teslamate_web/templates/layout/root.html.heex:181
+#: lib/teslamate_web/templates/layout/root.html.heex:189
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "Доступне оновлення"
@@ -613,22 +613,22 @@ msgstr "Ваш аккаунт Тесла заблоковано через ду�
 msgid "Downloading update"
 msgstr "Завантаження оновлення"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:138
+#: lib/teslamate_web/templates/layout/root.html.heex:146
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr "Не надано ключ шифрування"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:158
+#: lib/teslamate_web/templates/layout/root.html.heex:166
 #, elixir-autogen, elixir-format, fuzzy
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr "За додатковою інформацією, ознайомтесь з інструкцією за посиланням %{link}"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:151
+#: lib/teslamate_web/templates/layout/root.html.heex:159
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr "Автоматично сгенерований ключ шифрування, що використовується поточною сесією може бути знайдений <strong>у логах додотку</strong>."
 
-#: lib/teslamate_web/templates/layout/root.html.heex:144
+#: lib/teslamate_web/templates/layout/root.html.heex:152
 #, elixir-autogen, elixir-format, fuzzy
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr "Щоб переконатися що <strong>Tesla API токени зберігаються безпечно</strong>, ключ шифрування повинен передаватись TeslaMate через <code>ENCRYPTION_KEY</code> змінну в середовищі. Інакше, <strong>необхідно буде виконувати вхід, після кожного перезапуску</strong>."
@@ -688,33 +688,147 @@ msgstr ""
 msgid "Enter password to access"
 msgstr ""
 
-#: lib/teslamate_web/live/web_auth_live/index.html.heex:56
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "If you forgot your password, please contact the administrator"
 msgstr ""
 
-#: lib/teslamate_web/live/web_auth_live/index.html.heex:33
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Input your access password"
 msgstr ""
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:9
-#: lib/teslamate_web/live/web_auth_live/index.html.heex:48
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Login"
 msgstr ""
 
-#: lib/teslamate_web/templates/layout/root.html.heex:111
+#: lib/teslamate_web/templates/layout/root.html.heex:119
 #, elixir-autogen, elixir-format
 msgid "Logout"
-msgstr ""
-
-#: lib/teslamate_web/live/web_auth_live/index.html.heex:28
-#, elixir-autogen, elixir-format
-msgid "Password"
 msgstr ""
 
 #: lib/teslamate_web/live/web_auth_live/index.ex:15
 #, elixir-autogen, elixir-format
 msgid "Web Access Authentication"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.ex:43
+#: lib/teslamate_web/live/web_auth_live/status.ex:46
+#, elixir-autogen, elixir-format
+msgid "%{count} hour"
+msgid_plural "%{count} hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: lib/teslamate_web/live/web_auth_live/status.ex:43
+#: lib/teslamate_web/live/web_auth_live/status.ex:49
+#, elixir-autogen, elixir-format
+msgid "%{count} minute"
+msgid_plural "%{count} minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: lib/teslamate_web/live/web_auth_live/status.ex:52
+#, elixir-autogen, elixir-format
+msgid "%{count} second"
+msgid_plural "%{count} seconds"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: lib/teslamate_web/live/web_auth_live/status.ex:19
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:9
+#: lib/teslamate_web/templates/layout/root.html.heex:116
+#, elixir-autogen, elixir-format
+msgid "Auth Status"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:56
+#, elixir-autogen, elixir-format
+msgid "Authentication failed. Please try again."
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.ex:34
+#: lib/teslamate_web/live/web_auth_live/status.ex:57
+#, elixir-autogen, elixir-format
+msgid "Expired"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:42
+#, elixir-autogen, elixir-format
+msgid "Invalid input format"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:35
+#, elixir-autogen, elixir-format
+msgid "Invalid password"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:49
+#, elixir-autogen, elixir-format
+msgid "Invalid password format"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:59
+#, elixir-autogen, elixir-format
+msgid "Last Activity"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:66
+#, elixir-autogen, elixir-format
+msgid "Password is required"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:90
+#, elixir-autogen, elixir-format
+msgid "Please login first"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:51
+#, elixir-autogen, elixir-format
+msgid "Renew Session"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:37
+#, elixir-autogen, elixir-format
+msgid "Session Expiring Soon"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:16
+#, elixir-autogen, elixir-format
+msgid "Session Remaining Time"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:82
+#, elixir-autogen, elixir-format
+msgid "Session renewed successfully"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:24
+#, elixir-autogen, elixir-format
+msgid "Successfully authenticated"
+msgstr ""
+
+#: lib/teslamate_web/controllers/web_auth_controller.ex:105
+#, elixir-autogen, elixir-format
+msgid "Successfully logged out"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:22
+#, elixir-autogen, elixir-format
+msgid "Time Remaining"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:11
+#, elixir-autogen, elixir-format
+msgid "Web access authentication information"
+msgstr ""
+
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:39
+#, elixir-autogen, elixir-format
+msgid "Your session will expire in less than 5 minutes. Consider renewing your session to avoid being logged out."
 msgstr ""
