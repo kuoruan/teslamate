@@ -1,0 +1,69 @@
+<div class="columns is-centered">
+  <div class="column is-half">
+    <div class="box">
+      <div class="has-text-centered mb-5">
+        <%= img_tag(Routes.static_path(@socket, "/images/logo.svg"),
+          alt: "TeslaMate",
+          width: "80px"
+        ) %>
+        <h1 class="title is-4 mt-3"><%= gettext("Auth Status") %></h1>
+        <p class="subtitle is-6 has-text-grey">
+          <%= gettext("Web access authentication information") %>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label"><%= gettext("Session Remaining Time") %></label>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <div class="box has-background-light">
+              <div class="has-text-centered">
+                <div>
+                  <p class="heading"><%= gettext("Time Remaining") %></p>
+                  <p class={"title is-5 #{if @session_remaining <= 300, do: "has-text-danger", else: "has-text-success"}"}>
+                    <i class="mdi mdi-clock-outline mr-1"></i>
+                    <%= @session_remaining_formatted %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%= if @session_remaining <= 300 do %>
+        <div class="notification is-warning">
+          <i class="mdi mdi-clock-alert-outline mr-2"></i>
+          <strong><%= gettext("Session Expiring Soon") %></strong>
+          <br />
+          <%= gettext(
+            "Your session will expire in less than 5 minutes. Consider renewing your session to avoid being logged out."
+          ) %>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <div class="control">
+          <%= link to: Routes.web_auth_path(@socket, :renew), method: :post, class: "button is-primary is-fullwidth", csrf_token: true do %>
+            <span class="icon">
+              <i class="mdi mdi-refresh"></i>
+            </span>
+            <span><%= gettext("Renew Session") %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="has-text-centered">
+        <span class="has-text-weight-semibold"><%= gettext("Last Activity") %>:</span>
+        <span class="tag is-light ml-2">
+          <i class="mdi mdi-clock-outline mr-1"></i>
+          <span data-timestamp={DateTime.to_unix(@last_updated)}>
+            <%= Timex.format!(@last_updated, "%Y-%m-%d %H:%M:%S UTC", :strftime) %>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
