@@ -3,8 +3,6 @@ defmodule TeslaMate.WebAuth do
   Web 访问认证模块，用于保护 Web 界面不被未授权用户访问
   """
 
-  require Logger
-
   alias TeslaMateWeb.Router.Helpers, as: Routes
 
   @session_timeout_hours 1
