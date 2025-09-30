@@ -2,6 +2,7 @@ defmodule TeslaMateWeb.MapsController do
   use TeslaMateWeb, :controller
 
   alias TeslaMate.Maps
+  alias TeslaMate.Locations.Geocoder
 
   def tile(conn, %{"zoom" => zoom, "x" => x, "y" => y} = params) do
     with {zoom, ""} <- Integer.parse(zoom),
@@ -35,5 +36,27 @@ defmodule TeslaMateWeb.MapsController do
 
       put_resp_header(acc, name, adjusted_value)
     end)
+  end
+
+  def reverse_geocode(conn, %{"lat" => lat, "lon" => lon} = params) do
+    lang = Map.get(params, "lang", "en")
+
+    case {Float.parse(lat), Float.parse(lon)} do
+      {{lat, ""}, {lon, ""}} ->
+        case Geocoder.reverse_lookup(lat, lon, lang) do
+          {:ok, address} ->
+            json(conn, address)
+
+          {:error, reason} ->
+            conn
+            |> put_status(:bad_request)
+            |> json(%{error: reason})
+        end
+
+      _ ->
+        conn
+        |> put_status(:bad_request)
+        |> json(%{error: "Invalid latitude or longitude"})
+    end
   end
 end

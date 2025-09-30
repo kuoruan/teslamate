@@ -74,6 +74,12 @@ defmodule TeslaMateWeb.Router do
 
   scope "/maps", TeslaMateWeb do
     get "/tile/:zoom/:x/:y", MapsController, :tile
+
+    scope "/geocoder" do
+      pipe_through :api
+
+      get "/reverse", MapsController, :reverse_geocode
+    end
   end
 
   def fetch_settings(conn, _opts) do
