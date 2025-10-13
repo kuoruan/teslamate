@@ -1,8 +1,7 @@
 defmodule TeslaMateWeb.MapsController do
   use TeslaMateWeb, :controller
 
-  alias TeslaMate.Maps
-  alias TeslaMate.Locations.Geocoder
+  alias TeslaMate.Locations.{Maps, Geocoder}
 
   def tile(conn, %{"zoom" => zoom, "x" => x, "y" => y} = params) do
     with {zoom, ""} <- Integer.parse(zoom),

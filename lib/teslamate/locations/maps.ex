@@ -1,4 +1,4 @@
-defmodule TeslaMate.Maps do
+defmodule TeslaMate.Locations.Maps do
   @moduledoc """
   Provides map tile rendering functionality.
 
