@@ -683,143 +683,143 @@ msgstr "ดูตำแหน่งรถบน Google Maps"
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Enter password to access"
-msgstr ""
+msgstr "ป้อนรหัสผ่านเพื่อเข้าถึง"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "If you forgot your password, please contact the administrator"
-msgstr ""
+msgstr "หากคุณลืมรหัสผ่าน กรุณาติดต่อผู้ดูแลระบบ"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Input your access password"
-msgstr ""
+msgstr "กรอกรหัسผ่านการเข้าถึงของคุณ"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:9
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Login"
-msgstr ""
+msgstr "เข้าสู่ระบบ"
 
 #: lib/teslamate_web/templates/layout/root.html.heex:119
 #, elixir-autogen, elixir-format
 msgid "Logout"
-msgstr ""
+msgstr "ออกจากระบบ"
 
 #: lib/teslamate_web/live/web_auth_live/index.ex:15
 #, elixir-autogen, elixir-format
 msgid "Web Access Authentication"
-msgstr ""
+msgstr "การยืนยันตัวตนการเข้าถึงเว็บ"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43
 #: lib/teslamate_web/live/web_auth_live/status.ex:46
 #, elixir-autogen, elixir-format
 msgid "%{count} hour"
 msgid_plural "%{count} hours"
-msgstr[0] ""
+msgstr[0] "%{count} ชั่วโมง"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43
 #: lib/teslamate_web/live/web_auth_live/status.ex:49
 #, elixir-autogen, elixir-format
 msgid "%{count} minute"
 msgid_plural "%{count} minutes"
-msgstr[0] ""
+msgstr[0] "%{count} นาที"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:52
 #, elixir-autogen, elixir-format
 msgid "%{count} second"
 msgid_plural "%{count} seconds"
-msgstr[0] ""
+msgstr[0] "%{count} วินาที"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:19
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:9
 #: lib/teslamate_web/templates/layout/root.html.heex:116
 #, elixir-autogen, elixir-format
 msgid "Auth Status"
-msgstr ""
+msgstr "สถานะการยืนยันตัวตน"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:56
 #, elixir-autogen, elixir-format
 msgid "Authentication failed. Please try again."
-msgstr ""
+msgstr "การยืนยันตัวตนล้มเหลว กรุณาลองใหม่อีกครั้ง"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:34
 #: lib/teslamate_web/live/web_auth_live/status.ex:57
 #, elixir-autogen, elixir-format
 msgid "Expired"
-msgstr ""
+msgstr "หมดอายุ"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:42
 #, elixir-autogen, elixir-format
 msgid "Invalid input format"
-msgstr ""
+msgstr "รูปแบบข้อมูลนำเข้าไม่ถูกต้อง"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:35
 #, elixir-autogen, elixir-format
 msgid "Invalid password"
-msgstr ""
+msgstr "รหัสผ่านไม่ถูกต้อง"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:49
 #, elixir-autogen, elixir-format
 msgid "Invalid password format"
-msgstr ""
+msgstr "รูปแบบรหัสผ่านไม่ถูกต้อง"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Last Activity"
-msgstr ""
+msgstr "กิจกรรมล่าสุด"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:66
 #, elixir-autogen, elixir-format
 msgid "Password is required"
-msgstr ""
+msgstr "จำเป็นต้องมีรหัสผ่าน"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:90
 #, elixir-autogen, elixir-format
 msgid "Please login first"
-msgstr ""
+msgstr "กรุณาเข้าสู่ระบบก่อน"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Renew Session"
-msgstr ""
+msgstr "ต่ออายุเซสชัน"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:37
 #, elixir-autogen, elixir-format
 msgid "Session Expiring Soon"
-msgstr ""
+msgstr "เซสชันจะหมดอายุเร็วๆ นี้"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Session Remaining Time"
-msgstr ""
+msgstr "เวลาที่เหลือของเซสชัน"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:82
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
-msgstr ""
+msgstr "ต่ออายุเซสชันสำเร็จ"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:24
 #, elixir-autogen, elixir-format
 msgid "Successfully authenticated"
-msgstr ""
+msgstr "ยืนยันตัวตนสำเร็จ"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:105
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
-msgstr ""
+msgstr "ออกจากระบบสำเร็จ"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Time Remaining"
-msgstr ""
+msgstr "เวลาที่เหลือ"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Web access authentication information"
-msgstr ""
+msgstr "ข้อมูลการยืนยันตัวตนการเข้าถึงเว็บ"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:39
 #, elixir-autogen, elixir-format
 msgid "Your session will expire in less than 5 minutes. Consider renewing your session to avoid being logged out."
-msgstr ""
+msgstr "เซสชันของคุณจะหมดอายุในเวลาน้อยกว่า 5 นาที กรุณาพิจารณาต่ออายุเซสชันเพื่อหลีกเลี่ยงการออกจากระบบ"

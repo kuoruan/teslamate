@@ -686,40 +686,40 @@ msgstr ""
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Enter password to access"
-msgstr ""
+msgstr "Введіть пароль для доступу"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "If you forgot your password, please contact the administrator"
-msgstr ""
+msgstr "Якщо ви забули свій пароль, зверніться до адміністратора"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Input your access password"
-msgstr ""
+msgstr "Введіть свій пароль доступу"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:9
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Login"
-msgstr ""
+msgstr "Увійти"
 
 #: lib/teslamate_web/templates/layout/root.html.heex:119
 #, elixir-autogen, elixir-format
 msgid "Logout"
-msgstr ""
+msgstr "Вийти"
 
 #: lib/teslamate_web/live/web_auth_live/index.ex:15
 #, elixir-autogen, elixir-format
 msgid "Web Access Authentication"
-msgstr ""
+msgstr "Аутентифікація веб-доступу"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43
 #: lib/teslamate_web/live/web_auth_live/status.ex:46
 #, elixir-autogen, elixir-format
 msgid "%{count} hour"
 msgid_plural "%{count} hours"
-msgstr[0] ""
+msgstr[0] "%{count} година"
 msgstr[1] ""
 msgstr[2] ""
 
@@ -728,7 +728,7 @@ msgstr[2] ""
 #, elixir-autogen, elixir-format
 msgid "%{count} minute"
 msgid_plural "%{count} minutes"
-msgstr[0] ""
+msgstr[0] "%{count} хвилина"
 msgstr[1] ""
 msgstr[2] ""
 
@@ -736,7 +736,7 @@ msgstr[2] ""
 #, elixir-autogen, elixir-format
 msgid "%{count} second"
 msgid_plural "%{count} seconds"
-msgstr[0] ""
+msgstr[0] "%{count} секунда"
 msgstr[1] ""
 msgstr[2] ""
 
@@ -745,90 +745,90 @@ msgstr[2] ""
 #: lib/teslamate_web/templates/layout/root.html.heex:116
 #, elixir-autogen, elixir-format
 msgid "Auth Status"
-msgstr ""
+msgstr "Статус аутентифікації"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:56
 #, elixir-autogen, elixir-format
 msgid "Authentication failed. Please try again."
-msgstr ""
+msgstr "Помилка аутентифікації. Спробуйте ще раз."
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:34
 #: lib/teslamate_web/live/web_auth_live/status.ex:57
 #, elixir-autogen, elixir-format
 msgid "Expired"
-msgstr ""
+msgstr "Закінчився термін дії"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:42
 #, elixir-autogen, elixir-format
 msgid "Invalid input format"
-msgstr ""
+msgstr "Неправильний формат введення"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:35
 #, elixir-autogen, elixir-format
 msgid "Invalid password"
-msgstr ""
+msgstr "Неправильний пароль"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:49
 #, elixir-autogen, elixir-format
 msgid "Invalid password format"
-msgstr ""
+msgstr "Неправильний формат пароля"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Last Activity"
-msgstr ""
+msgstr "Остання активність"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:66
 #, elixir-autogen, elixir-format
 msgid "Password is required"
-msgstr ""
+msgstr "Пароль обов'язковий"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:90
 #, elixir-autogen, elixir-format
 msgid "Please login first"
-msgstr ""
+msgstr "Спочатку увійдіть в систему"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Renew Session"
-msgstr ""
+msgstr "Поновити сесію"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:37
 #, elixir-autogen, elixir-format
 msgid "Session Expiring Soon"
-msgstr ""
+msgstr "Сесія скоро закінчиться"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Session Remaining Time"
-msgstr ""
+msgstr "Час, що залишився у сесії"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:82
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
-msgstr ""
+msgstr "Сесію успішно поновлено"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:24
 #, elixir-autogen, elixir-format
 msgid "Successfully authenticated"
-msgstr ""
+msgstr "Успішно аутентифіковано"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:105
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
-msgstr ""
+msgstr "Успішно вийшли"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Time Remaining"
-msgstr ""
+msgstr "Час, що залишився"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Web access authentication information"
-msgstr ""
+msgstr "Інформація про аутентифікацію веб-доступу"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:39
 #, elixir-autogen, elixir-format
 msgid "Your session will expire in less than 5 minutes. Consider renewing your session to avoid being logged out."
-msgstr ""
+msgstr "Ваша сесія закінчиться менш ніж за 5 хвилин. Розгляньте можливість поновлення сесії, щоб уникнути виходу з системи."

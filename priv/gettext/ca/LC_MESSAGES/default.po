@@ -708,40 +708,40 @@ msgstr ""
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Enter password to access"
-msgstr ""
+msgstr "Introdueix la contrasenya per accedir"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:53
 #, elixir-autogen, elixir-format
 msgid "If you forgot your password, please contact the administrator"
-msgstr ""
+msgstr "Si has oblidat la contrasenya, contacta amb l'administrador"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Input your access password"
-msgstr ""
+msgstr "Introdueix la contrasenya d'accés"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:9
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Login"
-msgstr ""
+msgstr "Iniciar sessió"
 
 #: lib/teslamate_web/templates/layout/root.html.heex:119
 #, elixir-autogen, elixir-format
 msgid "Logout"
-msgstr ""
+msgstr "Tancar sessió"
 
 #: lib/teslamate_web/live/web_auth_live/index.ex:15
 #, elixir-autogen, elixir-format
 msgid "Web Access Authentication"
-msgstr ""
+msgstr "Autenticació d'accés web"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43
 #: lib/teslamate_web/live/web_auth_live/status.ex:46
 #, elixir-autogen, elixir-format
 msgid "%{count} hour"
 msgid_plural "%{count} hours"
-msgstr[0] ""
+msgstr[0] "%{count} hora"
 msgstr[1] ""
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43
@@ -749,14 +749,14 @@ msgstr[1] ""
 #, elixir-autogen, elixir-format
 msgid "%{count} minute"
 msgid_plural "%{count} minutes"
-msgstr[0] ""
+msgstr[0] "%{count} minut"
 msgstr[1] ""
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:52
 #, elixir-autogen, elixir-format
 msgid "%{count} second"
 msgid_plural "%{count} seconds"
-msgstr[0] ""
+msgstr[0] "%{count} segon"
 msgstr[1] ""
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:19
@@ -764,90 +764,90 @@ msgstr[1] ""
 #: lib/teslamate_web/templates/layout/root.html.heex:116
 #, elixir-autogen, elixir-format
 msgid "Auth Status"
-msgstr ""
+msgstr "Estat d'autenticació"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:56
 #, elixir-autogen, elixir-format
 msgid "Authentication failed. Please try again."
-msgstr ""
+msgstr "Autenticació fallida. Torna-ho a provar."
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:34
 #: lib/teslamate_web/live/web_auth_live/status.ex:57
 #, elixir-autogen, elixir-format
 msgid "Expired"
-msgstr ""
+msgstr "Caducat"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:42
 #, elixir-autogen, elixir-format
 msgid "Invalid input format"
-msgstr ""
+msgstr "Format d'entrada no vàlid"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:35
 #, elixir-autogen, elixir-format
 msgid "Invalid password"
-msgstr ""
+msgstr "Contrasenya no vàlida"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:49
 #, elixir-autogen, elixir-format
 msgid "Invalid password format"
-msgstr ""
+msgstr "Format de contrasenya no vàlid"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Last Activity"
-msgstr ""
+msgstr "Última activitat"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:66
 #, elixir-autogen, elixir-format
 msgid "Password is required"
-msgstr ""
+msgstr "La contrasenya és obligatòria"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:90
 #, elixir-autogen, elixir-format
 msgid "Please login first"
-msgstr ""
+msgstr "Si us plau, inicia sessió primer"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Renew Session"
-msgstr ""
+msgstr "Renovar sessió"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:37
 #, elixir-autogen, elixir-format
 msgid "Session Expiring Soon"
-msgstr ""
+msgstr "La sessió caduca aviat"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Session Remaining Time"
-msgstr ""
+msgstr "Temps restant de la sessió"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:82
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
-msgstr ""
+msgstr "Sessió renovada amb èxit"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:24
 #, elixir-autogen, elixir-format
 msgid "Successfully authenticated"
-msgstr ""
+msgstr "Autenticat amb èxit"
 
 #: lib/teslamate_web/controllers/web_auth_controller.ex:105
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
-msgstr ""
+msgstr "Sessió tancada amb èxit"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:22
 #, elixir-autogen, elixir-format
 msgid "Time Remaining"
-msgstr ""
+msgstr "Temps restant"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:11
 #, elixir-autogen, elixir-format
 msgid "Web access authentication information"
-msgstr ""
+msgstr "Informació d'autenticació d'accés web"
 
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:39
 #, elixir-autogen, elixir-format
 msgid "Your session will expire in less than 5 minutes. Consider renewing your session to avoid being logged out."
-msgstr ""
+msgstr "La teva sessió caducarà en menys de 5 minuts. Considera renovar la sessió per evitar tancar la sessió."
