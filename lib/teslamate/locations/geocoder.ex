@@ -12,10 +12,11 @@ defmodule TeslaMate.Locations.Geocoder do
 
   require Logger
 
-  alias TeslaMate.Locations.{Address, BaiduApi}
+  alias TeslaMate.Locations.{Address, BaiduApi, AmapApi}
 
   def reverse_lookup(lat, lon, lang \\ "en") do
-    with {:error, _} <- try_baidu_map(lat, lon, lang) do
+    with {:error, _} <- try_baidu_map(lat, lon, lang),
+         {:error, _} <- try_amap(lat, lon, lang) do
       osm_reverse_lookup(lat, lon, lang)
     end
   end
@@ -36,6 +37,28 @@ defmodule TeslaMate.Locations.Geocoder do
 
       {:error, reason} ->
         Logger.warning("Baidu map reverse lookup failed: #{inspect(reason)}")
+        {:error, reason}
+    end
+  end
+
+  defp try_amap(lat, lon, lang) do
+    # 高德地图 API 签名，可选
+    sig = System.get_env("AMAP_SIG")
+
+    # 高德地图 API 密钥
+    with key when key != "" <- System.get_env("AMAP_KEY", ""),
+         {:ok, address} <- AmapApi.reverse_lookup(lat, lon, lang, %{key: key, sig: sig}) do
+      Logger.info(
+        "Amap reverse lookup succeeded: #{lat},#{lon}, address: #{address.display_name}"
+      )
+
+      {:ok, address}
+    else
+      "" ->
+        {:error, :no_amap_credentials}
+
+      {:error, reason} ->
+        Logger.warning("Amap reverse lookup failed: #{inspect(reason)}")
         {:error, reason}
     end
   end
