@@ -72,7 +72,8 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
     # 保存原始请求路径（仅对 GET 请求）
     conn =
       if conn.method == "GET" and conn.request_path != "/" do
-        WebAuth.set_redirect_path(conn, conn.request_path)
+        query = if conn.query_string == "", do: "", else: "?#{conn.query_string}"
+        WebAuth.set_redirect_path(conn, conn.request_path <> query)
       else
         conn
       end
