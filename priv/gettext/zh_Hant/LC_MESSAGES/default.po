@@ -737,7 +737,7 @@ msgstr[0] "%{count} 秒"
 msgid "Auth Status"
 msgstr "認證狀態"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:56
+#: lib/teslamate_web/controllers/web_auth_controller.ex:49
 #, elixir-autogen, elixir-format
 msgid "Authentication failed. Please try again."
 msgstr "認證失敗，請重試。"
@@ -758,22 +758,17 @@ msgstr "輸入格式無效"
 msgid "Invalid password"
 msgstr "無效密碼"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:49
-#, elixir-autogen, elixir-format
-msgid "Invalid password format"
-msgstr "無效密碼格式"
-
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Last Activity"
 msgstr "上次活動時間"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:66
+#: lib/teslamate_web/controllers/web_auth_controller.ex:59
 #, elixir-autogen, elixir-format
 msgid "Password is required"
 msgstr "密碼是必需的"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:90
+#: lib/teslamate_web/controllers/web_auth_controller.ex:83
 #, elixir-autogen, elixir-format
 msgid "Please login first"
 msgstr "請先登入"
@@ -793,7 +788,7 @@ msgstr "會話即將過期"
 msgid "Session Remaining Time"
 msgstr "會話剩餘時間"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:82
+#: lib/teslamate_web/controllers/web_auth_controller.ex:75
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
 msgstr "會話延長成功"
@@ -803,7 +798,7 @@ msgstr "會話延長成功"
 msgid "Successfully authenticated"
 msgstr "認證成功"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:105
+#: lib/teslamate_web/controllers/web_auth_controller.ex:98
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
 msgstr "登出成功"

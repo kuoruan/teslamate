@@ -42,13 +42,6 @@ defmodule TeslaMateWeb.WebAuthController do
         |> put_flash(:warning, gettext("Invalid input format"))
         |> redirect(to: auth_page(conn))
 
-      {:error, :invalid_encoding} ->
-        Logger.warning("Invalid password encoding, remote ip: #{remote_ip}")
-
-        conn
-        |> put_flash(:warning, gettext("Invalid password format"))
-        |> redirect(to: auth_page(conn))
-
       {:error, reason} ->
         Logger.error("Authentication error, reason: #{reason}, remote ip: #{remote_ip}")
 

@@ -742,7 +742,7 @@ msgstr[1] ""
 msgid "Auth Status"
 msgstr "Autentiseringsstatus"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:56
+#: lib/teslamate_web/controllers/web_auth_controller.ex:49
 #, elixir-autogen, elixir-format
 msgid "Authentication failed. Please try again."
 msgstr "Autentisering misslyckades. Försök igen."
@@ -763,22 +763,17 @@ msgstr "Ogiltigt inmatningsformat"
 msgid "Invalid password"
 msgstr "Ogiltigt lösenord"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:49
-#, elixir-autogen, elixir-format
-msgid "Invalid password format"
-msgstr "Ogiltigt lösenordsformat"
-
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:59
 #, elixir-autogen, elixir-format
 msgid "Last Activity"
 msgstr "Senaste aktivitet"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:66
+#: lib/teslamate_web/controllers/web_auth_controller.ex:59
 #, elixir-autogen, elixir-format
 msgid "Password is required"
 msgstr "Lösenord krävs"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:90
+#: lib/teslamate_web/controllers/web_auth_controller.ex:83
 #, elixir-autogen, elixir-format
 msgid "Please login first"
 msgstr "Logga in först"
@@ -798,7 +793,7 @@ msgstr "Session går ut snart"
 msgid "Session Remaining Time"
 msgstr "Återstående sessionstid"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:82
+#: lib/teslamate_web/controllers/web_auth_controller.ex:75
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
 msgstr "Session förnyad framgångsrikt"
@@ -808,7 +803,7 @@ msgstr "Session förnyad framgångsrikt"
 msgid "Successfully authenticated"
 msgstr "Framgångsrikt autentiserad"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:105
+#: lib/teslamate_web/controllers/web_auth_controller.ex:98
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
 msgstr "Framgångsrikt utloggad"
