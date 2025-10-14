@@ -5,7 +5,7 @@ defmodule TeslaMateWeb.Endpoint do
     store: :cookie,
     key: "_teslamate_key",
     signing_salt: "yt5O3CAQ",
-    same_site: "Strict"
+    same_site: "Lax"
   ]
 
   plug TeslaMateWeb.HealthCheck
