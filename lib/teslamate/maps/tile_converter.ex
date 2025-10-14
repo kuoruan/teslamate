@@ -1,4 +1,4 @@
-defmodule TeslaMate.Locations.TileConverter do
+defmodule TeslaMate.Maps.TileConverter do
   @moduledoc """
   瓦片坐标转换工具
 

@@ -72,14 +72,12 @@ defmodule TeslaMateWeb.Router do
     put "/car/:id/logging/suspend", CarController, :suspend_logging
   end
 
-  scope "/maps", TeslaMateWeb do
-    get "/tile/:zoom/:x/:y", MapsController, :tile
+  scope "/map", TeslaMateWeb do
+    get "/tile/:zoom/:x/:y", MapController, :tile
+  end
 
-    scope "/geocoder" do
-      pipe_through :api
-
-      get "/reverse", MapsController, :reverse_geocode
-    end
+  scope "/location", TeslaMateWeb do
+    get "/geocoder/reverse", LocationController, :geocoder_reverse
   end
 
   def fetch_settings(conn, _opts) do

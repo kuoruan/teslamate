@@ -1,7 +1,8 @@
-defmodule TeslaMate.Locations.TileConverterTest do
+defmodule TeslaMate.Maps.TileConverterTest do
   use TeslaMate.DataCase
 
-  alias TeslaMate.Locations.{TileConverter, CoordConverter}
+  alias TeslaMate.Maps.TileConverter
+  alias TeslaMate.Locations.CoordConverter
 
   describe "Coordinate to Tile conversion" do
     test "WGS to Tile" do

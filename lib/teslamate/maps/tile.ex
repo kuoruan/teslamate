@@ -1,4 +1,4 @@
-defmodule TeslaMate.Locations.Maps do
+defmodule TeslaMate.Maps.Tile do
   @moduledoc """
   Provides map tile rendering functionality.
 
@@ -9,7 +9,7 @@ defmodule TeslaMate.Locations.Maps do
 
   require Logger
 
-  alias TeslaMate.Locations.TileConverter
+  alias TeslaMate.Maps.TileConverter
 
   adapter Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000
 
@@ -77,9 +77,9 @@ defmodule TeslaMate.Locations.Maps do
   - `{:ok, status, body, response_headers}` - 成功获取响应，包含状态码、响应体和响应头
   - `{:error, reason}` - 获取失败
   """
-  def tile_image(zoom, x, y, client_headers \\ [], opts \\ %{})
+  def get_image(zoom, x, y, client_headers \\ [], opts \\ %{})
 
-  def tile_image(zoom, x, y, client_headers, opts)
+  def get_image(zoom, x, y, client_headers, opts)
       when is_integer(zoom) and is_integer(x) and is_integer(y) do
     headers = prepare_headers(client_headers)
     url = get_tile_url(zoom, x, y, opts)
@@ -99,7 +99,7 @@ defmodule TeslaMate.Locations.Maps do
     end
   end
 
-  def tile_image(_, _, _, _, _), do: {:error, :invalid_coordinates}
+  def get_image(_, _, _, _, _), do: {:error, :invalid_coordinates}
 
   defp prepare_headers(client_headers) do
     if Enum.empty?(client_headers) do
