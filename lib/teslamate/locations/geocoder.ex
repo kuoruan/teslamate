@@ -231,8 +231,15 @@ defmodule TeslaMate.Locations.Geocoder do
     {:ok, address}
   end
 
-  defp ensure_float(value) when is_binary(value), do: String.to_float(value)
-  defp ensure_float(value) when is_number(value), do: value
+  defp ensure_float(value) when is_binary(value) do
+    case Float.parse(value) do
+      {num, ""} -> num
+      _ -> nil
+    end
+  end
+
+  defp ensure_float(value) when is_integer(value), do: value * 1.0
+  defp ensure_float(value) when is_float(value), do: value
   defp ensure_float(_), do: nil
 
   defp get_first(nil, _aliases), do: nil
