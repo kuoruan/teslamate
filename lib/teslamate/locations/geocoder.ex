@@ -15,9 +15,16 @@ defmodule TeslaMate.Locations.Geocoder do
   alias TeslaMate.Locations.{Address, BaiduApi, AmapApi}
 
   def reverse_lookup(lat, lon, lang \\ "en") do
-    with {:error, _} <- try_baidu_map(lat, lon, lang),
-         {:error, _} <- try_amap(lat, lon, lang) do
-      osm_reverse_lookup(lat, lon, lang)
+    lat = ensure_float(lat)
+    lon = ensure_float(lon)
+
+    if lat == nil or lon == nil do
+      {:error, :invalid_coordinates}
+    else
+      with {:error, _} <- try_baidu_map(lat, lon, lang),
+           {:error, _} <- try_amap(lat, lon, lang) do
+        osm_reverse_lookup(lat, lon, lang)
+      end
     end
   end
 
@@ -223,6 +230,10 @@ defmodule TeslaMate.Locations.Geocoder do
 
     {:ok, address}
   end
+
+  defp ensure_float(value) when is_binary(value), do: String.to_float(value)
+  defp ensure_float(value) when is_number(value), do: value
+  defp ensure_float(_), do: nil
 
   defp get_first(nil, _aliases), do: nil
   defp get_first(_address, []), do: nil
