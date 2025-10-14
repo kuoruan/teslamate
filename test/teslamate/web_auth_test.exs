@@ -473,7 +473,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, path)
 
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == path
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == path
     end
 
     test "set_redirect_path/2 handles complex paths" do
@@ -482,7 +482,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, complex_path)
 
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == complex_path
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == complex_path
     end
 
     test "set_redirect_path/2 handles paths with unicode characters" do
@@ -491,7 +491,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, unicode_path)
 
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == unicode_path
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == unicode_path
     end
 
     test "set_redirect_path/2 handles empty string path" do
@@ -499,7 +499,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, "")
 
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == ""
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == ""
     end
 
     test "set_redirect_path/2 returns unchanged conn for non-string input" do
@@ -518,17 +518,17 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "set_redirect_path/2 overwrites existing path" do
-      conn = build_conn_with_session(%{redirect_after_auth: "/old/path"})
+      conn = build_conn_with_session(%{web_auth_redirect_path: "/old/path"})
       new_path = "/new/path"
 
       updated_conn = WebAuth.set_redirect_path(conn, new_path)
 
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == new_path
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == new_path
     end
 
     test "get_redirect_path/1 returns stored path" do
       path = "/stored/path"
-      conn = build_conn_with_session(%{redirect_after_auth: path})
+      conn = build_conn_with_session(%{web_auth_redirect_path: path})
 
       assert WebAuth.get_redirect_path(conn) == path
     end
@@ -562,7 +562,7 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "get_redirect_path/1 handles nil session value" do
-      conn = build_conn_with_session(%{redirect_after_auth: nil})
+      conn = build_conn_with_session(%{web_auth_redirect_path: nil})
 
       path = WebAuth.get_redirect_path(conn)
 
@@ -570,11 +570,11 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "clear_redirect_path/1 removes stored path" do
-      conn = build_conn_with_session(%{redirect_after_auth: "/some/path"})
+      conn = build_conn_with_session(%{web_auth_redirect_path: "/some/path"})
 
       cleared_conn = WebAuth.clear_redirect_path(conn)
 
-      assert Plug.Conn.get_session(cleared_conn, :redirect_after_auth) == nil
+      assert Plug.Conn.get_session(cleared_conn, :web_auth_redirect_path) == nil
     end
 
     test "clear_redirect_path/1 handles already cleared path" do
@@ -582,17 +582,17 @@ defmodule TeslaMate.WebAuthTest do
 
       cleared_conn = WebAuth.clear_redirect_path(conn)
 
-      assert Plug.Conn.get_session(cleared_conn, :redirect_after_auth) == nil
+      assert Plug.Conn.get_session(cleared_conn, :web_auth_redirect_path) == nil
     end
 
     test "get_and_clear_redirect_path/1 returns path and clears it" do
       path = "/test/path"
-      conn = build_conn_with_session(%{redirect_after_auth: path})
+      conn = build_conn_with_session(%{web_auth_redirect_path: path})
 
       {updated_conn, returned_path} = WebAuth.get_and_clear_redirect_path(conn)
 
       assert returned_path == path
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == nil
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == nil
     end
 
     test "get_and_clear_redirect_path/1 returns default path when none stored" do
@@ -601,7 +601,7 @@ defmodule TeslaMate.WebAuthTest do
       {updated_conn, returned_path} = WebAuth.get_and_clear_redirect_path(conn)
 
       assert is_binary(returned_path)
-      assert Plug.Conn.get_session(updated_conn, :redirect_after_auth) == nil
+      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == nil
     end
   end
 
@@ -981,7 +981,7 @@ defmodule TeslaMate.WebAuthTest do
       session = Plug.Conn.get_session(final_conn)
       refute session[:web_authenticated]
       refute session[:web_auth_time]
-      refute session[:redirect_after_auth]
+      refute session[:web_auth_redirect_path]
     end
 
     test "rapid password verification doesn't degrade performance" do
@@ -1160,7 +1160,7 @@ defmodule TeslaMate.WebAuthTest do
         build_conn_with_session(%{
           web_authenticated: %{not: "boolean"},
           web_auth_time: "not_integer",
-          redirect_after_auth: 12345
+          web_auth_redirect_path: 12345
         })
 
       refute WebAuth.authenticated?(corrupted_conn)
@@ -1336,7 +1336,7 @@ defmodule TeslaMate.WebAuthTest do
       # Get and clear redirect path
       {conn, redirect_path} = WebAuth.get_and_clear_redirect_path(conn)
       assert redirect_path == "/target/page"
-      assert Plug.Conn.get_session(conn, :redirect_after_auth) == nil
+      assert Plug.Conn.get_session(conn, "web_auth_redirect_path") == nil
 
       # Simulate session expiry by manually setting old timestamp
       expired_conn =

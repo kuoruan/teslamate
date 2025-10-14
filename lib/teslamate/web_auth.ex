@@ -8,6 +8,12 @@ defmodule TeslaMate.WebAuth do
   @session_timeout_hours 1
   @dummy_password "dummy"
 
+  @session_keys %{
+    authenticated: "web_authenticated",
+    auth_time: "web_auth_time",
+    redirect_path: "web_auth_redirect_path"
+  }
+
   @doc """
   验证 Web 访问密码
 
@@ -71,8 +77,8 @@ defmodule TeslaMate.WebAuth do
 
   # 从 session map 中检查认证状态
   defp authenticated_from_session?(session) when is_map(session) do
-    web_authenticated = Map.get(session, "web_authenticated")
-    web_auth_time = Map.get(session, "web_auth_time")
+    web_authenticated = Map.get(session, @session_keys.authenticated)
+    web_auth_time = Map.get(session, @session_keys.auth_time)
 
     case {web_authenticated, web_auth_time} do
       {true, auth_time} when is_integer(auth_time) -> session_valid?(auth_time)
@@ -87,8 +93,8 @@ defmodule TeslaMate.WebAuth do
   """
   def authenticate(conn) do
     conn
-    |> Plug.Conn.put_session(:web_authenticated, true)
-    |> Plug.Conn.put_session(:web_auth_time, System.system_time(:second))
+    |> Plug.Conn.put_session(@session_keys.authenticated, true)
+    |> Plug.Conn.put_session(@session_keys.auth_time, System.system_time(:second))
   end
 
   @doc """
@@ -96,8 +102,8 @@ defmodule TeslaMate.WebAuth do
   """
   def unauthenticate(conn) do
     conn
-    |> Plug.Conn.delete_session(:web_authenticated)
-    |> Plug.Conn.delete_session(:web_auth_time)
+    |> Plug.Conn.delete_session(@session_keys.authenticated)
+    |> Plug.Conn.delete_session(@session_keys.auth_time)
   end
 
   @doc """
@@ -116,7 +122,7 @@ defmodule TeslaMate.WebAuth do
 
   # 从 session map 中获取剩余时间
   defp get_session_remaining_time(session) when is_map(session) do
-    case Map.get(session, "web_auth_time") do
+    case Map.get(session, @session_keys.auth_time) do
       auth_time when is_integer(auth_time) ->
         max(0, auth_time + @session_timeout_hours * 3600 - System.system_time(:second))
 
@@ -178,7 +184,7 @@ defmodule TeslaMate.WebAuth do
   设置认证后重定向路径
   """
   def set_redirect_path(conn, path) when is_binary(path) do
-    Plug.Conn.put_session(conn, :redirect_after_auth, path)
+    Plug.Conn.put_session(conn, @session_keys.redirect_path, path)
   end
 
   def set_redirect_path(conn, _), do: conn
@@ -187,7 +193,7 @@ defmodule TeslaMate.WebAuth do
   获取认证后重定向路径
   """
   def get_redirect_path(conn) do
-    case Plug.Conn.get_session(conn, :redirect_after_auth) do
+    case Plug.Conn.get_session(conn, @session_keys.redirect_path) do
       path when is_binary(path) -> path
       _ -> Routes.car_path(conn, :index)
     end
@@ -197,7 +203,7 @@ defmodule TeslaMate.WebAuth do
   清除认证后重定向路径
   """
   def clear_redirect_path(conn) do
-    Plug.Conn.delete_session(conn, :redirect_after_auth)
+    Plug.Conn.delete_session(conn, @session_keys.redirect_path)
   end
 
   @doc """
