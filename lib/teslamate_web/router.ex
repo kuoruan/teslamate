@@ -32,6 +32,8 @@ defmodule TeslaMateWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug TeslaMateWeb.Plugs.ApiAuth
   end
 
   scope "/", TeslaMateWeb do

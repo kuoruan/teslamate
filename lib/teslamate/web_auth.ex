@@ -65,8 +65,13 @@ defmodule TeslaMate.WebAuth do
   检查用户是否通过认证且会话仍然有效
   """
   def authenticated?(%Plug.Conn{} = conn) do
-    session = Plug.Conn.get_session(conn)
-    authenticated_from_session?(session)
+    try do
+      session = Plug.Conn.get_session(conn)
+      authenticated_from_session?(session)
+    rescue
+      # 如果 session 不存在或无法访问，返回 false
+      _ -> false
+    end
   end
 
   def authenticated?(session) when is_map(session) do
