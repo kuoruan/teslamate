@@ -17,8 +17,16 @@ defmodule TeslaMate.Locations.AmapApi do
   返回符合 OSM 格式的地址结构。
   """
   def reverse_lookup(lat, lon, lang, %{key: key, sig: sig}) do
-    wgs_coord = %{lat: lat, lon: lon}
+    wgs_coord = CoordConverter.normalize(lat, lon)
 
+    if wgs_coord == nil do
+      {:error, {:invalid_coordinates, reason: "Coordinates invalid or out of range"}}
+    else
+      do_reverse_lookup(wgs_coord, lang, key, sig)
+    end
+  end
+
+  defp do_reverse_lookup(wgs_coord, lang, key, sig) do
     # 高德地图使用 GCJ-02 坐标系，不支持 WGS-84 直接查询
     gcj_coord = CoordConverter.wgs_to_gcj(wgs_coord)
 
@@ -129,7 +137,7 @@ defmodule TeslaMate.Locations.AmapApi do
         "formatted_address" => formatted_address,
         "pois" => [poi],
         "location" => formatted_gcj_coord,
-        "origin_location" => formatted_wgs_coord,
+        "origin_location" => wgs_coord,
         "addressComponent" => address_component
       }
     }

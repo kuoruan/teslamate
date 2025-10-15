@@ -301,4 +301,154 @@ defmodule TeslaMate.Locations.CoordConverterTest do
       assert Map.has_key?(result, :lon)
     end
   end
+
+  describe "normalize/2" do
+    test "normalizes float coordinates" do
+      result = CoordConverter.normalize(39.9042, 116.4074)
+      assert result == %{lat: 39.9042, lon: 116.4074}
+    end
+
+    test "normalizes integer coordinates" do
+      result = CoordConverter.normalize(40, 116)
+      assert result == %{lat: 40.0, lon: 116.0}
+    end
+
+    test "normalizes string coordinates with valid numbers" do
+      result = CoordConverter.normalize("39.9042", "116.4074")
+      assert result == %{lat: 39.9042, lon: 116.4074}
+    end
+
+    test "normalizes string coordinates with integers" do
+      result = CoordConverter.normalize("40", "116")
+      assert result == %{lat: 40.0, lon: 116.0}
+    end
+
+    test "normalizes negative coordinates" do
+      result = CoordConverter.normalize(-37.7749, -122.4194)
+      assert result == %{lat: -37.7749, lon: -122.4194}
+    end
+
+    test "normalizes negative string coordinates" do
+      result = CoordConverter.normalize("-37.7749", "-122.4194")
+      assert result == %{lat: -37.7749, lon: -122.4194}
+    end
+
+    test "normalizes zero coordinates" do
+      result = CoordConverter.normalize(0, 0)
+      assert result == %{lat: 0.0, lon: 0.0}
+    end
+
+    test "normalizes string zero coordinates" do
+      result = CoordConverter.normalize("0", "0")
+      assert result == %{lat: 0.0, lon: 0.0}
+    end
+
+    test "returns nil for invalid string coordinates" do
+      assert CoordConverter.normalize("invalid", "116.4074") == nil
+      assert CoordConverter.normalize("39.9042", "invalid") == nil
+      assert CoordConverter.normalize("invalid", "invalid") == nil
+    end
+
+    test "returns nil for empty string coordinates" do
+      assert CoordConverter.normalize("", "") == nil
+      assert CoordConverter.normalize("", "116.4074") == nil
+      assert CoordConverter.normalize("39.9042", "") == nil
+    end
+
+    test "returns nil for partial string coordinates" do
+      assert CoordConverter.normalize("39.9042abc", "116.4074") == nil
+      assert CoordConverter.normalize("39.9042", "116.4074xyz") == nil
+    end
+
+    test "returns nil for mixed invalid types" do
+      assert CoordConverter.normalize(39.9042, "invalid") == nil
+      assert CoordConverter.normalize("invalid", 116.4074) == nil
+    end
+
+    test "returns nil for unsupported types" do
+      assert CoordConverter.normalize(%{lat: 39.9042}, 116.4074) == nil
+      assert CoordConverter.normalize(39.9042, %{lon: 116.4074}) == nil
+      assert CoordConverter.normalize(nil, nil) == nil
+      assert CoordConverter.normalize(:atom, :atom) == nil
+    end
+
+    test "rejects very large numbers outside valid range" do
+      # These should now return nil due to range validation
+      assert CoordConverter.normalize(999_999.999999, -999_999.999999) == nil
+      assert CoordConverter.normalize(200.0, 200.0) == nil
+      assert CoordConverter.normalize(-200.0, -200.0) == nil
+    end
+
+    test "handles very small decimal numbers" do
+      result = CoordConverter.normalize(0.000001, -0.000001)
+      assert result == %{lat: 0.000001, lon: -0.000001}
+    end
+
+    test "handles scientific notation in strings" do
+      result = CoordConverter.normalize("1.23e-4", "1.16e2")
+      assert result == %{lat: 0.000123, lon: 116.0}
+    end
+
+    test "handles string with leading/trailing whitespace should fail" do
+      # Float.parse doesn't handle whitespace, so these should return nil
+      assert CoordConverter.normalize(" 39.9042", "116.4074") == nil
+      assert CoordConverter.normalize("39.9042 ", "116.4074") == nil
+      assert CoordConverter.normalize("39.9042", " 116.4074") == nil
+    end
+
+    test "validates latitude range" do
+      # Valid latitude range: -90 to 90
+      assert CoordConverter.normalize(90.0, 0.0) == %{lat: 90.0, lon: 0.0}
+      assert CoordConverter.normalize(-90.0, 0.0) == %{lat: -90.0, lon: 0.0}
+      assert CoordConverter.normalize(0.0, 0.0) == %{lat: 0.0, lon: 0.0}
+
+      # Invalid latitude range
+      assert CoordConverter.normalize(90.1, 0.0) == nil
+      assert CoordConverter.normalize(-90.1, 0.0) == nil
+      assert CoordConverter.normalize(180.0, 0.0) == nil
+      assert CoordConverter.normalize(-180.0, 0.0) == nil
+    end
+
+    test "validates longitude range" do
+      # Valid longitude range: -180 to 180
+      assert CoordConverter.normalize(0.0, 180.0) == %{lat: 0.0, lon: 180.0}
+      assert CoordConverter.normalize(0.0, -180.0) == %{lat: 0.0, lon: -180.0}
+      assert CoordConverter.normalize(0.0, 0.0) == %{lat: 0.0, lon: 0.0}
+
+      # Invalid longitude range
+      assert CoordConverter.normalize(0.0, 180.1) == nil
+      assert CoordConverter.normalize(0.0, -180.1) == nil
+      assert CoordConverter.normalize(0.0, 360.0) == nil
+      assert CoordConverter.normalize(0.0, -360.0) == nil
+    end
+
+    test "validates coordinate range for integer inputs" do
+      assert CoordConverter.normalize(90, 180) == %{lat: 90.0, lon: 180.0}
+      assert CoordConverter.normalize(-90, -180) == %{lat: -90.0, lon: -180.0}
+
+      # Invalid ranges
+      assert CoordConverter.normalize(91, 0) == nil
+      assert CoordConverter.normalize(-91, 0) == nil
+      assert CoordConverter.normalize(0, 181) == nil
+      assert CoordConverter.normalize(0, -181) == nil
+    end
+
+    test "validates coordinate range for string inputs" do
+      assert CoordConverter.normalize("90.0", "180.0") == %{lat: 90.0, lon: 180.0}
+      assert CoordConverter.normalize("-90.0", "-180.0") == %{lat: -90.0, lon: -180.0}
+
+      # Invalid ranges
+      assert CoordConverter.normalize("90.1", "0.0") == nil
+      assert CoordConverter.normalize("-90.1", "0.0") == nil
+      assert CoordConverter.normalize("0.0", "180.1") == nil
+      assert CoordConverter.normalize("0.0", "-180.1") == nil
+    end
+
+    test "validates combined out-of-range coordinates" do
+      # Both lat and lon out of range
+      assert CoordConverter.normalize(100.0, 200.0) == nil
+      assert CoordConverter.normalize(-100.0, -200.0) == nil
+      assert CoordConverter.normalize("91", "181") == nil
+    end
+  end
 end

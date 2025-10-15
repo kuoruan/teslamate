@@ -17,8 +17,16 @@ defmodule TeslaMate.Locations.BaiduApi do
   返回符合 OSM 格式的地址结构。
   """
   def reverse_lookup(lat, lon, lang, %{ak: ak, sk: sk}) do
-    wgs_coord = %{lat: lat, lon: lon}
+    wgs_coord = CoordConverter.normalize(lat, lon)
 
+    if wgs_coord == nil do
+      {:error, {:invalid_coordinates, reason: "Coordinates invalid or out of range"}}
+    else
+      do_reverse_lookup(wgs_coord, lang, ak, sk)
+    end
+  end
+
+  defp do_reverse_lookup(wgs_coord, lang, ak, sk) do
     base_params = [
       ak: ak,
       coordtype: :wgs84ll,
@@ -124,7 +132,7 @@ defmodule TeslaMate.Locations.BaiduApi do
         "pois" => [poi],
         "business" => business,
         "location" => %{"lat" => lat, "lng" => lon},
-        "origin_location" => formatted_wgs_coord,
+        "origin_location" => wgs_coord,
         "addressComponent" => address_component
       }
     }

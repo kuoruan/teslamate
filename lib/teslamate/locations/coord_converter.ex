@@ -253,4 +253,51 @@ defmodule TeslaMate.Locations.CoordConverter do
   """
   @spec hash(coordinate()) :: integer()
   def hash(%{lat: lat, lon: lon}), do: :erlang.phash2({lat, lon}, 0xFFFFFFFF)
+
+  @doc """
+  规范化输入坐标，确保为浮点数格式并校验经纬度范围。
+  支持整数和字符串输入。
+  纬度范围：-90 到 90 度
+  经度范围：-180 到 180 度
+  返回 `nil` 表示输入无效或超出范围。
+  """
+  @spec normalize(any(), any()) :: coordinate() | nil
+  def normalize(lat, lon) when is_float(lat) and is_float(lon) do
+    if valid_coordinate_range?(lat, lon) do
+      %{lat: lat, lon: lon}
+    else
+      nil
+    end
+  end
+
+  def normalize(lat, lon) when is_integer(lat) and is_integer(lon) do
+    lat_float = lat * 1.0
+    lon_float = lon * 1.0
+
+    if valid_coordinate_range?(lat_float, lon_float) do
+      %{lat: lat_float, lon: lon_float}
+    else
+      nil
+    end
+  end
+
+  def normalize(lat, lon) when is_binary(lat) and is_binary(lon) do
+    with {lat_parsed, ""} <- Float.parse(lat),
+         {lon_parsed, ""} <- Float.parse(lon) do
+      if valid_coordinate_range?(lat_parsed, lon_parsed) do
+        %{lat: lat_parsed, lon: lon_parsed}
+      else
+        nil
+      end
+    else
+      _ -> nil
+    end
+  end
+
+  def normalize(_, _), do: nil
+
+  # 校验经纬度范围的私有函数
+  defp valid_coordinate_range?(lat, lon) do
+    lat >= -90.0 and lat <= 90.0 and lon >= -180.0 and lon <= 180.0
+  end
 end
