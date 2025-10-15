@@ -294,6 +294,17 @@ defmodule TeslaMate.Locations.CoordConverter do
     end
   end
 
+  def normalize(%Decimal{} = lat, %Decimal{} = lon) do
+    lat_float = Decimal.to_float(lat)
+    lon_float = Decimal.to_float(lon)
+
+    if valid_coordinate_range?(lat_float, lon_float) do
+      %{lat: lat_float, lon: lon_float}
+    else
+      nil
+    end
+  end
+
   def normalize(_, _), do: nil
 
   # 校验经纬度范围的私有函数

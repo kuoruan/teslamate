@@ -450,5 +450,91 @@ defmodule TeslaMate.Locations.CoordConverterTest do
       assert CoordConverter.normalize(-100.0, -200.0) == nil
       assert CoordConverter.normalize("91", "181") == nil
     end
+
+    test "normalizes Decimal coordinates" do
+      lat_decimal = Decimal.new("39.9042")
+      lon_decimal = Decimal.new("116.4074")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 39.9042, lon: 116.4074}
+    end
+
+    test "normalizes Decimal integer coordinates" do
+      lat_decimal = Decimal.new("40")
+      lon_decimal = Decimal.new("116")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 40.0, lon: 116.0}
+    end
+
+    test "normalizes negative Decimal coordinates" do
+      lat_decimal = Decimal.new("-37.7749")
+      lon_decimal = Decimal.new("-122.4194")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: -37.7749, lon: -122.4194}
+    end
+
+    test "normalizes Decimal zero coordinates" do
+      lat_decimal = Decimal.new("0")
+      lon_decimal = Decimal.new("0")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 0.0, lon: 0.0}
+    end
+
+    test "normalizes very small Decimal coordinates" do
+      lat_decimal = Decimal.new("0.000001")
+      lon_decimal = Decimal.new("-0.000001")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 0.000001, lon: -0.000001}
+    end
+
+    test "normalizes Decimal coordinates with high precision" do
+      lat_decimal = Decimal.new("39.904200000001")
+      lon_decimal = Decimal.new("116.407400000002")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 39.904200000001, lon: 116.407400000002}
+    end
+
+    test "validates Decimal coordinate range" do
+      # Valid Decimal coordinates at boundaries
+      lat_90 = Decimal.new("90.0")
+      lon_180 = Decimal.new("180.0")
+      lat_neg90 = Decimal.new("-90.0")
+      lon_neg180 = Decimal.new("-180.0")
+
+      assert CoordConverter.normalize(lat_90, Decimal.new("0")) == %{lat: 90.0, lon: 0.0}
+      assert CoordConverter.normalize(lat_neg90, Decimal.new("0")) == %{lat: -90.0, lon: 0.0}
+      assert CoordConverter.normalize(Decimal.new("0"), lon_180) == %{lat: 0.0, lon: 180.0}
+      assert CoordConverter.normalize(Decimal.new("0"), lon_neg180) == %{lat: 0.0, lon: -180.0}
+
+      # Invalid Decimal coordinates out of range
+      lat_91 = Decimal.new("90.1")
+      lon_181 = Decimal.new("180.1")
+      lat_neg91 = Decimal.new("-90.1")
+      lon_neg181 = Decimal.new("-180.1")
+
+      assert CoordConverter.normalize(lat_91, Decimal.new("0")) == nil
+      assert CoordConverter.normalize(lat_neg91, Decimal.new("0")) == nil
+      assert CoordConverter.normalize(Decimal.new("0"), lon_181) == nil
+      assert CoordConverter.normalize(Decimal.new("0"), lon_neg181) == nil
+    end
+
+    test "handles Decimal scientific notation" do
+      # 0.000123
+      lat_decimal = Decimal.new("1.23E-4")
+      # 116.0
+      lon_decimal = Decimal.new("1.16E2")
+      result = CoordConverter.normalize(lat_decimal, lon_decimal)
+      assert result == %{lat: 0.000123, lon: 116.0}
+    end
+
+    test "returns nil for mixed Decimal and other types" do
+      lat_decimal = Decimal.new("39.9042")
+      lon_decimal = Decimal.new("116.4074")
+
+      # Decimal with non-Decimal should return nil
+      assert CoordConverter.normalize(lat_decimal, 116.4074) == nil
+      assert CoordConverter.normalize(39.9042, lon_decimal) == nil
+      assert CoordConverter.normalize(lat_decimal, "116.4074") == nil
+      assert CoordConverter.normalize("39.9042", lon_decimal) == nil
+    end
   end
 end
