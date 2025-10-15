@@ -42,7 +42,7 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
     if is_auth_page?(conn) do
       # 如果访问的是认证页面，重定向到根目录
       conn
-      |> redirect(to: Routes.car_path(conn, :index))
+      |> redirect(to: index_page(conn))
       |> halt()
     else
       conn
@@ -54,29 +54,24 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
     # 如果已认证用户访问认证页面，重定向到根目录
     if is_auth_page?(conn) do
       conn
-      |> redirect(to: Routes.car_path(conn, :index))
+      |> redirect(to: index_page(conn))
       |> halt()
     else
       maybe_renew_session(conn)
     end
   end
 
+  defp is_get_request?(conn), do: conn.method == "GET"
+
   # 检查是否是认证页面
   defp is_auth_page?(conn) do
-    conn.method == "GET" and
-      conn.request_path == Routes.live_path(conn, TeslaMateWeb.WebAuthLive.Index)
+    is_get_request?(conn) and
+      conn.request_path == auth_page(conn)
   end
 
   # 处理未认证的请求
   defp handle_unauthenticated_request(conn) do
-    # 保存原始请求路径（仅对 GET 请求）
-    conn =
-      if conn.method == "GET" and conn.request_path != "/" do
-        query = if conn.query_string == "", do: "", else: "?#{conn.query_string}"
-        WebAuth.set_redirect_path(conn, conn.request_path <> query)
-      else
-        conn
-      end
+    conn = maybe_save_redirect_path(conn)
 
     info = %{
       path: conn.request_path,
@@ -89,8 +84,25 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
     Logger.info("Unauthorized access attempt, #{inspect(info, pretty: true)}")
 
     conn
-    |> redirect(to: Routes.live_path(conn, TeslaMateWeb.WebAuthLive.Index))
+    |> redirect(to: auth_page(conn))
     |> halt()
+  end
+
+  # 保存原始请求路径（仅对 GET 请求）
+  defp maybe_save_redirect_path(conn) do
+    if is_get_request?(conn) do
+      query = if conn.query_string != "", do: "?#{conn.query_string}", else: ""
+      full_path = conn.request_path <> query
+
+      # 仅在非首页时保存路径
+      if full_path != index_page(conn) do
+        WebAuth.set_redirect_path(conn, full_path)
+      else
+        conn
+      end
+    else
+      conn
+    end
   end
 
   # 在会话接近过期时刷新会话
@@ -104,4 +116,8 @@ defmodule TeslaMateWeb.Plugs.WebAuth do
       conn
     end
   end
+
+  defp auth_page(conn), do: Routes.live_path(conn, TeslaMateWeb.WebAuthLive.Index)
+
+  defp index_page(conn), do: Routes.car_path(conn, :index)
 end
