@@ -4,6 +4,46 @@
 
 ### New features
 
+### Improvements and bug fixes
+
+- feat: use Logger instead of IO.puts in DB check (#5050 - @swiffer)
+- feat: Increase max_header_value_length to support oauth2-proxy (#5031 - @ultravail)
+
+#### Build, CI, internal
+
+- build(deps): bump mdast-util-to-hast from 13.2.0 to 13.2.1 in /website (#5059)
+- build(deps): bump js-yaml from 3.14.1 to 3.14.2 in /website (#5043)
+- build(deps): bump crate-ci/typos from 1.39.0 to 1.40.0 (#5055)
+- build(deps): bump DeterminateSystems/update-flake-lock from 27 to 28 (#5056)
+- build(deps): bump express from 4.21.2 to 4.22.1 in /website (#5060)
+- build(deps): update flake.lock (#5027)
+- fix(website): Bump node-forge to 1.3.3 to resolve CVE-2025-12816, CVE-2025-66030 and CVE-2025-66031 (#5071 - @JakobLichterfeld)
+- chore(website): bump qs to fix CVE-2025-15284 (#5091 - @JakobLichterfeld)
+
+#### Dashboards
+
+- feat(overview): show battery heating on overview dashboard as well (#5090 - @kaistian)
+
+#### Translations
+
+#### Documentation
+
+- docs(traefik): update to v3.6 as 3.6.1 solves issues with docker 29.0 (#5034 - @JakobLichterfeld)
+- docs: fix the formatting of the `DATABASE_SOCKET_DIR` description (#5026 - @IngmarStein)
+- docs: fix external image rendering with Traefik SSL (#5074 - @swiffer)
+- docs(home_assistant): default tesla_active_route_distance_to_arrival sensor to kilometers (#5086 - @kenni)
+
+## [2.2.0] - 2025-11-06
+
+As always, there have been many improvements. We now support a proxy for the OpenStreetMap API. If you live in a geo-blocked location, this could simplify your setup. Your tokens are now more secure.
+We use the latest dependencies and support PostgreSQL 18 (To update, back up your data and follow [the guide](https://docs.teslamate.org/docs/maintenance/upgrading_postgres) **Please note: Volume mounts have changed in PostgreSQL18, see point 4 of the guide.**).
+We also avoid memory bloat on misconfigured Docker hosts. If your host has limited hardware, this will greatly improve your experience.
+The dashboards have been improved in terms of performance, and all dashboards now function as expected when set to miles.
+
+Enjoy it.
+
+### New features
+
 - feat: support proxy for openstreet API (#4970 - @jaypark0006)
 
 ### Improvements and bug fixes
@@ -12,6 +52,8 @@
 - build(deps): use elixir 1.18.4, node 22 & debian trixie (#4889 - @swiffer)
 - fix: allow using different PostgreSQL port than default when using socket_dir connection (#4979 - @jaypark0006)
 - perf: use anti join for short-circuit evaluation when getting non streamed drives (#4990 - @swiffer)
+- feat: Add ulimit cap to prevent memory bloat in some misconfigured versions of Docker/containerd Hosts (e.g. on Debian 13) (#5025 - @JakobLichterfeld)
+- feat: officially support PostgreSQL 18 (#4890 - @swiffer)
 
 #### Build, CI, internal
 
@@ -24,6 +66,9 @@
 - build(deps): bump crate-ci/typos from 1.34.0 to 1.37.0 (#4976)
 - build(deps): bump finch from 0.19.0 to 0.20.0 (#4929)
 - build(deps): update flake.lock (#4991)
+- build(deps): update flake.lock (#4997)
+- build(deps): bump actions/stale from 9.1.0 to 10.1.0 (#5019)
+- build(deps): bump @docusaurus/core from 3.9.1 to 3.9.2, @docusaurus/preset-classic from 3.9.1 to 3.9.2 and dependencies in /website (#5020)
 
 #### Dashboards
 
@@ -48,6 +93,9 @@
 - docs: explain MQTT in Readme via link to Wikipedia (#4985 - @DanCard)
 - docs(dev): provide guidelines for checking dependency updates before merging (#4969 - @JakobLichterfeld)
 - docs: add domain prefix to Home Assistant default_entity_id (#5014 - @gym22)
+- docs: add star history (#5024 - @JakobLichterfeld)
+- docs: bump Traefik to v3.5 and enable http3 in advanced guide (#5023 - @swiffer)
+- docs: add docs for volume mount change with PostgreSQL 18 (#4890 - @swiffer)
 
 ## [2.1.1] - 2025-08-16
 
@@ -2602,7 +2650,8 @@ New users need to sign in via the web interface.
 
 ## [1.0.0] - 2019-07-25
 
-[unreleased]: https://github.com/teslamate-org/teslamate/compare/v2.1.1...HEAD
+[unreleased]: https://github.com/teslamate-org/teslamate/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/teslamate-org/teslamate/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/teslamate-org/teslamate/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/teslamate-org/teslamate/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/teslamate-org/teslamate/compare/v1.33.0...v2.0.0
