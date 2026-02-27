@@ -82,7 +82,7 @@ msgstr "Додому"
 
 #: lib/teslamate_web/live/settings_live/index.ex:21
 #: lib/teslamate_web/live/settings_live/index.html.heex:4
-#: lib/teslamate_web/templates/layout/root.html.heex:108
+#: lib/teslamate_web/templates/layout/root.html.heex:120
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr "Налаштування"
@@ -112,17 +112,17 @@ msgstr "Засинає"
 msgid "unavailable"
 msgstr "недоступно"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:254
+#: lib/teslamate_web/live/settings_live/index.html.heex:279
 #, elixir-autogen, elixir-format
 msgid "Length"
 msgstr "Довжина"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:269
+#: lib/teslamate_web/live/settings_live/index.html.heex:294
 #, elixir-autogen, elixir-format
 msgid "Temperature"
 msgstr "Температура"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:251
+#: lib/teslamate_web/live/settings_live/index.html.heex:276
 #, elixir-autogen, elixir-format
 msgid "Units"
 msgstr "Одиниці"
@@ -142,7 +142,7 @@ msgstr "Гео-позиція \"%{name}\" створена"
 #: lib/teslamate_web/live/geofence_live/form.html.heex:4
 #: lib/teslamate_web/live/geofence_live/index.ex:22
 #: lib/teslamate_web/live/geofence_live/index.html.heex:5
-#: lib/teslamate_web/templates/layout/root.html.heex:102
+#: lib/teslamate_web/templates/layout/root.html.heex:114
 #, elixir-autogen, elixir-format
 msgid "Geo-Fences"
 msgstr "Гео-позиції"
@@ -322,7 +322,7 @@ msgid "Outside Temperature"
 msgstr "Температура ззовні"
 
 #: lib/teslamate_web/live/car_live/summary.html.heex:424
-#: lib/teslamate_web/live/settings_live/index.html.heex:349
+#: lib/teslamate_web/live/settings_live/index.html.heex:374
 #, elixir-autogen, elixir-format
 msgid "Version"
 msgstr "Версія"
@@ -342,19 +342,19 @@ msgstr "Відкрито"
 msgid "Remaining Time"
 msgstr "Залишилось часу"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:324
-#: lib/teslamate_web/templates/layout/root.html.heex:83
+#: lib/teslamate_web/live/settings_live/index.html.heex:349
+#: lib/teslamate_web/templates/layout/root.html.heex:95
 #, elixir-autogen, elixir-format
 msgid "Dashboards"
 msgstr ""
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:302
+#: lib/teslamate_web/live/settings_live/index.html.heex:327
 #, elixir-autogen, elixir-format
 msgid "URLs"
 msgstr "Посилання"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:216
-#: lib/teslamate_web/live/settings_live/index.html.heex:305
+#: lib/teslamate_web/live/settings_live/index.html.heex:330
 #, elixir-autogen, elixir-format
 msgid "Web App"
 msgstr "Веб Додаток"
@@ -536,18 +536,18 @@ msgstr "Пробіг"
 msgid "Streaming API"
 msgstr "Потокове API"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:370
+#: lib/teslamate_web/live/settings_live/index.html.heex:395
 #, elixir-autogen, elixir-format
 msgid "Documentation"
 msgstr "Документація"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:360
+#: lib/teslamate_web/live/settings_live/index.html.heex:385
 #, elixir-autogen, elixir-format
 msgid "GitHub"
 msgstr ""
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:355
-#: lib/teslamate_web/templates/layout/root.html.heex:189
+#: lib/teslamate_web/live/settings_live/index.html.heex:380
+#: lib/teslamate_web/templates/layout/root.html.heex:201
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "Доступне оновлення"
@@ -573,7 +573,7 @@ msgstr "За хвилину"
 msgid "Software Update available (%{version})"
 msgstr "Доступне оновлення ПЗ (%{version})"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:388
+#: lib/teslamate_web/live/settings_live/index.html.heex:413
 #, elixir-autogen, elixir-format
 msgid "Sign out"
 msgstr "Вийти"
@@ -613,27 +613,27 @@ msgstr "Ваш аккаунт Тесла заблоковано через ду�
 msgid "Downloading update"
 msgstr "Завантаження оновлення"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:146
+#: lib/teslamate_web/templates/layout/root.html.heex:158
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr "Не надано ключ шифрування"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:166
+#: lib/teslamate_web/templates/layout/root.html.heex:178
 #, elixir-autogen, elixir-format, fuzzy
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr "За додатковою інформацією, ознайомтесь з інструкцією за посиланням %{link}"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:159
+#: lib/teslamate_web/templates/layout/root.html.heex:171
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr "Автоматично сгенерований ключ шифрування, що використовується поточною сесією може бути знайдений <strong>у логах додотку</strong>."
 
-#: lib/teslamate_web/templates/layout/root.html.heex:152
+#: lib/teslamate_web/templates/layout/root.html.heex:164
 #, elixir-autogen, elixir-format, fuzzy
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr "Щоб переконатися що <strong>Tesla API токени зберігаються безпечно</strong>, ключ шифрування повинен передаватись TeslaMate через <code>ENCRYPTION_KEY</code> змінну в середовищі. Інакше, <strong>необхідно буде виконувати вхід, після кожного перезапуску</strong>."
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:284
+#: lib/teslamate_web/live/settings_live/index.html.heex:309
 #, elixir-autogen, elixir-format
 msgid "Tire Pressure"
 msgstr "Тиск"
@@ -683,6 +683,31 @@ msgstr "Сентрі Мод"
 msgid "View car location on Google Maps"
 msgstr ""
 
+#: lib/teslamate_web/live/settings_live/index.html.heex:254
+#, elixir-autogen, elixir-format
+msgid "Appearance"
+msgstr ""
+
+#: lib/teslamate_web/live/settings_live/index.html.heex:263
+#, elixir-autogen, elixir-format
+msgid "Dark"
+msgstr ""
+
+#: lib/teslamate_web/live/settings_live/index.html.heex:262
+#, elixir-autogen, elixir-format
+msgid "Follow System"
+msgstr ""
+
+#: lib/teslamate_web/live/settings_live/index.html.heex:261
+#, elixir-autogen, elixir-format
+msgid "Light"
+msgstr ""
+
+#: lib/teslamate_web/live/settings_live/index.html.heex:251
+#, elixir-autogen, elixir-format
+msgid "Theme"
+msgstr ""
+
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Enter password to access"
@@ -704,7 +729,7 @@ msgstr "Введіть свій пароль доступу"
 msgid "Login"
 msgstr "Увійти"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:119
+#: lib/teslamate_web/templates/layout/root.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Logout"
 msgstr "Вийти"
@@ -742,7 +767,7 @@ msgstr[2] ""
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:19
 #: lib/teslamate_web/live/web_auth_live/status.html.heex:9
-#: lib/teslamate_web/templates/layout/root.html.heex:116
+#: lib/teslamate_web/templates/layout/root.html.heex:128
 #, elixir-autogen, elixir-format
 msgid "Auth Status"
 msgstr "Статус аутентифікації"
