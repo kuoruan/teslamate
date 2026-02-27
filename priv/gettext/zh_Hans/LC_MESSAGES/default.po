@@ -680,32 +680,32 @@ msgstr "哨兵模式录制中"
 #: lib/teslamate_web/live/car_live/summary.html.heex:99
 #, elixir-autogen, elixir-format, fuzzy
 msgid "View car location on Google Maps"
-msgstr ""
+msgstr "在Google地图上查看车辆位置"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:254
 #, elixir-autogen, elixir-format
 msgid "Appearance"
-msgstr ""
+msgstr "外观"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:263
 #, elixir-autogen, elixir-format
 msgid "Dark"
-msgstr ""
+msgstr "深色"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:262
 #, elixir-autogen, elixir-format
 msgid "Follow System"
-msgstr ""
+msgstr "跟随系统"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:261
 #, elixir-autogen, elixir-format
 msgid "Light"
-msgstr ""
+msgstr "浅色"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:251
 #, elixir-autogen, elixir-format
 msgid "Theme"
-msgstr ""
+msgstr "主题"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format

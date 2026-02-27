@@ -682,27 +682,27 @@ msgstr "在Google Maps查看車輛位置"
 #: lib/teslamate_web/live/settings_live/index.html.heex:254
 #, elixir-autogen, elixir-format
 msgid "Appearance"
-msgstr ""
+msgstr "外觀"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:263
 #, elixir-autogen, elixir-format
 msgid "Dark"
-msgstr ""
+msgstr "深色"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:262
 #, elixir-autogen, elixir-format
 msgid "Follow System"
-msgstr ""
+msgstr "跟隨系統"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:261
 #, elixir-autogen, elixir-format
 msgid "Light"
-msgstr ""
+msgstr "淺色"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:251
 #, elixir-autogen, elixir-format
 msgid "Theme"
-msgstr ""
+msgstr "主題"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
