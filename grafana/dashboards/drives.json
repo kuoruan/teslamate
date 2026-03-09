@@ -129,7 +129,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -161,7 +161,6 @@
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -230,7 +229,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -262,7 +261,6 @@
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -350,7 +348,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -384,7 +382,6 @@
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -470,7 +467,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -559,6 +556,9 @@
               "type": "auto"
             },
             "filterable": false,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false,
             "minWidth": 150
           },
@@ -915,7 +915,7 @@
             },
             "properties": [
               {
-                "id": "custom.hidden",
+                "id": "custom.hideFrom.viz",
                 "value": true
               }
             ]
@@ -1097,7 +1097,7 @@
             },
             "properties": [
               {
-                "id": "custom.hidden",
+                "id": "custom.hideFrom.viz",
                 "value": true
               }
             ]
@@ -1109,7 +1109,7 @@
             },
             "properties": [
               {
-                "id": "custom.hidden",
+                "id": "custom.hideFrom.viz",
                 "value": true
               }
             ]
@@ -1121,7 +1121,7 @@
             },
             "properties": [
               {
-                "id": "custom.hidden",
+                "id": "custom.hideFrom.viz",
                 "value": true
               }
             ]
@@ -1227,7 +1227,7 @@
             },
             "properties": [
               {
-                "id": "custom.hidden",
+                "id": "custom.hideFrom.viz",
                 "value": true
               }
             ]
@@ -1263,19 +1263,10 @@
       "id": 2,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "enablePagination": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1343,7 +1334,7 @@
         "content": "你可以从这里查看是否存在不完整的 **行程** 数据（指没有结束日期的行程记录）。\n如果存在，你可以按照官方指南<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
         "mode": "markdown"
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "title": "",
       "type": "text"
     },
@@ -1352,7 +1343,6 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1362,6 +1352,9 @@
             "align": "center",
             "cellOptions": {
               "type": "auto"
+            },
+            "footer": {
+              "reducers": []
             },
             "inspect": false
           },
@@ -1449,18 +1442,10 @@
       "id": 9,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
+        "enablePagination": true,
         "showHeader": true
       },
-      "pluginVersion": "12.1.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1497,7 +1482,7 @@
   ],
   "preload": false,
   "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [
     "tesla"
   ],
@@ -1517,6 +1502,7 @@
         "query": "SELECT\n    id as __value,\n    CASE WHEN COUNT(id) OVER (PARTITION BY name) > 1 AND name IS NOT NULL THEN CONCAT(name, ' - ', RIGHT(vin, 6)) ELSE COALESCE(name, CONCAT('VIN ', vin)) end as __text \nFROM cars\nORDER BY display_priority ASC, name ASC, vin ASC;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1536,6 +1522,7 @@
         "query": "SELECT name AS __text, id AS __value FROM geofences ORDER BY name COLLATE \"C\" ASC;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1571,6 +1558,7 @@
         "query": "select unit_of_temperature from settings limit 1;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1588,6 +1576,7 @@
         "query": "select unit_of_length from settings limit 1;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1604,6 +1593,7 @@
         "query": "select preferred_range from settings limit 1;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1620,6 +1610,7 @@
         "query": "select base_url from settings limit 1;",
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1665,20 +1656,10 @@
         "description": "选择能效评分的计算方式。\n\n“按距离” 基于行驶距离和行驶过程中损失的续航进行简单对比。\n\n“按坡度调整” 会考虑行程中的上升/下降，并相应调整能耗。能量回收制动效率设为 85%，车辆假定质量为 2100 kg。",
         "label": "能效",
         "name": "efficiency",
-        "options": [
-          {
-            "selected": true,
-            "text": "按坡度调整",
-            "value": "slope-adjusted"
-          },
-          {
-            "selected": false,
-            "text": "按距离",
-            "value": "by distance"
-          }
-        ],
+        "options": [],
         "query": "按坡度调整 : slope-adjusted, 按距离 : by distance",
-        "type": "custom"
+        "type": "custom",
+        "valuesFormat": "csv"
       }
     ]
   },
@@ -1687,8 +1668,9 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "行程",
   "uid": "Y8upc6ZRk",
-  "version": 1
+  "version": 1,
+  "weekStart": ""
 }

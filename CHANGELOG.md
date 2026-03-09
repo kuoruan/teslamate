@@ -2,11 +2,29 @@
 
 ## [unreleased]
 
+### New features
+
+### Improvements and bug fixes
+
+- feat(webview): Sort vehicles by display_priority (#5188 - @olsoybakk and @swiffer)
+
+#### Build, CI, internal
+
+- build(deps): bump ex_cldr from 2.46.0 to 2.47.1 to fix 100% CPU lock when accessing TeslaMate web (#5166)
+
+#### Dashboards
+
+#### Translations
+
+#### Documentation
+
+## [3.0.0] - 2026-02-28
+
 Let's start with a quote: "Why do programmers like dark mode? Because light attracts bugs.". Yes, you read that right. TeslaMate Webview now has a dark mode.
 
 As always, lots of improvements have been made. Memory usage has been reduced, while performance has been increased — it sounds too good to be true, but it's the reality.
 Battery heating is now also shown on the overview dashboard, and the drives dashboard now always shows the consumption.
-To make your TeslaMate experience even better, we have also made more than 45 other improvements.
+To make your TeslaMate experience even better, we have also made more than 52 other improvements.
 
 Enjoy!
 
@@ -22,6 +40,14 @@ What does this mean for you?
 
 We believe this step is necessary to protect the project from exploitation and to ensure its long-term sustainability.
 
+### Known issues
+
+We have received reports from users suffering with "No Data" errors when viewing dashboards in Grafana (#5157).
+These issues are currently assumed to be instance specific, caused by changes in Grafana (v12.1.1 -> v12.4.0) and need to be addressed by following the steps below once.
+
+- If you are affected please try saving the TeslaMate datasource by clicking on "Save & test" in Grafana -> Connections -> Data sources -> TeslaMate.
+- If some dashboard keep showing errors please try resetting the Geofence filter by selecting "All" from the dropdown.
+
 ### New features
 
 - feat: add optional dark mode feature (#5065 - @wooter)
@@ -36,6 +62,8 @@ We believe this step is necessary to protect the project from exploitation and t
 - perf: Replace positions indexes from BTREE to BRIN to reduce memory usage (#5075 - @ilya-y-synth)
 - feat(grafana): disable update checks as version is handled via docker image (#5115 - @fatbasstard)
 - perf: use static asset compression via brotli and zstandard to enhance HTTP Compression (#5113 - @swiffer)
+- feat: use Grafana 12.4.0 (#4965 - @swiffer)
+- fix(vehicle): update state transition to handle offline scenario after a drive end with no network (#5152 - @jlestel)
 
 #### Build, CI, internal
 
@@ -74,6 +102,10 @@ We believe this step is necessary to protect the project from exploitation and t
 - build(deps): update flake.lock (#5141)
 - build(deps): relax requirement for elixir to allow 1.17+ and clarify what is supported (#5145 - @swiffer)
 - build(deps): update flake.lock (#5148)
+- build(deps): update flake.lock (#5154)
+- build(deps): bump ajv in /website (#5149)
+- chore(website): bump mimimatch to version 3.1.5 to solve CVE-2026-26996, CVE-2026-27903 and CVE-2026-27904 (#5155 - @JakobLichterfeld)
+- chore(website): bump serialize-javascript to version 7.0.3 to solve CWE-96 (#5156 - @JakobLichterfeld)
 
 #### Dashboards
 
@@ -89,6 +121,7 @@ We believe this step is necessary to protect the project from exploitation and t
 - docs: fix external image rendering with Traefik SSL (#5074 - @swiffer)
 - docs(home_assistant): default tesla_active_route_distance_to_arrival sensor to kilometers (#5086 - @kenni)
 - docs: Remove hints to now deprecated Grafana VS Code Extension in contribution guide (#5110 - @swiffer)
+- docs: Add reference to TeslaMate Achievements (#5134 - @crstian19)
 
 ## [2.2.0] - 2025-11-06
 
@@ -2706,7 +2739,8 @@ New users need to sign in via the web interface.
 
 ## [1.0.0] - 2019-07-25
 
-[unreleased]: https://github.com/teslamate-org/teslamate/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/teslamate-org/teslamate/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/teslamate-org/teslamate/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/teslamate-org/teslamate/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/teslamate-org/teslamate/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/teslamate-org/teslamate/compare/v2.0.0...v2.1.0
