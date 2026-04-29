@@ -7,16 +7,60 @@
 ### Improvements and bug fixes
 
 - feat(webview): Sort vehicles by display_priority (#5188 - @olsoybakk and @swiffer)
+- feat(webview): Make icons inherit text color for better contrast in dark mode (#5193 - @olsoybakk)
+- feat(webview): Add dark mode support for background and buttons in the map (#5240 - @olsoybakk and @swiffer)
+- fix(webview): Prevent rounding of map tiles via Bulma CSS (#5265 - @swiffer)
+- perf: ensure BRIN indexes don't degrade over time (#5276 - @swiffer)
+- fix: fix folder creation and bash 3.2 compatibility in dashboards.sh (#5233 - @svennergr)
 
 #### Build, CI, internal
 
 - build(deps): bump ex_cldr from 2.46.0 to 2.47.1 to fix 100% CPU lock when accessing TeslaMate web (#5166)
+- ci: migrate runners for arm from buildjet to gha native (#5206 - @adriankumpf)
+- ci: limit DevOps workflow runs of type push to branch main to prevent duplicate runs on PR (#5211 - @swiffer)
+- build(deps): update flake.lock (#5186)
+- fix(nix): update mix dependency hash in nix builds (#5186 - @JakobLichterfeld)
+- build(deps): bump actions/stale from 10.1.1 to 10.2.0 (#5162)
+- build(deps): bump crate-ci/typos from 1.42.3 to 1.44.0 (#5163)
+- build(deps): bump finch from 0.20.0 to 0.21.0 (#5165)
+- build(deps): bump immutable from 5.1.4 to 5.1.5 in /assets (#5176)
+- build(deps): bump svgo from 3.3.2 to 3.3.3 in /website (#5177)
+- ci: bump actions to avoid warnings for node 20 (#5213 - @swiffer)
+- ci: ensure fully purging PR related tags for images hosted on GHCR on PR close (#5212 - @swiffer)
+- ci: build images for main branch and use buildcache of main as fallback for PR builds (#5212 - @swiffer)
+- ci: run Purge PR images workflow only if PR is from our own repo (#5217 - @swiffer)
+- ci: for check_paths ensure the job value is retrieved and set as workflow output correctly (#5219 - @swiffer)
+- build(deps): bump castore from 1.0.17 to 1.0.18 (#5255)
+- build(deps-dev): bump credo from 1.7.16 to 1.7.17 (#5254)
+- build(deps): bump floki from 0.38.0 to 0.38.1 (#5249)
+- build(deps): bump crate-ci/typos from 1.44.0 to 1.45.0 (#5251)
+- build(deps): bump actions/cache from 5.0.3 to 5.0.4 (#5248)
+- build(deps): bump dorny/paths-filter from 4.0.0 to 4.0.1 (#5247)
+- build(deps): bump ecto_sql from 3.13.4 to 3.13.5 (#5260 - @swiffer)
+- build(deps): bump ex_cldr from 2.47.1 to 2.47.2 (#5260 - @swiffer)
+- build(deps-dev): bump esbuild from 0.27.3 to 0.27.7 in /assets (#5261 - @swiffer)
+- build(deps-dev): bump esbuild-sass-plugin from 3.6.0 to 3.7.0 in /assets (#5261 - @swiffer)
+- build(deps-dev): bump sass from 1.97.3 to 1.99.0 in /assets (#5261 - @swiffer)
+- build(deps): update packages in /website and remove obsolete overrides (#5264 - @swiffer)
+- build(deps): update flake.lock (#5275)
+- build(deps): update flake.lock (#5288)
 
 #### Dashboards
 
+- fix: use FLOOR/CEIL over ROUND for timestamps used in dashboard links to avoid timeranges becoming to narrow (#5187 - @swiffer)
+- fix: ensure Charges / Drives dashboards load correctly if no Geofence exists (#5199 - @swiffer)
+- fix: division by zero in SQL query for cost_mileage in Trips dashboard (#5198 - @DrMichael)
+- fix: handle incomplete data correctly in Charging Stats / Statistics / Trips dashboards (#5229 - @swiffer)
+- feat: enable timepicker in efficiency dashboard (#5257 - @swiffer)
+- fix: ensure low precision mode is used for consumption gross for larger intervals (#5257 - @swiffer)
+
 #### Translations
 
+- i18n: updated Catalan default.po (#5180 - @pellix)
+
 #### Documentation
+
+- docs: drop private schema before restore (#5190 - @brianmay)
 
 ## [3.0.0] - 2026-02-28
 
@@ -42,11 +86,9 @@ We believe this step is necessary to protect the project from exploitation and t
 
 ### Known issues
 
-We have received reports from users suffering with "No Data" errors when viewing dashboards in Grafana (#5157).
-These issues are currently assumed to be instance specific, caused by changes in Grafana (v12.1.1 -> v12.4.0) and need to be addressed by following the steps below once.
-
-- If you are affected please try saving the TeslaMate datasource by clicking on "Save & test" in Grafana -> Connections -> Data sources -> TeslaMate.
-- If some dashboard keep showing errors please try resetting the Geofence filter by selecting "All" from the dropdown.
+- We have received reports from users suffering with "No Data" errors when viewing dashboards in Grafana (#5157).
+  This issue is currently assumed to be instance specific and caused by changes in Grafana (v12.1.1 -> v12.4.0). If you are affected please try saving the TeslaMate datasource by clicking on "Save & test" in Grafana -> Connections -> Data sources -> TeslaMate.
+- Dashboards containing a Geofence filter fail to load if no Geofence is defined (#5191). While being a regression in Grafana v12.4.0 most likely it can be fixed by defining at least one Geofence. We will provide a workaround in TeslaMate v3.0.1 until it's fixed upstream.
 
 ### New features
 

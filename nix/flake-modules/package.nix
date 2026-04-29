@@ -18,7 +18,7 @@
         TOP_SRC = src;
         pname = "${pname}-mix-deps";
         inherit src version;
-        hash = "sha256-DDrREiM1BIMgD2qFPTK8QyjOYlnfE3XlnaH/jk7G2go="; # if you change the mix deps, you need to update this hash
+        hash = "sha256-5zaqvh2Z8cnFN9Ls0aSKJZZ7ygfpsDrawrRqJ5U2wEA="; # if you change the mix deps, you need to update this hash
         # hash = pkgs.lib.fakeHash;
       };
 
@@ -26,7 +26,7 @@
       nodePackages = pkgs.buildNpmPackage {
         name = "${pname}-assets";
         src = "${src}/assets";
-        npmDepsHash = "sha256-XyiaUkT/c4rZnNxmxhVLb+vEXnc64A1hjOrnR5fhaEk="; # if you change the npm deps, you need to update this hash
+        npmDepsHash = "sha256-8WkR5wqt5ooiF1Y66W3UMcbCfRmaBByS8704QHAvA4w="; # if you change the npm deps, you need to update this hash
         # npmDepsHash = pkgs.lib.fakeHash;
         dontNpmBuild = true;
         inherit nodejs;
