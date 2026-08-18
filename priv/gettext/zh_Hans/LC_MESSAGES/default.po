@@ -223,7 +223,7 @@ msgstr "当前剩余里程 (预估)"
 #: lib/teslamate_web/live/car_live/summary.html.heex:282
 #, elixir-autogen, elixir-format
 msgid "for"
-msgstr ""
+msgstr "持续"
 
 #: lib/teslamate_web/live/settings_live/index.html.heex:100
 #, elixir-autogen, elixir-format
@@ -677,7 +677,7 @@ msgstr "主题"
 #: lib/teslamate_web/live/car_live/summary.html.heex:118
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Service Mode"
-msgstr ""
+msgstr "服务模式"
 
 #: lib/teslamate_web/live/car_live/summary.html.heex:183
 #, elixir-autogen, elixir-format, fuzzy
@@ -687,143 +687,144 @@ msgstr "正在下载更新程序"
 #: lib/teslamate_web/live/car_live/summary.html.heex:179
 #, elixir-autogen, elixir-format
 msgid "Installing %{percent}%"
-msgstr ""
+msgstr "安装中 %{percent}%"
 
 #: lib/teslamate_web/live/car_live/summary.html.heex:14 lib/teslamate_web/live/car_live/summary.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Maximize map"
-msgstr ""
+msgstr "放大地图"
 
 #: lib/teslamate_web/live/car_live/summary.html.heex:15
 #, elixir-autogen, elixir-format
 msgid "Minimize map"
-msgstr ""
+msgstr "缩小地图"
 
 #: lib/teslamate_web/live/import_live/index.ex:98
 #, elixir-autogen, elixir-format
 msgid "invalid values for %{fields}"
-msgstr ""
+msgstr "%{fields} 的值无效"
 
 #: lib/teslamate_web/live/import_live/index.ex:126
 #, elixir-autogen, elixir-format
 msgid "row could not be parsed"
-msgstr ""
+msgstr "无法解析该行"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:86
 #, elixir-autogen, elixir-format
 msgid "Skipped %{count} malformed row. Valid rows continued."
 msgid_plural "Skipped %{count} malformed rows. Valid rows continued."
-msgstr[0] ""
+msgstr[0] "跳过了 %{count} 行格式错误的数据。有效行已继续处理。"
+msgstr[1] "跳过了 %{count} 行格式错误的数据。有效行已继续处理。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:94
 #, elixir-autogen, elixir-format
 msgid "Skipped rows were not imported. Nearby drive or charge summaries may be incomplete."
-msgstr ""
+msgstr "已跳过的行未导入。附近的行程或充电摘要可能不完整。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:106
 #, elixir-autogen, elixir-format
 msgid "%{file}, row %{row}: %{reason}"
-msgstr ""
+msgstr "%{file}，第 %{row} 行：%{reason}"
 
 #: lib/teslamate_web/live/import_live/index.ex:106
 #, elixir-autogen, elixir-format
 msgid "ambiguous local time"
-msgstr ""
+msgstr "本地时间有歧义"
 
 #: lib/teslamate_web/live/import_live/index.ex:118
 #, elixir-autogen, elixir-format
 msgid "column count does not match the header"
-msgstr ""
+msgstr "列数与表头不匹配"
 
 #: lib/teslamate_web/live/import_live/index.ex:114
 #, elixir-autogen, elixir-format
 msgid "date could not be converted in the selected time zone"
-msgstr ""
+msgstr "日期无法转换为所选时区"
 
 #: lib/teslamate_web/live/import_live/index.ex:102
 #, elixir-autogen, elixir-format
 msgid "invalid date"
-msgstr ""
+msgstr "无效日期"
 
 #: lib/teslamate_web/live/import_live/index.ex:110
 #, elixir-autogen, elixir-format
 msgid "nonexistent local time"
-msgstr ""
+msgstr "本地时间不存在"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:77
 #, elixir-autogen, elixir-format
 msgid "After a restart, unchanged completed files are skipped. The file active during a crash starts again from its beginning and may replay rows already stored; row-exact crash resume is not provided."
-msgstr ""
+msgstr "重启后，未修改的已完成文件会被跳过。崩溃时正在处理的文件会从头开始重新处理，可能会重复存储已保存的行；不支持精确到行的崩溃恢复。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:99
 #, elixir-autogen, elixir-format
 msgid "Rejected-row details are stored without source values so this report survives an interrupted import."
-msgstr ""
+msgstr "被拒绝行的详情会去除原始值存储，以便该报告能在导入中断后保留。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:174
 #, elixir-autogen, elixir-format
 msgid "Discard interrupted import"
-msgstr ""
+msgstr "放弃中断的导入"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:169
 #, elixir-autogen, elixir-format
 msgid "Discard this interrupted import? Its completed-file checkpoints and rejection report will no longer be used. Imported TeslaMate data is kept."
-msgstr ""
+msgstr "确定放弃此中断的导入吗？其已完成文件的检查点和拒绝报告将不再使用。已导入的 TeslaMate 数据会保留。"
 
 #: lib/teslamate_web/live/import_live/index.ex:76
 #, elixir-autogen, elixir-format
 msgid "Interrupted import discarded."
-msgstr ""
+msgstr "已放弃中断的导入。"
 
 #: lib/teslamate_web/live/import_live/index.ex:130
 #, elixir-autogen, elixir-format
 msgid "No complete vehicle data was found in the import files."
-msgstr ""
+msgstr "导入文件中未找到完整的车辆数据。"
 
 #: lib/teslamate_web/live/import_live/index.ex:139
 #, elixir-autogen, elixir-format
 msgid "No import files were found."
-msgstr ""
+msgstr "未找到导入文件。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:116
 #, elixir-autogen, elixir-format
 msgid "Showing the first %{count} malformed rows."
-msgstr ""
+msgstr "显示前 %{count} 行格式错误的数据。"
 
 #: lib/teslamate_web/live/import_live/index.ex:81
 #, elixir-autogen, elixir-format
 msgid "The import can no longer be discarded."
-msgstr ""
+msgstr "该导入已无法放弃。"
 
 #: lib/teslamate_web/live/import_live/index.ex:145
 #, elixir-autogen, elixir-format
 msgid "The import could not be started."
-msgstr ""
+msgstr "无法启动导入。"
 
 #: lib/teslamate_web/live/import_live/index.ex:134
 #, elixir-autogen, elixir-format
 msgid "The import files contain data for more than one vehicle."
-msgstr ""
+msgstr "导入文件包含多辆车的数据。"
 
 #: lib/teslamate_web/live/import_live/index.ex:142
 #, elixir-autogen, elixir-format
 msgid "The import is no longer idle. Reload and try again."
-msgstr ""
+msgstr "导入已不在空闲状态。请刷新后重试。"
 
 #: lib/teslamate_web/live/import_live/index.html.heex:136
 #, elixir-autogen, elixir-format
 msgid "This interrupted import will resume with its saved time zone. The time zone cannot be changed while resuming this run."
-msgstr ""
+msgstr "此中断的导入将使用其保存的时区继续。恢复运行期间无法更改时区。"
 
 #: lib/teslamate_web/live/import_live/index.ex:122
 #, elixir-autogen, elixir-format
 msgid "row belongs to a different vehicle"
-msgstr ""
+msgstr "该行属于其他车辆"
 
 #: lib/teslamate_web/live/car_live/summary.ex:135 lib/teslamate_web/live/car_live/summary.ex:140
 #, elixir-autogen, elixir-format
 msgid "VIN %{vin}"
-msgstr ""
+msgstr "VIN %{vin}"
 
 #: lib/teslamate_web/live/web_auth_live/index.html.heex:10
 #, elixir-autogen, elixir-format
@@ -860,18 +861,21 @@ msgstr "Web 访问认证"
 msgid "%{count} hour"
 msgid_plural "%{count} hours"
 msgstr[0] "%{count} 小时"
+msgstr[1] "%{count} 小时"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:43 lib/teslamate_web/live/web_auth_live/status.ex:49
 #, elixir-autogen, elixir-format
 msgid "%{count} minute"
 msgid_plural "%{count} minutes"
 msgstr[0] "%{count} 分钟"
+msgstr[1] "%{count} 分钟"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:52
 #, elixir-autogen, elixir-format
 msgid "%{count} second"
 msgid_plural "%{count} seconds"
 msgstr[0] "%{count} 秒"
+msgstr[1] "%{count} 秒"
 
 #: lib/teslamate_web/live/web_auth_live/status.ex:19 lib/teslamate_web/live/web_auth_live/status.html.heex:9 lib/teslamate_web/templates/layout/root.html.heex:128
 #, elixir-autogen, elixir-format
