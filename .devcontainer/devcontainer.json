@@ -1,0 +1,19 @@
+{
+  "name": "TeslaMate",
+  "build": { "dockerfile": "Dockerfile" },
+  "forwardPorts": [4000],
+  "postCreateCommand": ".devcontainer/init-db.sh",
+  "postStartCommand": ".devcontainer/start-db.sh",
+  "remoteEnv": {
+    "DATABASE_HOST": "127.0.0.1",
+    "DATABASE_USER": "postgres",
+    "DATABASE_PASS": "postgres",
+    "DATABASE_NAME": "teslamate_dev",
+    "MIX_ENV": "dev"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["elixir-lsp.elixir-ls"]
+    }
+  }
+}
