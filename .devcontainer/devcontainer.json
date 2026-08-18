@@ -1,11 +1,14 @@
 {
   "name": "TeslaMate",
   "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
   "forwardPorts": [4000],
   "postCreateCommand": ".devcontainer/init-db.sh",
   "postStartCommand": ".devcontainer/start-db.sh",
   "remoteEnv": {
-    "DATABASE_HOST": "127.0.0.1",
+    "DATABASE_HOST": "host.docker.internal",
     "DATABASE_USER": "postgres",
     "DATABASE_PASS": "postgres",
     "DATABASE_NAME": "teslamate_dev",

@@ -8,10 +8,13 @@ docker run -d --name teslamate-db \
   -p 5432:5432 \
   postgres:18
 
-# 等 Postgres 可连接
-until pg_isready -h 127.0.0.1 -U postgres -d teslamate_dev >/dev/null 2>&1; do
+# 等 Postgres 可连接（经宿主端口映射访问 sibling 容器）
+until pg_isready -h host.docker.internal -U postgres -d teslamate_dev >/dev/null 2>&1; do
   sleep 1
 done
 
 mix deps.get
 mix setup
+
+# 创建测试数据库
+MIX_ENV=test mix ecto.setup
