@@ -12,7 +12,8 @@
     "DATABASE_USER": "postgres",
     "DATABASE_PASS": "postgres",
     "DATABASE_NAME": "teslamate_dev",
-    "MIX_ENV": "dev"
+    "MIX_ENV": "dev",
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
   },
   "customizations": {
     "vscode": {
