@@ -1,10 +1,11 @@
-{ stdenv
-, lib
-, pkgs
-, writeShellScript
-, databaseUser
-, databaseName
-, ...
+{
+  stdenv,
+  lib,
+  pkgs,
+  writeShellScript,
+  databaseUser,
+  databaseName,
+  ...
 }:
 let
   backup = writeShellScript "teslamate-backup" ''
@@ -20,9 +21,10 @@ let
     systemctl stop teslamate.service
 
     # Drop existing data and reinitialize
-    sudo -u teslamate psql -U ${databaseUser} << .
-      drop schema public cascade;
-      create schema public;
+    sudo -u teslamate psql -U ${databaseUser} -d ${databaseName} << .
+      DROP SCHEMA IF EXISTS public cascade;
+      DROP SCHEMA IF EXISTS private CASCADE;
+      CREATE SCHEMA public;
       CREATE EXTENSION cube WITH SCHEMA public;
       CREATE EXTENSION earthdistance WITH SCHEMA public;
     .

@@ -336,12 +336,18 @@
       },
       "id": 2,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "min",
             "max"
           ],
           "displayMode": "list",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -351,7 +357,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -453,7 +459,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -534,7 +540,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "alias": "Elapsed Time",
@@ -674,7 +680,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -705,7 +711,6 @@
           }
         }
       ],
-      "title": "",
       "type": "stat"
     },
     {
@@ -809,7 +814,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1014,6 +1019,7 @@
         },
         "view": {
           "allLayers": true,
+          "dashboardVariable": false,
           "id": "fit",
           "lat": 0,
           "lon": 0,
@@ -1021,7 +1027,7 @@
           "zoom": 15
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1052,7 +1058,6 @@
           }
         }
       ],
-      "title": "",
       "type": "geomap"
     },
     {
@@ -1152,7 +1157,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1292,7 +1297,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1302,7 +1307,7 @@
           "editorMode": "code",
           "format": "time_series",
           "rawQuery": true,
-          "rawSql": "SELECT $__timeGroupAlias(date,$__interval),\r\navg(\r\n    case when charger_phases >= 1 then\r\n    cast(nullif(${determine_phases:sqlstring}, '') as numeric) * charger_actual_current * charger_voltage / 1000.0 else charger_power end) as \"Power\" \r\nFROM charges WHERE charging_process_id = $charging_process_id\r\nGROUP BY 1 ORDER BY 1",
+          "rawSql": "SELECT $__timeGroupAlias(date,$__interval),\r\navg(\r\n    case when charger_phases >= 1 then\r\n    coalesce(cast(nullif(${determine_phases:sqlstring}, '') as numeric) * charger_actual_current * charger_voltage / 1000.0, charger_power) else charger_power end) as \"Power\" \r\nFROM charges WHERE charging_process_id = $charging_process_id\r\nGROUP BY 1 ORDER BY 1",
           "refId": "Current",
           "sql": {
             "columns": [
@@ -1400,7 +1405,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1544,7 +1549,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1748,6 +1753,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": false
         },
@@ -1800,7 +1806,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1977,12 +1983,12 @@
           "text": "2",
           "value": "2"
         },
-        "definition": "with data as (\n\n    select\n        avg(c.charger_power * 1000.0 / nullif(c.charger_actual_current * c.charger_voltage, 0)) p,\n        avg(c.charger_phases) r,\n        avg(c.charger_voltage) v,\n        count(*) as n\n    from charges c\n    where c.charging_process_id = ${charging_process_id}\n\n)\n\nselect\n    case\n        when p is not null and p > 0 and n > 15 then case\n            when r = round(p) then r\n            when r = 3 and abs(p / sqrt(r) - 1) <= 0.1 then sqrt(r)\n            when abs(round(p) - p) <= 0.3 then round(p)\n            else null\n        end\n        else null\n    end as phases\nfrom data",
+        "definition": "with data as (\n\n    select\n        avg(c.charger_power * 1000.0 / nullif(c.charger_actual_current::int * c.charger_voltage, 0)) p,\n        avg(c.charger_phases) r,\n        avg(c.charger_voltage) v,\n        count(*) as n\n    from charges c\n    where c.charging_process_id = ${charging_process_id}\n\n)\n\nselect\n    case\n        when p is not null and p > 0 and n > 15 then case\n            when r = round(p) then r\n            when r = 3 and abs(p / sqrt(r) - 1) <= 0.1 then sqrt(r)\n            when round(p) > 0 and abs(round(p) - p) <= 0.3 then round(p)\n            else null\n        end\n        else null\n    end as phases\nfrom data",
         "description": "",
         "hide": 2,
         "name": "determine_phases",
         "options": [],
-        "query": "with data as (\n\n    select\n        avg(c.charger_power * 1000.0 / nullif(c.charger_actual_current * c.charger_voltage, 0)) p,\n        avg(c.charger_phases) r,\n        avg(c.charger_voltage) v,\n        count(*) as n\n    from charges c\n    where c.charging_process_id = ${charging_process_id}\n\n)\n\nselect\n    case\n        when p is not null and p > 0 and n > 15 then case\n            when r = round(p) then r\n            when r = 3 and abs(p / sqrt(r) - 1) <= 0.1 then sqrt(r)\n            when abs(round(p) - p) <= 0.3 then round(p)\n            else null\n        end\n        else null\n    end as phases\nfrom data",
+        "query": "with data as (\n\n    select\n        avg(c.charger_power * 1000.0 / nullif(c.charger_actual_current::int * c.charger_voltage, 0)) p,\n        avg(c.charger_phases) r,\n        avg(c.charger_voltage) v,\n        count(*) as n\n    from charges c\n    where c.charging_process_id = ${charging_process_id}\n\n)\n\nselect\n    case\n        when p is not null and p > 0 and n > 15 then case\n            when r = round(p) then r\n            when r = 3 and abs(p / sqrt(r) - 1) <= 0.1 then sqrt(r)\n            when round(p) > 0 and abs(round(p) - p) <= 0.3 then round(p)\n            else null\n        end\n        else null\n    end as phases\nfrom data",
         "refresh": 1,
         "regex": "",
         "regexApplyTo": "value",
@@ -1997,7 +2003,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "充电详情",
-  "uid": "BHhxFeZRz",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "BHhxFeZRz"
 }

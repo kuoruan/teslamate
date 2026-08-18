@@ -173,12 +173,18 @@
       },
       "id": 2,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [
             "min",
             "max"
           ],
           "displayMode": "table",
+          "enableFacetedFilter": false,
+          "overflow": "ellipsis",
           "placement": "bottom",
           "showLegend": true
         },
@@ -189,7 +195,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -293,7 +299,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "里程",
-  "uid": "NjtMTFggz",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "NjtMTFggz"
 }

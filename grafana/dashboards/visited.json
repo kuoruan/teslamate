@@ -160,6 +160,7 @@
         },
         "view": {
           "allLayers": true,
+          "dashboardVariable": false,
           "id": "fit",
           "lat": 0,
           "lon": 0,
@@ -167,7 +168,7 @@
           "zoom": 15
         }
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -198,7 +199,6 @@
           }
         }
       ],
-      "title": "",
       "type": "geomap"
     },
     {
@@ -261,7 +261,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -292,7 +292,6 @@
           }
         }
       ],
-      "title": "",
       "type": "stat"
     },
     {
@@ -396,7 +395,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -427,7 +426,6 @@
           }
         }
       ],
-      "title": "",
       "type": "stat"
     },
     {
@@ -493,7 +491,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -524,7 +522,6 @@
           }
         }
       ],
-      "title": "",
       "type": "stat"
     }
   ],
@@ -597,7 +594,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "足迹",
-  "uid": "RG_DxSmgk",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "RG_DxSmgk"
 }

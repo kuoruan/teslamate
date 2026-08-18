@@ -308,7 +308,7 @@
           }
         ]
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -446,7 +446,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "行程（荷兰税务）",
-  "uid": "lBIoQIggk",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "lBIoQIggk"
 }

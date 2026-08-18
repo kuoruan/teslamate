@@ -96,7 +96,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -176,7 +176,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -469,7 +469,7 @@
           }
         ]
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -602,7 +602,7 @@
   },
   "timezone": "browser",
   "title": "更新",
-  "uid": "IiC07mgWz",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "IiC07mgWz"
 }

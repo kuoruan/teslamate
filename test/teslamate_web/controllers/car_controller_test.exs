@@ -37,6 +37,38 @@ defmodule TeslaMateWeb.CarControllerTest do
              |> Enum.find(&match?({"span", [_, {"data-tooltip", ^tooltip}], _}, &1))
   end
 
+  defp assert_car_title(html, name) do
+    assert name ==
+             html
+             |> Floki.parse_document!()
+             |> Floki.find(".car .title")
+             |> Floki.filter_out(".is-sr-only")
+             |> Floki.text()
+             |> String.trim()
+  end
+
+  defp assert_car_title_vin(html, name, vin_label) do
+    assert [{"span", attrs, content}] =
+             html
+             |> Floki.parse_document!()
+             |> Floki.find(".car .title [data-tooltip]")
+
+    attrs = Map.new(attrs)
+
+    assert content |> Floki.filter_out(".is-sr-only") |> Floki.text() |> String.trim() == name
+    assert attrs["data-tooltip"] == vin_label
+    refute Map.has_key?(attrs, "title")
+
+    case name do
+      ^vin_label ->
+        assert [] == Floki.find(content, ".is-sr-only")
+
+      _name ->
+        assert content |> Floki.find(".is-sr-only") |> Floki.text() |> String.trim() ==
+                 ", #{vin_label}"
+    end
+  end
+
   defp car_fixture(settings) do
     {:ok, car} =
       Log.create_car(%{
@@ -65,9 +97,11 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     @tag :signed_in
     test "lists all active vehicles", %{conn: conn} do
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
       {:ok, _pid} =
         start_supervised(
-          {ApiMock, name: :api_vehicle, events: [{:ok, online_event()}], pid: self()}
+          {ApiMock, name: :api_vehicle, events: [{:ok, online_event(now_ts)}], pid: self()}
         )
 
       {:ok, _pid} =
@@ -121,7 +155,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "asleep")
       assert table_row(html, "Range (rated)", "380.26 km")
       assert table_row(html, "Range (est.)", "401.52 km")
@@ -131,14 +165,40 @@ defmodule TeslaMateWeb.CarControllerTest do
     end
 
     @tag :signed_in
+    test "shows the VIN suffix in an accessible car title tooltip", %{conn: conn} do
+      events = [
+        {:ok, %TeslaApi.Vehicle{state: "asleep", display_name: "FooCar"}}
+      ]
+
+      :ok = start_vehicles(events, vin: "5YJ3E1EA7KF317000")
+
+      conn = get(conn, Routes.car_path(conn, :index))
+
+      assert html = response(conn, 200)
+      assert_car_title_vin(html, "FooCar", "VIN 317000")
+    end
+
+    @tag :capture_log
+    @tag :signed_in
+    test "shows the full VIN when the car has no display name", %{conn: conn} do
+      :ok = start_vehicles([{:error, :unknown}], vin: "5YJ3E1EA7KF317000")
+
+      conn = get(conn, Routes.car_path(conn, :index))
+
+      assert html = response(conn, 200)
+      assert_car_title_vin(html, "VIN 5YJ3E1EA7KF317000", "VIN 5YJ3E1EA7KF317000")
+    end
+
+    @tag :signed_in
     test "displays the friendly name", %{conn: conn} do
-      now = (DateTime.utc_now() |> DateTime.to_unix()) * 1000
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: now, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            vehicle_config: %{car_type: "model3", trim_badging: "p74d"}
          )}
       ]
@@ -165,13 +225,14 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     @tag :signed_in
     test "renders current vehicle stats [:online]", %{conn: conn} do
-      now = (DateTime.utc_now() |> DateTime.to_unix()) * 1000
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: now, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            charge_state: %{
              battery_range: 200,
              est_battery_range: 180,
@@ -181,7 +242,7 @@ defmodule TeslaMateWeb.CarControllerTest do
            },
            climate_state: %{is_preconditioning: true, outside_temp: 24, inside_temp: 23.2},
            vehicle_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              car_version: "2019.40.50.7 ad132c7b057e",
              software_update: %{status: "available", version: "2020.4.1 4a4ad401858f"},
              locked: true,
@@ -208,7 +269,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
 
       assert "Model S P90D" ==
                html
@@ -229,7 +290,20 @@ defmodule TeslaMateWeb.CarControllerTest do
       assert icon(html, "Sentry Mode", "shield-check")
       assert icon(html, "Windows open", "window-open")
       assert icon(html, "Doors open", "car-door")
-      assert icon(html, "Software Update available (2020.4.1)", "gift-outline")
+
+      software_update_icon =
+        html
+        |> Floki.parse_document!()
+        |> Floki.find(".icons .icon")
+        |> Enum.find(&match?({"a", _, [{"span", [{"class", "mdi mdi-gift-outline"}], _}]}, &1))
+
+      assert {"a", update_attrs, _} = software_update_icon
+      update_attrs_map = Map.new(update_attrs)
+      assert update_attrs_map["data-tooltip"] == "Software Update available (2020.4.1)"
+
+      assert update_attrs_map["href"] ==
+               "https://www.notateslaapp.com/software-updates/version/2020.4.1/release-notes"
+
       assert table_row(html, "Outside Temperature", "24 °C")
       assert table_row(html, "Inside Temperature", "23.2 °C")
       assert table_row(html, "Mileage", "42000 km")
@@ -250,14 +324,16 @@ defmodule TeslaMateWeb.CarControllerTest do
     @tag :signed_in
     test "renders current vehicle stats [:charging]", %{conn: conn} do
       car = car_fixture(%{})
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            charge_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              charger_power: 11,
              charger_phases: 3,
              charger_voltage: 229,
@@ -282,7 +358,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "charging")
       assert table_row(html, "Remaining Time", "1 h, 49 min")
       assert icon(html, "Plugged In", "power-plug")
@@ -307,12 +383,15 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     @tag :signed_in
     test "does not render remaining seconds", %{conn: conn} do
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
       events = [
         {:ok,
          online_event(
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           now_ts,
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            charge_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              charging_state: "Charging",
              charge_energy_added: "4.32",
              ideal_battery_range: 200,
@@ -331,12 +410,15 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     @tag :signed_in
     test "renders current vehicle stats [:driving]", %{conn: conn} do
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
            drive_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              latitude: 0.0,
              longitude: 0.0,
              shift_state: "D",
@@ -350,7 +432,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "driving")
       assert table_row(html, "Speed", "48 km/h")
     end
@@ -358,13 +440,15 @@ defmodule TeslaMateWeb.CarControllerTest do
     @tag :signed_in
     test "renders current vehicle stats [:updating]", %{conn: conn} do
       alias TeslaApi.Vehicle.State.VehicleState.SoftwareUpdate
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
            vehicle_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              car_version: "2019.8.4 530d1d3",
              software_update: %SoftwareUpdate{expected_duration_sec: 2700, status: "installing"}
            }
@@ -376,7 +460,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "updating")
     end
 
@@ -391,7 +475,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "asleep")
     end
 
@@ -406,19 +490,21 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "offline")
     end
 
     @tag :signed_in
     test "renders current vehicle stats [:falling asleep]", %{conn: conn} do
       _car = car_fixture(%{suspend_min: 60, suspend_after_idle_min: 1, use_streaming_api: false})
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            climate_state: %{is_preconditioning: false}
          )}
       ]
@@ -430,7 +516,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "falling asleep")
     end
 
@@ -446,7 +532,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5"><\/p>/
+      assert_car_title(html, "VIN xxxxx")
       assert table_row(html, "Status", "unavailable")
     end
 
@@ -456,11 +542,14 @@ defmodule TeslaMateWeb.CarControllerTest do
         Settings.get_global_settings!()
         |> Settings.update_global_settings(%{preferred_range: :rated})
 
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            charge_state: %{
              ideal_battery_range: 200,
              est_battery_range: 180,
@@ -468,7 +557,7 @@ defmodule TeslaMateWeb.CarControllerTest do
              battery_level: 69
            },
            climate_state: %{is_preconditioning: false, outside_temp: 24, inside_temp: 23.2},
-           vehicle_state: %{timestamp: 0, locked: true, sentry_mode: true, car_version: ""},
+           vehicle_state: %{timestamp: now_ts, locked: true, sentry_mode: true, car_version: ""},
            vehicle_config: %{car_type: "models2", trim_badging: "p90d"}
          )}
       ]
@@ -480,7 +569,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Range (rated)", "281.64 km")
       assert table_row(html, "Range (est.)", "289.68 km")
     end
@@ -492,12 +581,15 @@ defmodule TeslaMateWeb.CarControllerTest do
         Settings.get_global_settings!()
         |> Settings.update_global_settings(%{unit_of_length: :mi, unit_of_temperature: :F})
 
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
            drive_state: %{
-             timestamp: 0,
+             timestamp: now_ts,
              latitude: 0.0,
              longitude: 0.0,
              shift_state: "D",
@@ -526,7 +618,7 @@ defmodule TeslaMateWeb.CarControllerTest do
       conn = get(conn, Routes.car_path(conn, :index))
 
       assert html = response(conn, 200)
-      assert html =~ ~r/<p class="title is-5">FooCar<\/p>/
+      assert_car_title(html, "FooCar")
       assert table_row(html, "Status", "driving")
       assert table_row(html, "Range (rated)", "200.0 mi")
       assert table_row(html, "Range (est.)", "180.0 mi")
@@ -545,12 +637,14 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     test "suspends logging", %{conn: conn} do
       _car = car_fixture(%{suspend_min: 60, suspend_after_idle_min: 60, use_streaming_api: false})
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            climate_state: %{is_preconditioning: false}
          )}
       ]
@@ -566,12 +660,14 @@ defmodule TeslaMateWeb.CarControllerTest do
 
     test "returns error if suspending is not possible", %{conn: conn} do
       _car = car_fixture(%{suspend_min: 60, suspend_after_idle_min: 60, use_streaming_api: false})
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            climate_state: %{is_preconditioning: true}
          )}
       ]
@@ -590,12 +686,14 @@ defmodule TeslaMateWeb.CarControllerTest do
       alias TeslaMate.Vehicles.Vehicle.Summary
 
       _car = car_fixture(%{suspend_min: 60, suspend_after_idle_min: 1, use_streaming_api: false})
+      now_ts = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
 
       events = [
         {:ok,
          online_event(
+           now_ts,
            display_name: "FooCar",
-           drive_state: %{timestamp: 0, latitude: 0.0, longitude: 0.0},
+           drive_state: %{timestamp: now_ts, latitude: 0.0, longitude: 0.0},
            climate_state: %{is_preconditioning: false}
          )}
       ]
@@ -611,7 +709,7 @@ defmodule TeslaMateWeb.CarControllerTest do
     end
   end
 
-  def start_vehicles(events \\ []) do
+  def start_vehicles(events \\ [], opts \\ []) do
     {:ok, _pid} = start_supervised({ApiMock, name: :api_vehicle, events: events, pid: self()})
 
     {:ok, _pid} =
@@ -623,7 +721,7 @@ defmodule TeslaMateWeb.CarControllerTest do
              display_name: "foo",
              id: 4242,
              vehicle_id: 404,
-             vin: "xxxxx"
+             vin: Keyword.get(opts, :vin, "xxxxx")
            }
          ]}
       )

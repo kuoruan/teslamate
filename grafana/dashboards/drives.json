@@ -129,7 +129,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -140,7 +140,6 @@
           "refId": "A"
         }
       ],
-      "title": "",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -229,7 +228,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -240,7 +239,6 @@
           "refId": "A"
         }
       ],
-      "title": "",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -348,7 +346,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -359,7 +357,6 @@
           "refId": "A"
         }
       ],
-      "title": "",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -467,7 +464,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -478,7 +475,6 @@
           "refId": "A"
         }
       ],
-      "title": "",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1266,7 +1262,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1314,10 +1310,6 @@
       "type": "row"
     },
     {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 2,
         "w": 24,
@@ -1334,8 +1326,7 @@
         "content": "你可以从这里查看是否存在不完整的 **行程** 数据（指没有结束日期的行程记录）。\n如果存在，你可以按照官方指南<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
         "mode": "markdown"
       },
-      "pluginVersion": "12.4.0",
-      "title": "",
+      "pluginVersion": "13.1.1",
       "type": "text"
     },
     {
@@ -1445,7 +1436,7 @@
         "enablePagination": true,
         "showHeader": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1513,14 +1504,14 @@
           "type": "grafana-postgresql-datasource",
           "uid": "TeslaMate"
         },
-        "definition": "-- The \"Include All option\" built into Grafana is not initializing correctly if no value is returned by the SQL query anymore\r\n-- Create the option via SQL as a temporary workaround until fixed (https://github.com/grafana/grafana/issues/119793)\r\n\r\nwith geofences_incl_all_option as (\r\n\r\n  select 'All' as __text, -1 as __value, '_all' as name\r\n\r\n  union all\r\n\r\n  SELECT name AS __text, id AS __value, name from geofences\r\n\r\n)\r\n\r\nSELECT __text, __value from geofences_incl_all_option order by name asc",
+        "definition": "-- The \"Include All option\" built into Grafana is not initializing correctly if no value is returned by the SQL query anymore\r\n-- If no GeoFence exists, create a Placeholder Geofence entry until fixed (https://github.com/grafana/grafana/issues/119793)\r\n\r\nwith geofences_incl_placeholder as (\r\n\r\n  select 'Giga Texas (Placeholder)' as __text, 0 as __value where ((select count(*) from geofences) = 0)\r\n\r\n  union all\r\n\r\n  SELECT name AS __text, id AS __value from geofences\r\n\r\n)\r\n\r\nSELECT __text, __value from geofences_incl_placeholder order by __text asc",
         "description": "收藏的起点或者终点",
-        "includeAll": false,
+        "includeAll": true,
         "label": "收藏点",
         "multi": true,
         "name": "geofence",
         "options": [],
-        "query": "-- The \"Include All option\" built into Grafana is not initializing correctly if no value is returned by the SQL query anymore\r\n-- Create the option via SQL as a temporary workaround until fixed (https://github.com/grafana/grafana/issues/119793)\r\n\r\nwith geofences_incl_all_option as (\r\n\r\n  select 'All' as __text, -1 as __value, '_all' as name\r\n\r\n  union all\r\n\r\n  SELECT name AS __text, id AS __value, name from geofences\r\n\r\n)\r\n\r\nSELECT __text, __value from geofences_incl_all_option order by name asc",
+        "query": "-- The \"Include All option\" built into Grafana is not initializing correctly if no value is returned by the SQL query anymore\r\n-- If no GeoFence exists, create a Placeholder Geofence entry until fixed (https://github.com/grafana/grafana/issues/119793)\r\n\r\nwith geofences_incl_placeholder as (\r\n\r\n  select 'Giga Texas (Placeholder)' as __text, 0 as __value where ((select count(*) from geofences) = 0)\r\n\r\n  union all\r\n\r\n  SELECT name AS __text, id AS __value from geofences\r\n\r\n)\r\n\r\nSELECT __text, __value from geofences_incl_placeholder order by __text asc",
         "refresh": 1,
         "regex": "",
         "regexApplyTo": "value",
@@ -1671,7 +1662,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "行程",
-  "uid": "Y8upc6ZRk",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "Y8upc6ZRk"
 }

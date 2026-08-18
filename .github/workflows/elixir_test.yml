@@ -4,8 +4,6 @@ on:
   workflow_call:
 
 env:
-  CACHE_NAME_DEPS: cache-elixir-deps
-  CACHE_NAME_COMPILED_TEST: cache-compiled-test-build
   ELIXIR_ASSERT_TIMEOUT: 1000
 
 permissions:
@@ -29,14 +27,12 @@ jobs:
           --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup Elixir and Cache Dependencies
         id: setup-elixir-and-cache-deps
         uses: ./.github/actions/setup-elixir-and-cache-deps
         with:
-          cache-name-deps: ${{ env.CACHE_NAME_DEPS }}
-          cache-name-compiled: ${{ env.CACHE_NAME_COMPILED_TEST }}
           mix-env: test
           ELIXIR_ASSERT_TIMEOUT: ${{ env.ELIXIR_ASSERT_TIMEOUT }}
 

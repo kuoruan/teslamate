@@ -4,7 +4,6 @@ defmodule TeslaMate.Auth do
   """
 
   import Ecto.Query, warn: false
-  require Logger
 
   alias TeslaMate.Repo
 
@@ -55,6 +54,11 @@ defmodule TeslaMate.Auth do
     with {:ok, _tokens} <- maybe_created_or_updated do
       :ok
     end
+  end
+
+  def delete_tokens do
+    Repo.delete_all(Tokens)
+    :ok
   end
 
   defp create_tokens(attrs) do

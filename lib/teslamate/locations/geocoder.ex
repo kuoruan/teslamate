@@ -1,18 +1,23 @@
 defmodule TeslaMate.Locations.Geocoder do
-  use Tesla, only: [:get]
-
   @version Mix.Project.config()[:version]
-
-  adapter Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000
-
-  plug Tesla.Middleware.BaseUrl, "https://nominatim.openstreetmap.org"
-  plug Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]
-  plug Tesla.Middleware.JSON
-  plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
 
   require Logger
 
   alias TeslaMate.Locations.{Address, BaiduApi, AmapApi}
+
+  defp client do
+    Tesla.client(
+      [
+        {Tesla.Middleware.BaseUrl, "https://nominatim.openstreetmap.org"},
+        {Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]},
+        Tesla.Middleware.JSON,
+        {Tesla.Middleware.Logger, debug: true, level: &log_level/1}
+      ],
+      {Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000}
+    )
+  end
+
+  defp get(url, opts), do: Tesla.get(client(), url, opts)
 
   def reverse_lookup(lat, lon, lang \\ "en") do
     with {:error, _} <- try_baidu_map(lat, lon, lang),
@@ -183,6 +188,13 @@ defmodule TeslaMate.Locations.Geocoder do
     "department"
   ]
 
+  @state_aliases [
+    "state",
+    "province",
+    "territory",
+    "state_code"
+  ]
+
   defp into_address(%{"error" => "Unable to geocode"} = raw) do
     unknown_address = %{
       display_name: "Unknown",
@@ -216,7 +228,7 @@ defmodule TeslaMate.Locations.Geocoder do
       city: raw["address"] |> get_first(@city_aliases),
       county: raw["address"] |> get_first(@county_aliases),
       postcode: get_in(raw, ["address", "postcode"]),
-      state: raw["address"] |> get_first(["state", "province", "state_code"]),
+      state: raw["address"] |> get_first(@state_aliases),
       state_district: get_in(raw, ["address", "state_district"]),
       country: raw["address"] |> get_first(["country", "country_name"]),
       raw: raw
@@ -232,6 +244,7 @@ defmodule TeslaMate.Locations.Geocoder do
     with nil <- Map.get(address, key), do: get_first(address, aliases)
   end
 
-  defp log_level(%Tesla.Env{} = env) when env.status >= 400, do: :warning
-  defp log_level(%Tesla.Env{}), do: :info
+  defp log_level({:ok, %Tesla.Env{} = env}) when env.status >= 400, do: :warning
+  defp log_level({:ok, %Tesla.Env{}}), do: :info
+  defp log_level({:error, _reason}), do: :error
 end

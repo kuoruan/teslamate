@@ -6,12 +6,261 @@
 
 ### Improvements and bug fixes
 
+- fix(vehicle): shorten the streaming suspend probe interval from 30 to 10 minutes (#5600 - @onevcat)
+- feat(mqtt): enrich Home Assistant device metadata and republish on change (#5616 - @nebhale)
+- fix(charging): prevent smallint overflow in energy calculation and recalc migration on battery-side DC readings (5617 - @JakobLichterfeld)
+
+#### Build, CI, internal
+
+- build(deps): bump tzdata from 1.1.3 to 1.1.4 (#5614 - @mews-se)
+- ci: purge orphaned GHCR attestation referrers (#5622 - @swiffer)
+- test: stop the app in test_helper instead of relying on --no-start (#5615 - @swiffer)
+- build(deps): update flake.lock (#5613)
+
+#### Dashboards
+
+#### Translations
+
+#### Documentation
+
+## [4.1.1] - 2026-08-14
+
+Hotfix for 4.1.0, which crashes in a startup loop on installations with MQTT enabled and no `MQTT_NAMESPACE` set. Upgrading is recommended for all MQTT users.
+
+### Improvements and bug fixes
+
+- fix(mqtt): don't require the namespace option in VehicleSubscriber (#5611 - @JakobLichterfeld)
+
+## [4.1.0] - 2026-08-14 **YANKED**
+
+We've fixed small bugs that had been around for years, implemented several feature requests, integrated the latest version of Grafana, and completely overhauled numerous areas within TeslaMate. As we fixed the phase detection during AC charges, existing charging processes are recomputed once during the upgrade migration: previously empty or zero `charge_energy_used` values (short or mixed AC sessions) gain values.
+The first start after the upgrade can take a few minutes longer on databases with years of history and slow hardware; charge costs are deliberately not changed retroactively (#5592).
+
+And Home Assistant MQTT auto discovery landed (opt-in).
+
+**Note for manual Home Assistant configurations:** The documented manual [mqtt_sensors.yaml](https://docs.teslamate.org/docs/integrations/home_assistant#mqtt_sensorsyaml-mqtt-section-of-configurationyaml) now uses `state_class: total_increasing` for the `charge_energy_added` sensor (#5543). If you re-sync your manual YAML, Home Assistant will treat the per-charge resets as meter cycles, which changes the long-term statistics behavior (e.g. in the Energy dashboard).
+
+To make your TeslaMate experience even better, we have made 112 improvements.
+
+Enjoy!
+
+### New features
+
+- feat: add service mode to webview and reduce log when car is Unlocked at service mode (#5289 - @NirKli)
+- feat(mqtt): add service_mode (#5289 - @NirKli)
+- feat: add Sun roof and individual window status via MQTT (#5393 - @nebhale)
+- feat: show and color the software update icon through the update lifecycle (#5487 - @NirKli)
+- feat(mqtt): add download_perc and install_perc for pending sw install (#5487 - @NirKli)
+- feat: link the software update icon to the notateslaapp release notes (#5490 - @NirKli)
+- feat: add fullscreen mode to vehicle summary map (#5495 - @hakong)
+- feat(web): expose VIN in car summary ( #5556 - @Helvio88, @magrathean-uk)
+- feat(mqtt): add opt-in Home Assistant MQTT discovery (#5543 - @brianmay, @JakobLichterfeld)
+
+### Improvements and bug fixes
+
+- fix(webview): show charging finish time in browser local time (#5436 - @Ashok28)
+- fix(vehicle): use streaming-aware interval when a drive starts (#5417 - @evanclan)
+- fix(mqtt): retry failed value publications (#5429 - @ciyahu)
+- fix: redact Tesla API tokens from logs (#5475 - @magrathean-uk)
+- fix(vehicle): back off for 15 minutes on Fleet API `EXCEEDED_LIMIT` responses instead of retrying every 10-30s (#5476 - @hossamnagy)
+- refactor: send TOKEN as Bearer header via FleetAuth middleware (#5470 - @jlestel)
+- fix: honor DATABASE_USER/DATABASE_PASS with DATABASE_SOCKET_DIR (#5503 - @mvanhorn)
+- fix(import): accept fractional TeslaFi battery levels (#5513 - @magrathean-uk)
+- fix(cars): enforce non-null VINs (#5512 - @magrathean-uk)
+- fix(mqtt): return publish errors without crashing (#5514 - @magrathean-uk)
+- fix(geofences): increase cost precision (#5508 - @magrathean-uk)
+- fix: reconnect stream when a drive resumes after mid-drive offline phase to avoid missing elevation (#5535 - @JakobLichterfeld)
+- refactor(nix,postgres): provision database declaratively, connect via socket (#5337 - @JakobLichterfeld)
+- fix(nix,maintenance): read RELEASE_COOKIE without sourcing the env file (#5337 - @JakobLichterfeld)
+- fix(nix,postgres): set role password safely for any value (#5337 - @JakobLichterfeld)
+- fix(nix): drop schemas in the configured database during restore (#5337 - @JakobLichterfeld)
+- fix(nix,grafana): disable the periodic plugin update check (#5337 - @JakobLichterfeld)
+- feat(import): continue past malformed rows and resume completed TeslaFi files- (#5552 - @magrathean-uk)
+- fix(vehicle): update geofence while driving with streaming API (#5515 - @magrathean-uk)
+- fix(vehicle): identify base Model 3 from model year 2022 as RWD instead of SR+ (#5551 - @magrathean-uk)
+- fix(mqtt): avoid blocking startup on retained cleanup (#5549 - @magrathean-uk)
+- feat: use Grafana 13.1.1 (#5559 - @swiffer)
+- fix(performance): use existing indexes for last-inserted / latest complete position lookups (#5438 - @swiffer)
+- fix(geocoder): resolve state for Australian territories (#3868 - mattew124)
+- refactor(vehicles): make the geofence name lookup in the charging log total (#5599 - @JakobLichterfeld)
+- feat: use Grafana 13.1.3 (#5587 - @swiffer)
+- fix(charging): fall back to charger_power when phase detection fails (#5592 - @JakobLichterfeld)
+- fix(charges): enforce positive charger phases at the database (#5592 - @JakobLichterfeld)
+- fix(charging): recalculate charge_energy_used for existing processes (#5592 - @JakobLichterfeld)
+
+#### Build, CI, internal
+
+- build(nix): update mixFodDeps hash in nix builds ([954e8739](https://github.com/teslamate-org/teslamate/commit/954e8739326e092f7cddf7308dd4b704cc008f62) - @JakobLichterfeld)
+- build(deps): bump launch-editor from 2.13.2 to 2.14.1 in /website (#5426)
+- build(deps): update flake.lock (#5427)
+- build(deps): bump webpack-dev-server from 5.2.4 to 5.2.5 in /website (#5445)
+- chore: add .codegraph to .gitignore (#5440 - @JakobLichterfeld)
+- ci: speed up check_linting by running treefmt in a lean app (#5440 - @JakobLichterfeld)
+- sec(deps): add ws override to version 8.21.0 in /website (#5446 - @JakobLichterfeld)
+- build(deps-dev): bump esbuild from 0.28.0 to 0.28.1 in /assets (#5444)
+- sec(deps): add joi override to version 17.13.4 in /website (#5448 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5449)
+- build(deps): bump the actions-deps group across 3 directories with 9 updates (#5469)
+- build(deps): bump ex_cldr_plugs from 1.3.4 to 1.4.0 (#5465)
+- build(deps): bump react and react-dom from 19.2.6 to 19.2.7 in /website (#5466)
+- build(deps): bump @geoman-io/leaflet-geoman-free from 2.19.3 to 2.20.0 in /assets (#5464)
+- build(deps-dev): bump sass from 1.100.0 to 1.101.0 in /assets (#5462)
+- build(deps): bump plug_cowboy from 2.8.1 to 2.9.0 (#5463)
+- build(deps): bump floki from 0.38.3 to 0.38.4 (#5461)
+- test: harden async waits (#5456 - @magrathean-uk)
+- build(deps): update flake.lock (#5477)
+- ci: sign published images with SLSA provenance + SBOM attestations (#5380 - @oivindoh)
+- fix(ci): add artifact-metadata permission for workflows as it is essential for generating attestations (#5484 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5498)
+- test: reuse API snapshots across paired fetches (#5510 - @magrathean-uk)
+- build(deps): bump tesla from 1.14.1 to 1.20.0, migrate to Tesla.client/2 and update mix nix hash (#5468 - @JakobLichterfeld)
+- build(deps): bump websocket-driver from 0.7.4 to 0.7.5 in /website (#5516)
+- build(deps): update flake.lock (#5522)
+- build(deps): bump svgo from 3.3.3 to 3.3.4 in /website (#5536)
+- build(deps): bump shell-quote from 1.8.4 to 1.10.0 in /website (#5537)
+- build(deps): bump webpack-dev-server from 5.2.5 to 5.2.6 in /website (#5538)
+- build(deps): bump body-parser from 1.20.5 to 1.20.6 in /website (#5539)
+- build(deps): bump fast-uri from 3.1.2 to 3.1.4 in /website (#5540)
+- build(deps): bump immutable from 5.1.5 to 5.1.9 in /assets (#5541)
+- ci(treefmt): stop treefmt.toml from drifting out of sync with the flake (#5545 - @JakobLichterfeld)
+- style(nix): format Nix code with nixfmt instead of the archived nixpkgs-fmt (#5545 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5544)
+- build(deps): bump phoenix_live_view from 0.20.17 to 1.2.8 and migrate accordingly (#5580 - @JakobLichterfeld)
+- build(deps): bump all @docusaurus from 3.10.1 to 3.10.2 in /website (#5571)
+- build(deps): bump react and react-dom from 19.2.7 to 19.2.8 in /website (#5574)
+- build(deps): bump postcss from 8.5.15 to 8.5.25 in /website (#5582)
+- build(deps): bump the actions-deps group across 4 directories with 11 updates (#5576)
+- test(grafana): guard latest-position dashboard queries against missing partial-index predicate (#5581 - @magrathean-uk)
+- build: use Elixir 1.20.2 OTP 29 (#5579 - @swiffer)
+- ci: derive Elixir cache keys from the toolchain and MIX_ENV (#5595 - @JakobLichterfeld)
+- fix(test): override meck to 1.2 for OTP 29 compatibility (#5598 - @swiffer)
+- build(nix): reduce the manually pinned hashes to one and automate it (#5593 - @JakobLichterfeld)
+- ci: let Dependabot pull requests refresh the Nix hashes (#5593 - @JakobLichterfeld)
+- ci: verify Nix hashes on all dependency pull requests (#5593 - @JakobLichterfeld)
+- ci: let maintainers run CI on pull requests touching .github (#5593 - @JakobLichterfeld)
+- build(deps): bump postgrex from 0.22.2 to 0.22.3 (#5570)
+- build(deps): bump js-yaml from 4.2.0 to 4.3.1 in /website (#5597)
+- build(deps): bump brace-expansion from 1.1.14 to 1.1.18 in /website (#5596)
+- build(deps): bump fast-uri from 3.1.4 to 3.1.5 in /website (#5589)
+- build(deps): bump phoenix from 1.7.24 to 1.8.9 and migrate accordingly (#5572 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5560)
+- build(deps-dev): bump sass from 1.101.0 to 1.102.0 in /assets (#5566)
+- build(deps): bump leaflet-control-geocoder from 3.3.1 to 4.0.0 in /assets (#5565)
+
+#### Dashboards
+
+- feat(grafana): make data health summary actionable (#5526 - @magrathean-uk)
+- fix(grafana): drop the Releases panel from the home dashboard to end the CORS proxy dependency (#5548 - @JakobLichterfeld)
+- fix(dashboards): filter latest-value position panels on complete rows so they use the partial index (#5438 - @swiffer)
+- fix(grafana): Battery Health latest SOC/kWh panels pick the newest UNION row and use `usable_battery_level` on charges (#5438 - @swiffer)
+- fix(grafana): use local calendar for Statistics period end boundaries (#5562 - @wjsall)
+- fix(charge-details): keep power panel in sync with the energy integration (#5592 - @JakobLichterfeld)
+
+#### Translations
+
+- i18n: add Hungarian translation (#5480 - @magrathean-uk)
+- i18n: improve Traditional Chinese translations (#5527 - @occultsound)
+
+#### Documentation
+
+- docs: update security policy to emphasize network-level protection ([27172cba](https://github.com/teslamate-org/teslamate/commit/27172cba54782f9a8eb7fdd9ea3a481dfd9d8f2b) - @JakobLichterfeld)
+- docs: fix typo in DATABASE_SSL_SNI description (#5346 - @dashitongzhi)
+- docs: update upgrading instructions to emphasize backup before updating more clearly (#5453 - @JakobLichterfeld)
+- docs(mqtt): add service mode topic to MQTT integration documentation (#5472 - @JakobLichterfeld)
+- docs: update star history chart links to new format in README (#5482 - @JakobLichterfeld)
+- docs: update star history links in README with to include the now needed sealed token (#5489 - @JakobLichterfeld)
+- docs: link directly to restore section in upgrading PostgreSQL guide (#5501 - @JakobLichterfeld)
+- docs: split the backup and restore guides into two separate guides and highlight that you should transfer your backup of the host (#5502 - @JakobLichterfeld)
+- docs: point Tesla Auth users to fixed releases (#5509 - @magrathean-uk)
+- docs: add TeslaMate Dash to the projects page (#5494 - @gmaslowski)
+
+## [4.0.1] - 2026-06-14
+
+This release resolves the issue with refresh tokens. This was a community effort: the community conducted research, submitted pull requests, and the maintainers provided test images. We love to see, and we hope, we do not need another quick hotfix in the next days, weeks, ... .
+To make your TeslaMate experience even better, we have also made more than 8 other improvements.
+
+Enjoy!
+
+### New features
+
+### Improvements and bug fixes
+
+- fix: enable HTTP/2 and set TLS to 1.3 for TESLA_AUTH_HOST (#5406 - @kenc420 and @longzheng)
+- feat: log Erlang and OTP version (#5397 - @swiffer)
+
+#### Build, CI, internal
+
+- ci: remove now obsolete ARMv7 buildcache (#5397 - @swiffer)
+- build: remove now unused zstd compression tool to reduce docker image size (#5397 - @swiffer)
+- build(deps): bump floki from 0.38.1 to 0.38.3 (#5359)
+- ci(osv-scanner): don't fail on main pushes and merge queue (#5410 - @JakobLichterfeld)
+
+#### Dashboards
+
+#### Translations
+
+#### Documentation
+
+- docs: clarify Grafana and Erlang requirements (#5397 - @swiffer)
+- docs: clarify which docker images are provided and what to do if the user have a Raspberry Pi with ARMv7 OS (#5397 - @swiffer)
+- docs: clarify Erlang and OTP support in contributing guide (#5397 - @swiffer)
+
+## [4.0.0] - 2026-06-13
+
+**This is a breaking change release:**
+
+This release resolves the issue of 403 Forbidden errors with Owner API tokens. To accomplish this, we had to drop ARMv7 support, a plan that had been in place for a long time, as it held us back from recent updates. The need for this change in such a short time span was unforeseeable.
+To make your TeslaMate experience even better, we have also made more than 4 other improvements.
+
+Enjoy!
+
+### New features
+
+### Improvements and bug fixes
+
+- fix: restore vehicle_unavailable fallback for streaming fetches to prevent unwanted vehicle online state (#5378 - @ciyahu)
+- fix: properly clean up state and delete tokens on sign out (#5379 - @jlestel)
+
+#### Build, CI, internal
+
+- build: use Elixir 1.19.5 OTP 28 (#5391 - @NirKli and @JakobLichterfeld)
+- build: drop ARMv7 support as announced in Changelog of v3.1.0 (#5391 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5386)
+- build(deps): bump shell-quote from 1.8.3 to 1.8.4 in /website (#5381)
+
+#### Dashboards
+
+#### Translations
+
+#### Documentation
+
+## [3.1.0] - 2026-06-07
+
+MCU2 upgraded cars are now fully supported in the main release (please switch from the now deprecated mcu2 branch aka pr-4453).
+
+As always, there have been many improvements. We now use the latest version of Grafana (13.0.1+security-01). The dashboards have been improved in terms of performance, and all dashboards now function as expected even if no geofence exists. BRIN indexes are now maintained to prevent performance degradation over time.
+To make your TeslaMate experience even better, we have also made more than 80 other improvements.
+
+Enjoy!
+
+### ARMv7 deprecation
+
+This is the last TeslaMate release to include ARMv7 Docker images. To keep up with current Elixir versions, ARMv7 support will be dropped going forward. Please migrate your OS to ARM64 or AMD64 before upgrading to the next release. If this is not possible, please inform us in #5304.
+
+### New features
+
+- feat: handle sleep behavior of MCU2 upgraded cars (#4453 -> [f58df80](https://github.com/teslamate-org/teslamate/commit/f58df8088c3b935851e84e2f935a041fc393b3ff) - @micves, @JakobLichterfeld and @brianmay)
+
+### Improvements and bug fixes
+
 - feat(webview): Sort vehicles by display_priority (#5188 - @olsoybakk and @swiffer)
 - feat(webview): Make icons inherit text color for better contrast in dark mode (#5193 - @olsoybakk)
 - feat(webview): Add dark mode support for background and buttons in the map (#5240 - @olsoybakk and @swiffer)
 - fix(webview): Prevent rounding of map tiles via Bulma CSS (#5265 - @swiffer)
 - perf: ensure BRIN indexes don't degrade over time (#5276 - @swiffer)
 - fix: fix folder creation and bash 3.2 compatibility in dashboards.sh (#5233 - @svennergr)
+- fix: handle nil tire pressure values in summary view (#5297 - @elemated)
+- feat: use Grafana 13.0.1+security-01 (#5324 - @swiffer)
 
 #### Build, CI, internal
 
@@ -41,26 +290,64 @@
 - build(deps-dev): bump esbuild from 0.27.3 to 0.27.7 in /assets (#5261 - @swiffer)
 - build(deps-dev): bump esbuild-sass-plugin from 3.6.0 to 3.7.0 in /assets (#5261 - @swiffer)
 - build(deps-dev): bump sass from 1.97.3 to 1.99.0 in /assets (#5261 - @swiffer)
-- build(deps): update packages in /website and remove obsolete overrides (#5264 - @swiffer)
+- build(deps): update packages in /website and remove obsolete overrides (#5266 - @swiffer)
 - build(deps): update flake.lock (#5275)
 - build(deps): update flake.lock (#5288)
+- build(deps): bump docusaurus from 3.9.2 to 3.10.0 in /website (#5302 - @swiffer)
+- refactor: replace fake_online_state integer with typed mcu2_online_check atom (#5245 - @brianmay)
+- fix: update GitHub Actions configuration for Dependabot to include action directories (#5316 - @swiffer)
+- build(deps): bump docker/login-action from 4.0.0 to 4.1.0, docker/build-push-action from 7.0.0 to 7.1.0, actions/upload-artifact from 7.0.0 to 7.0.1, actions/upload-artifact/merge from 7.0.0 to 7.0.1, erlef/setup-beam from 1.18.1 to 1.24.0, actions/cache from 5.0.4 to 5.0.5, actions/cache/restore from 5.0.4 to 5.0.5, actions/cache/save from 5.0.4 to 5.0.5 and crate-ci/typos from 1.45.0 to 1.46.0 (#5317)
+- build(deps): bump leaflet-geoman-free from 2.19.2 to 2.19.3 in /assets (#5301 - @swiffer)
+- build(deps): bump plug_cowboy from 2.8.0 to 2.8.1 (#5314)
+- build(deps-dev): bump esbuild from 0.27.7 to 0.28.0 in /assets (#5312)
+- build(deps-dev): bump credo from 1.7.17 to 1.7.18 (#5315)
+- sec(deps): add uuid override to version 14.0.0 in /website (#5320 - @JakobLichterfeld)
+- build(deps): bump @babel/plugin-transform-modules-systemjs from 7.29.0 to 7.29.4 in /website (#5328)
+- build(deps): bump fast-uri from 3.1.0 to 3.1.2 in /website (#5327)
+- build(deps): update flake.lock (#5326)
+- sec(deps): fix OSV vulnerabilities - update cowlib, decimal, and phoenix to patched versions (#5332 - @brianmay)
+- ci: add osv scanner to scan for vulnerabilities (#5332 - @brianmay and @JakobLichterfeld)
+- build(deps): update flake.lock (#5338)
+- refactor: use frame key when specifying window to improve readability (#5339 - @swiffer)
+- build(deps): bump cowlib from 2.16.0 to 2.16.1 (#5342 - @JakobLichterfeld)
+- build(deps): bump cowboy from 2.14.2 to 2.15.0 (#5342 - @JakobLichterfeld)
+- build(deps): bump plug from 1.19.1 to 1.19.2 (#5342 - @JakobLichterfeld)
+- build(deps): bump postgrex from 0.22.0 to 0.22.2 and db_connection from 2.9.0 to 2.10.1 (#5342 - @JakobLichterfeld)
+- build(deps): update flake.lock (#5342 - @JakobLichterfeld)
+- build(deps): bump webpack-dev-server from 5.2.3 to 5.2.4 in /website (#5343)
+- sec(deps): add ws override to version 8.20.1 in /website (#5344 - @JakobLichterfeld)
+- feat(nix): update NixOS version to 26.05 (#5350 - @JakobLichterfeld)
+- fix(nix): correct URL format for PostgreSQL connection in Grafana 13+ (#5351 - @JakobLichterfeld)
+- fix(nix): make grafana.secretKeyFile optional with old insecure grafana default fallback (#5352 - @JakobLichterfeld)
+- build(deps): bump ex_cldr from 2.47.2 to 2.47.4 (#5361)
+- ci(deps): bump the actions-deps group across 4 directories with 11 updates (#5368)
+- build(deps): update flake.lock (#5354)
+- build(deps): bump finch from 0.21.0 to 0.22.0 (#5358)
+- build(deps): bump react and react-dom from 19.2.5 to 19.2.6 in /website (#5366)
+- build(deps-dev): bump sass from 1.99.0 to 1.100.0 in /assets (#5360)
+- build(deps): bump @docusaurus/core, /faster and /preset-classic from 3.10.0 to 3.10.1 in /website (#5365)
 
 #### Dashboards
 
 - fix: use FLOOR/CEIL over ROUND for timestamps used in dashboard links to avoid timeranges becoming to narrow (#5187 - @swiffer)
-- fix: ensure Charges / Drives dashboards load correctly if no Geofence exists (#5199 - @swiffer)
+- fix: ensure Charges / Drives dashboards load correctly if no Geofence exists (#5199, #5335 - @swiffer)
 - fix: division by zero in SQL query for cost_mileage in Trips dashboard (#5198 - @DrMichael)
 - fix: handle incomplete data correctly in Charging Stats / Statistics / Trips dashboards (#5229 - @swiffer)
 - feat: enable timepicker in efficiency dashboard (#5257 - @swiffer)
 - fix: ensure low precision mode is used for consumption gross for larger intervals (#5257 - @swiffer)
+- feat: improve filters in Statistics dashboard (#5340 - @DrMichael)
+- feat: add geofence filter to Charging Stats dashboard with default to all (#5355 - @faekz0r)
 
 #### Translations
 
 - i18n: updated Catalan default.po (#5180 - @pellix)
+- i18n: Update Korean translations in default.po (#5218 - @dongbum)
 
 #### Documentation
 
 - docs: drop private schema before restore (#5190 - @brianmay)
+- docs: remove references to mcu2-upgraded-cars branch (#5371- @brianmay)
+- docs: update DROP SCHEMA commands to include IF EXISTS to avoid issues with old installations (@5372- @JakobLichterfeld)
 
 ## [3.0.0] - 2026-02-28
 
@@ -148,6 +435,7 @@ We believe this step is necessary to protect the project from exploitation and t
 - build(deps): bump ajv in /website (#5149)
 - chore(website): bump mimimatch to version 3.1.5 to solve CVE-2026-26996, CVE-2026-27903 and CVE-2026-27904 (#5155 - @JakobLichterfeld)
 - chore(website): bump serialize-javascript to version 7.0.3 to solve CWE-96 (#5156 - @JakobLichterfeld)
+- build(deps): bump qs and express in /website (#5348)
 
 #### Dashboards
 
@@ -370,10 +658,10 @@ Enjoy it.
 
 **This is a breaking change release:** TeslaMate uses PostgreSQL as database, this is an external dependency and needs to be updated by yourself. We now require PostgreSQL 16.7 or 17.3 or higher as we are upgrading the bundled earthdistance extension to v1.2. TeslaMate will now fail to start if you are using an older version. Ensure to upgrade your database before upgrading TeslaMate. To upgrade PostgreSQL, you need to follow these instructions:
 
-- [Backup your data](https://docs.teslamate.org/docs/maintenance/backup_restore#backup)
+- [Backup your data](https://docs.teslamate.org/docs/maintenance/backup)
 - [Upgrade PostgreSQL to postgres:17](https://docs.teslamate.org/docs/maintenance/upgrading_postgres) (Yes, you will have to erase your data, which is why you need your backup in the first place.)
 - [Upgrade TeslaMate to this version](https://docs.teslamate.org/docs/upgrading)
-- [Backup your data after the upgrade](https://docs.teslamate.org/docs/maintenance/backup_restore#backup)
+- [Backup your data after the upgrade](https://docs.teslamate.org/docs/maintenance/backup)
 
 **Note for user which revoked permissions:** If the SUPERUSER privilege has been revoked after the initial (manual) installation, it must be temporarily granted for pending earthdistance migrations to succeed. The privilege can then be safely revoked.
 
@@ -625,9 +913,9 @@ As always, lots of improvements. The focus has been on performance improvements,
 
 **Regarding PostgreSQL 17:** TeslaMate uses PostgreSQL as database, this is an external dependency and needs to be updated by yourself. Although TeslaMate currently runs fine with PostgreSQL 14+ we strongly recommend upgrading to the latest supported version. We recommend that you do this as follows:
 
-- [Backup your data](https://docs.teslamate.org/docs/maintenance/backup_restore#backup)
+- [Backup your data](https://docs.teslamate.org/docs/maintenance/backup)
 - [Upgrade TeslaMate to this version](https://docs.teslamate.org/docs/upgrading)
-- [Backup your data after the upgrade](https://docs.teslamate.org/docs/maintenance/backup_restore#backup)
+- [Backup your data after the upgrade](https://docs.teslamate.org/docs/maintenance/backup)
 - [Upgrade PostgreSQL to postgres:17](https://docs.teslamate.org/docs/maintenance/upgrading_postgres) (Yes, you will have to erase your data, which is why you need your backup in the first place.)
 
 **Additional info:** In some very rare cases with very old installations of TeslaMate (from 2019) we have observed performance issues due to missing indexes. These should normally be added with our automatic migrations. If you think your installation may be missing some indexes, see #4201 for the corrective SQL command.
@@ -2781,7 +3069,12 @@ New users need to sign in via the web interface.
 
 ## [1.0.0] - 2019-07-25
 
-[unreleased]: https://github.com/teslamate-org/teslamate/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/teslamate-org/teslamate/compare/v4.1.1...HEAD
+[4.1.1]: https://github.com/teslamate-org/teslamate/compare/v4.1.0...v4.1.1
+[4.1.0]: https://github.com/teslamate-org/teslamate/compare/v4.0.1...v4.1.0
+[4.0.1]: https://github.com/teslamate-org/teslamate/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/teslamate-org/teslamate/compare/v3.1.0...v4.0.0
+[3.1.0]: https://github.com/teslamate-org/teslamate/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/teslamate-org/teslamate/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/teslamate-org/teslamate/compare/v2.1.1...v2.2.0
 [2.1.1]: https://github.com/teslamate-org/teslamate/compare/v2.1.0...v2.1.1

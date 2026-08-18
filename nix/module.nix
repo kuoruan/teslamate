@@ -1,8 +1,9 @@
 { self }:
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   teslamate = self.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -28,6 +29,9 @@ in
       example = "/run/secrets/teslamate.env";
       description = lib.mdDoc ''
         Path to an env file containing the secrets used by TeslaMate.
+
+        The file uses systemd `EnvironmentFile` syntax (`KEY="value"` lines,
+        values may be wrapped in one pair of double quotes).
 
         Must contain at least:
         - `ENCRYPTION_KEY` - encryption key used to encrypt database
@@ -143,6 +147,12 @@ in
         default = true;
         description = "Whether to set the TeslaMate home dashboard as the default dashboard in Grafana";
       };
+
+      secretKeyFile = lib.mkOption {
+        type = lib.types.path;
+        description = "File with the Grafana secret_key for signing data source settings like secrets and passwords";
+        default = /dev/null; # default as otherwise nix flake check fails as it is accessed with $__file
+      };
     };
 
     mqtt = {
@@ -159,6 +169,24 @@ in
         default = null;
         example = 1883;
         description = "MQTT port.";
+      };
+
+      discovery = {
+        enable = mkEnableOption "Home Assistant MQTT discovery";
+
+        url = mkOption {
+          type = types.str;
+          default = "";
+          example = "https://teslamate.example.com/";
+          description = "The TeslaMate URL surfaced in the discovered device panel.";
+        };
+
+        prefix = mkOption {
+          type = types.str;
+          default = "homeassistant";
+          example = "homeassistant";
+          description = "Discovery topic prefix. Must match Home Assistant's discovery_prefix setting.";
+        };
       };
     };
   };
@@ -178,6 +206,9 @@ in
         after = [
           "network.target"
           "postgresql.service"
+          # Database, role and password are provisioned here (no-op when using
+          # an external database server, where the unit is absent).
+          "postgresql-setup.service"
           "mosquitto.service"
         ];
         wantedBy = mkIf cfg.autoStart [ "multi-user.target" ];
@@ -206,9 +237,21 @@ in
             HTTP_BINDING_ADDRESS = mkIf (cfg.listenAddress != null) cfg.listenAddress;
             DISABLE_MQTT = mkIf (!cfg.mqtt.enable) "true";
           }
+          # When PostgreSQL runs on the same host, connect via the local socket
+          # using peer authentication instead of TCP with a password. This only
+          # works for the default role name, since the socket branch in
+          # runtime.exs authenticates as the systemd unit's OS user (teslamate).
+          (mkIf (cfg.postgres.enable_server && cfg.postgres.user == "teslamate") {
+            DATABASE_SOCKET_DIR = "/run/postgresql";
+          })
           (mkIf cfg.mqtt.enable {
             MQTT_HOST = cfg.mqtt.host;
             MQTT_PORT = mkIf (cfg.mqtt.port != null) (toString cfg.mqtt.port);
+            MQTT_HOME_ASSISTANT_DISCOVERY = mkIf cfg.mqtt.discovery.enable "true";
+            MQTT_HOME_ASSISTANT_DISCOVERY_PREFIX = mkIf cfg.mqtt.discovery.enable cfg.mqtt.discovery.prefix;
+            MQTT_HOME_ASSISTANT_DISCOVERY_URL = mkIf (
+              cfg.mqtt.discovery.enable && cfg.mqtt.discovery.url != ""
+            ) cfg.mqtt.discovery.url;
           })
         ];
       };
@@ -229,6 +272,24 @@ in
       ];
     }
     (mkIf cfg.postgres.enable_server {
+      assertions = [
+        {
+          # Mirror TeslaMate's runtime requirement (see
+          # lib/teslamate/database_check.ex): >= 16.7 for 16.x, >= 17.3 for
+          # 17.x, or >= 18. Newer majors only produce a runtime warning there,
+          # so they are allowed here as well. This also covers the psql
+          # \getenv used in postStart, which needs PostgreSQL >= 14.
+          assertion =
+            let
+              v = cfg.postgres.package.version;
+            in
+            lib.versionAtLeast v "18"
+            || (lib.versionAtLeast v "17.3" && lib.versionOlder v "18")
+            || (lib.versionAtLeast v "16.7" && lib.versionOlder v "17");
+          message = "services.teslamate.postgres.package (${cfg.postgres.package.version}) is not supported by TeslaMate: required is PostgreSQL >= 16.7 (16.x), >= 17.3 (17.x), or >= 18 (see lib/teslamate/database_check.ex).";
+        }
+      ];
+
       services.postgresql = {
         enable = true;
         inherit (cfg.postgres) package;
@@ -237,23 +298,73 @@ in
           inherit (cfg.postgres) port;
         };
 
-        initialScript = pkgs.writeText "teslamate-psql-init" ''
-          \set password `echo $DATABASE_PASS`
-          CREATE DATABASE ${cfg.postgres.database};
-          CREATE USER ${cfg.postgres.user} with encrypted password :'password';
-          GRANT ALL PRIVILEGES ON DATABASE ${cfg.postgres.database} TO ${cfg.postgres.user};
-          ALTER USER ${cfg.postgres.user} WITH SUPERUSER;
-        '';
+        ensureDatabases = [ cfg.postgres.database ];
+        ensureUsers = [
+          {
+            name = cfg.postgres.user;
+            ensureDBOwnership = cfg.postgres.user == cfg.postgres.database;
+            # TeslaMate's migrations create the cube and earthdistance
+            # extensions (see priv/repo/migrations/20190925152807_create_geo_extensions.exs).
+            # These are not trusted extensions, so CREATE EXTENSION requires a
+            # database superuser.
+            ensureClauses.superuser = true;
+          }
+        ];
       };
 
-      # Include secrets in postgres as well
-      systemd.services.postgresql = {
-        serviceConfig = {
-          EnvironmentFile = cfg.secretsFile;
-        };
+      # ensureUsers creates the role without a password. Apply it out-of-band
+      # from DATABASE_PASS so the secret never lands in the world-readable Nix
+      # store (ensureUsers cannot set passwords). It is still required for
+      # Grafana and for the TCP fallback (remote DB or a non-default role name),
+      # even though TeslaMate itself connects via the socket with peer auth.
+      #
+      # ensureDatabases/ensureUsers run inside postgresql-setup.service, so we
+      # hook there (after the role exists) and scope the secret to that unit.
+      systemd.services.postgresql-setup = {
+        serviceConfig.EnvironmentFile = cfg.secretsFile;
+        # Read the password from the environment with psql's \getenv (so it is
+        # never placed on the command line or shell-expanded) and quote it with
+        # :'password', which produces a correctly escaped SQL string literal.
+        # This is safe for any password, including ones containing single
+        # quotes. Requires PostgreSQL >= 14 for \getenv.
+        #
+        # Both commands must be fed through a single stdin stream, not two
+        # separate -c options: psql only performs :'var' interpolation when
+        # reading from stdin/a file, and a \getenv variable set in one -c is not
+        # available for interpolation in a following -c (it is sent verbatim,
+        # producing a `syntax error at or near ":"`).
+        #
+        # The interpolated ALTER USER contains the cleartext password, which
+        # would land in the PostgreSQL server log if the operator enabled
+        # statement logging (log_statement, log_min_duration_statement) or
+        # error-statement logging. Turn all three off for this session first
+        # (allowed since we connect as the postgres superuser) so the secret is
+        # never written to the log regardless of the server configuration.
+        postStart = ''
+          # A read-only standby cannot execute ALTER USER; the password is
+          # replicated from the primary anyway.
+          if [ "$(psql -d postgres -tAc 'SELECT pg_is_in_recovery()')" = "t" ]; then
+            echo "PostgreSQL is in recovery (standby); skipping role password setup."
+            exit 0
+          fi
+          if [ -z "''${DATABASE_PASS:-}" ]; then
+            echo "DATABASE_PASS must be set in ${cfg.secretsFile} (services.teslamate.secretsFile)" >&2
+            exit 1
+          fi
+          printf '%s\n' \
+            "SET log_statement = 'none';" \
+            "SET log_min_duration_statement = -1;" \
+            "SET log_min_error_statement = 'panic';" \
+            '\getenv password DATABASE_PASS' \
+            "ALTER USER \"${cfg.postgres.user}\" WITH ENCRYPTED PASSWORD :'password'" \
+            | psql -v ON_ERROR_STOP=1 -d postgres
+        '';
       };
     })
     (mkIf cfg.grafana.enable {
+      warnings =
+        lib.optional (cfg.grafana.secretKeyFile == /dev/null)
+          "teslamate: grafana.secretKeyFile is not set. Using the insecure default secret_key. Set grafana.secretKeyFile to a file containing a secure random key.";
       services.grafana = {
         enable = true;
         settings = {
@@ -267,6 +378,11 @@ in
           security = {
             allow_embedding = true;
             disable_gravatar = true;
+            secret_key =
+              if cfg.grafana.secretKeyFile == /dev/null then
+                "SW2YcwTIb9zpOOhoPsMm" # old default value, see https://github.com/grafana/grafana/blob/0920e8bcc69f555a34462d0d2029a882272a0184/conf/defaults.ini#L334
+              else
+                "$__file{${cfg.grafana.secretKeyFile}}";
           };
           users = {
             allow_sign_up = false;
@@ -275,7 +391,14 @@ in
           "auth.anonymous".enabled = false;
           "auth.basic".enabled = false;
           analytics.reporting_enabled = false;
-          dashboards.default_home_dashboard_path = mkIf cfg.grafana.setDefaultDashboard "${pkgs.lib.sources.sourceFilesBySuffices ../grafana/dashboards/internal [".json"]}/home.json";
+          # The NixOS module disables the Grafana and plugin update checks by
+          # default -- except the plugin check when declarativePlugins is unset.
+          # Plugins only ever change through nixpkgs here, so the 10-minute check
+          # is pure log noise and an unnecessary call to grafana.com.
+          analytics.check_for_plugin_updates = false;
+          dashboards.default_home_dashboard_path = mkIf cfg.grafana.setDefaultDashboard "${
+            pkgs.lib.sources.sourceFilesBySuffices ../grafana/dashboards/internal [ ".json" ]
+          }/home.json";
           date_formats.use_browser_locale = true;
           plugins.preinstall_disabled = true;
           unified_alerting.enabled = false;
@@ -287,7 +410,7 @@ in
             {
               name = "TeslaMate";
               type = "postgres";
-              url = "http://${cfg.postgres.host}:${toString cfg.postgres.port}";
+              url = "${cfg.postgres.host}:${toString cfg.postgres.port}";
               user = cfg.postgres.user;
               access = "proxy";
               basicAuth = false;
@@ -317,9 +440,7 @@ in
                 disableDeletion = false;
                 allowUiUpdates = true;
                 updateIntervalSeconds = 86400;
-                options.path = lib.sources.sourceByRegex
-                  ../grafana/dashboards
-                  [ "^[^\/]*\.json$" ];
+                options.path = lib.sources.sourceByRegex ../grafana/dashboards [ "^[^\/]*\.json$" ];
               }
               {
                 name = "teslamate_internal";
@@ -330,9 +451,7 @@ in
                 disableDeletion = false;
                 allowUiUpdates = true;
                 updateIntervalSeconds = 86400;
-                options.path = lib.sources.sourceFilesBySuffices
-                  ../grafana/dashboards/internal
-                  [ ".json" ];
+                options.path = lib.sources.sourceFilesBySuffices ../grafana/dashboards/internal [ ".json" ];
               }
               {
                 name = "teslamate_reports";
@@ -343,9 +462,7 @@ in
                 disableDeletion = false;
                 allowUiUpdates = true;
                 updateIntervalSeconds = 86400;
-                options.path = lib.sources.sourceFilesBySuffices
-                  ../grafana/dashboards/reports
-                  [ ".json" ];
+                options.path = lib.sources.sourceFilesBySuffices ../grafana/dashboards/reports [ ".json" ];
               }
             ];
           };

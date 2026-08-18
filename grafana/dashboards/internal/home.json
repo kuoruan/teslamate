@@ -21,10 +21,6 @@
   "links": [],
   "panels": [
     {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 20,
         "w": 6,
@@ -45,17 +41,13 @@
         "showStarred": false,
         "tags": []
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "type": "dashlist"
     },
     {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 20,
-        "w": 16,
+        "w": 18,
         "x": 6,
         "y": 0
       },
@@ -69,8 +61,7 @@
         "content": "<div style=\"background-size: cover; background-image: url(&quot;https://digitalassets.tesla.com/tesla-contents/image/upload/c_pad,dpr_1.0,f_auto,q_auto/c_pad/Group_67?pgw=1&quot;);width:100%;height:734px;background-position:center;\"></div>",
         "mode": "html"
       },
-      "pluginVersion": "12.4.0",
-      "title": "",
+      "pluginVersion": "13.1.1",
       "type": "text"
     },
     {
@@ -109,7 +100,7 @@
   },
   "timezone": "browser",
   "title": "主页",
-  "uid": "be2m9kga7b8qoc",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "be2m9kga7b8qoc"
 }

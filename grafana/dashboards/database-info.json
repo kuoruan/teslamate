@@ -110,7 +110,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -216,7 +216,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -350,7 +350,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -417,7 +417,7 @@
         "type": "grafana-postgresql-datasource",
         "uid": "TeslaMate"
       },
-      "description": "这表示你有一些 **行程** 或 **充电** 记录没有被正确结束。如果是这种情况，你可以参照官方指南: \n<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
+      "description": "**行程** 或 **充电** 记录处于开放状态时可能是活动会话，不一定是未完成记录。点击数量可查看对应记录。\n若记录确实未完成，请参照官方指南: \n<a href='https://docs.teslamate.org/docs/maintenance/manually_fixing_data' target='_blank'>手动修复数据</a>",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -428,8 +428,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "super-light-blue",
+                "color": "green",
                 "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 1
               }
             ]
           }
@@ -444,6 +448,16 @@
               {
                 "id": "displayName",
                 "value": "未关闭的充电"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "查看未完成的充电",
+                    "url": "/d/TSmNYvRRk/charges?var-car_id=$car_id&viewPanel=17"
+                  }
+                ]
               }
             ]
           },
@@ -456,6 +470,16 @@
               {
                 "id": "displayName",
                 "value": "未关闭的行程"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "查看未完成的行程",
+                    "url": "/d/Y8upc6ZRk/drives?var-car_id=$car_id&viewPanel=9"
+                  }
+                ]
               }
             ]
           }
@@ -485,7 +509,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -592,7 +616,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -746,7 +770,7 @@
         "cellHeight": "sm",
         "showHeader": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -777,7 +801,6 @@
           }
         }
       ],
-      "title": "",
       "type": "table"
     },
     {
@@ -862,7 +885,7 @@
         "cellHeight": "sm",
         "showHeader": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -893,7 +916,6 @@
           }
         }
       ],
-      "title": "",
       "type": "table"
     },
     {
@@ -1052,7 +1074,7 @@
         "enablePagination": true,
         "showHeader": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1134,7 +1156,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1217,7 +1239,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1298,7 +1320,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1390,7 +1412,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1469,7 +1491,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1504,10 +1526,6 @@
       "type": "stat"
     },
     {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 3,
         "w": 12,
@@ -1524,7 +1542,7 @@
         "content": "查阅 [贡献文档](https://docs.teslamate.org/docs/development#enable-pg_stat_statements-to-collect-query-statistics) 以了解如何启用对服务器执行的所有 SQL 语句的规划和执行统计信息的跟踪。\n",
         "mode": "markdown"
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "title": "关于 pg_stat_statements (跟踪 SQL 规划与执行统计数据)",
       "type": "text"
     },
@@ -1541,13 +1559,13 @@
           "custom": {
             "align": "auto",
             "cellOptions": {
-              "type": "auto",
-              "wrapText": false
+              "type": "auto"
             },
             "footer": {
               "reducers": []
             },
-            "inspect": false
+            "inspect": false,
+            "wrapText": false
           },
           "mappings": [],
           "thresholds": {
@@ -1649,7 +1667,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1696,13 +1714,13 @@
           "custom": {
             "align": "auto",
             "cellOptions": {
-              "type": "auto",
-              "wrapText": false
+              "type": "auto"
             },
             "footer": {
               "reducers": []
             },
-            "inspect": false
+            "inspect": false,
+            "wrapText": false
           },
           "mappings": [],
           "thresholds": {
@@ -1804,7 +1822,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.1.1",
       "targets": [
         {
           "datasource": {
@@ -1995,7 +2013,7 @@
   },
   "timezone": "browser",
   "title": "数据库信息",
-  "uid": "jchmDbInfo",
+  "weekStart": "",
   "version": 1,
-  "weekStart": ""
+  "uid": "jchmDbInfo"
 }
