@@ -1,16 +1,21 @@
 defmodule TeslaMate.Locations.AmapApi do
-  use Tesla, only: [:get]
-
   @version Mix.Project.config()[:version]
 
-  adapter Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000
-
-  plug Tesla.Middleware.BaseUrl, "https://restapi.amap.com"
-  plug Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]
-  plug Tesla.Middleware.JSON
-  plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
-
   alias TeslaMate.Locations.CoordConverter
+
+  defp client do
+    Tesla.client(
+      [
+        {Tesla.Middleware.BaseUrl, "https://restapi.amap.com"},
+        {Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]},
+        Tesla.Middleware.JSON,
+        {Tesla.Middleware.Logger, debug: true, level: &log_level/1}
+      ],
+      {Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000}
+    )
+  end
+
+  defp get(url, opts), do: Tesla.get(client(), url, opts)
 
   @doc """
   使用高德地图 API 进行逆地理编码查询。
@@ -157,6 +162,7 @@ defmodule TeslaMate.Locations.AmapApi do
   defp is_municipality?(citycode) when citycode in ["010", "021", "022", "023"], do: true
   defp is_municipality?(_), do: false
 
-  defp log_level(%Tesla.Env{} = env) when env.status >= 400, do: :warning
-  defp log_level(%Tesla.Env{}), do: :info
+  defp log_level({:ok, %Tesla.Env{} = env}) when env.status >= 400, do: :warning
+  defp log_level({:ok, %Tesla.Env{}}), do: :info
+  defp log_level({:error, _reason}), do: :error
 end

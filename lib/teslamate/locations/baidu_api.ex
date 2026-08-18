@@ -1,16 +1,21 @@
 defmodule TeslaMate.Locations.BaiduApi do
-  use Tesla, only: [:get]
-
   @version Mix.Project.config()[:version]
 
-  adapter Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000
-
-  plug Tesla.Middleware.BaseUrl, "https://api.map.baidu.com"
-  plug Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]
-  plug Tesla.Middleware.JSON
-  plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
-
   alias TeslaMate.Locations.CoordConverter
+
+  defp client do
+    Tesla.client(
+      [
+        {Tesla.Middleware.BaseUrl, "https://api.map.baidu.com"},
+        {Tesla.Middleware.Headers, [{"user-agent", "TeslaMate/#{@version}"}]},
+        Tesla.Middleware.JSON,
+        {Tesla.Middleware.Logger, debug: true, level: &log_level/1}
+      ],
+      {Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000}
+    )
+  end
+
+  defp get(url, opts), do: Tesla.get(client(), url, opts)
 
   @doc """
   使用百度地图 API 进行逆地理编码查询。
@@ -148,6 +153,7 @@ defmodule TeslaMate.Locations.BaiduApi do
     {:error, {:invalid_response_format, reason: "Unexpected response"}}
   end
 
-  defp log_level(%Tesla.Env{} = env) when env.status >= 400, do: :warning
-  defp log_level(%Tesla.Env{}), do: :info
+  defp log_level({:ok, %Tesla.Env{} = env}) when env.status >= 400, do: :warning
+  defp log_level({:ok, %Tesla.Env{}}), do: :info
+  defp log_level({:error, _reason}), do: :error
 end
