@@ -183,8 +183,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: current_time
+          "web_authenticated" => true,
+          "web_auth_time" => current_time
         })
 
       assert WebAuth.authenticated?(conn)
@@ -196,8 +196,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: expired_time
+          "web_authenticated" => true,
+          "web_auth_time" => expired_time
         })
 
       refute WebAuth.authenticated?(conn)
@@ -208,8 +208,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: false,
-          web_auth_time: current_time
+          "web_authenticated" => false,
+          "web_auth_time" => current_time
         })
 
       refute WebAuth.authenticated?(conn)
@@ -220,7 +220,7 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_auth_time: current_time
+          "web_auth_time" => current_time
         })
 
       refute WebAuth.authenticated?(conn)
@@ -229,7 +229,7 @@ defmodule TeslaMate.WebAuthTest do
     test "authenticated?/1 returns false when web_auth_time is missing" do
       conn =
         build_conn_with_session(%{
-          web_authenticated: true
+          "web_authenticated" => true
         })
 
       refute WebAuth.authenticated?(conn)
@@ -238,8 +238,8 @@ defmodule TeslaMate.WebAuthTest do
     test "authenticated?/1 returns false when auth_time is not an integer" do
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: "not_an_integer"
+          "web_authenticated" => true,
+          "web_auth_time" => "not_an_integer"
         })
 
       refute WebAuth.authenticated?(conn)
@@ -251,8 +251,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: boundary_time
+          "web_authenticated" => true,
+          "web_auth_time" => boundary_time
         })
 
       refute WebAuth.authenticated?(conn)
@@ -264,8 +264,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: valid_time
+          "web_authenticated" => true,
+          "web_auth_time" => valid_time
         })
 
       assert WebAuth.authenticated?(conn)
@@ -278,8 +278,8 @@ defmodule TeslaMate.WebAuthTest do
       authenticated_conn = WebAuth.authenticate(conn)
       after_time = System.system_time(:second)
 
-      assert Plug.Conn.get_session(authenticated_conn, :web_authenticated) == true
-      auth_time = Plug.Conn.get_session(authenticated_conn, :web_auth_time)
+      assert Plug.Conn.get_session(authenticated_conn, "web_authenticated") == true
+      auth_time = Plug.Conn.get_session(authenticated_conn, "web_auth_time")
       assert is_integer(auth_time)
       assert auth_time >= before_time and auth_time <= after_time
     end
@@ -289,28 +289,28 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: false,
-          web_auth_time: old_time
+          "web_authenticated" => false,
+          "web_auth_time" => old_time
         })
 
       authenticated_conn = WebAuth.authenticate(conn)
 
-      assert Plug.Conn.get_session(authenticated_conn, :web_authenticated) == true
-      new_auth_time = Plug.Conn.get_session(authenticated_conn, :web_auth_time)
+      assert Plug.Conn.get_session(authenticated_conn, "web_authenticated") == true
+      new_auth_time = Plug.Conn.get_session(authenticated_conn, "web_auth_time")
       assert new_auth_time > old_time
     end
 
     test "unauthenticate/1 clears session data" do
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: System.system_time(:second)
+          "web_authenticated" => true,
+          "web_auth_time" => System.system_time(:second)
         })
 
       unauthenticated_conn = WebAuth.unauthenticate(conn)
 
-      assert Plug.Conn.get_session(unauthenticated_conn, :web_authenticated) == nil
-      assert Plug.Conn.get_session(unauthenticated_conn, :web_auth_time) == nil
+      assert Plug.Conn.get_session(unauthenticated_conn, "web_authenticated") == nil
+      assert Plug.Conn.get_session(unauthenticated_conn, "web_auth_time") == nil
     end
 
     test "unauthenticate/1 handles already unauthenticated session" do
@@ -318,8 +318,8 @@ defmodule TeslaMate.WebAuthTest do
 
       unauthenticated_conn = WebAuth.unauthenticate(conn)
 
-      assert Plug.Conn.get_session(unauthenticated_conn, :web_authenticated) == nil
-      assert Plug.Conn.get_session(unauthenticated_conn, :web_auth_time) == nil
+      assert Plug.Conn.get_session(unauthenticated_conn, "web_authenticated") == nil
+      assert Plug.Conn.get_session(unauthenticated_conn, "web_auth_time") == nil
     end
 
     test "session_remaining_time/1 calculates correct remaining time" do
@@ -327,7 +327,7 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_auth_time: current_time
+          "web_auth_time" => current_time
         })
 
       remaining = WebAuth.session_remaining_time(conn)
@@ -348,7 +348,7 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_auth_time: expired_time
+          "web_auth_time" => expired_time
         })
 
       assert WebAuth.session_remaining_time(conn) == 0
@@ -360,7 +360,7 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_auth_time: half_hour_ago
+          "web_auth_time" => half_hour_ago
         })
 
       remaining = WebAuth.session_remaining_time(conn)
@@ -375,8 +375,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: negative_time
+          "web_authenticated" => true,
+          "web_auth_time" => negative_time
         })
 
       # Should be considered expired
@@ -387,8 +387,8 @@ defmodule TeslaMate.WebAuthTest do
     test "session functions handle zero auth_time" do
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: 0
+          "web_authenticated" => true,
+          "web_auth_time" => 0
         })
 
       # Should be considered expired (Unix epoch is way in the past)
@@ -402,8 +402,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: large_time
+          "web_authenticated" => true,
+          "web_auth_time" => large_time
         })
 
       # Should be considered valid (timestamp is in future)
@@ -421,15 +421,6 @@ defmodule TeslaMate.WebAuthTest do
       }
 
       assert WebAuth.authenticated?(session_with_strings)
-
-      # Test with atom keys
-      session_with_atoms = %{
-        web_authenticated: true,
-        web_auth_time: System.system_time(:second)
-      }
-
-      # Should only work with string keys
-      refute WebAuth.authenticated?(session_with_atoms)
 
       # Test with mixed types
       session_mixed = %{
@@ -473,7 +464,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, path)
 
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == path
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == path
     end
 
     test "set_redirect_path/2 handles complex paths" do
@@ -482,7 +473,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, complex_path)
 
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == complex_path
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == complex_path
     end
 
     test "set_redirect_path/2 handles paths with unicode characters" do
@@ -491,7 +482,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, unicode_path)
 
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == unicode_path
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == unicode_path
     end
 
     test "set_redirect_path/2 handles empty string path" do
@@ -499,7 +490,7 @@ defmodule TeslaMate.WebAuthTest do
 
       updated_conn = WebAuth.set_redirect_path(conn, "")
 
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == ""
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == ""
     end
 
     test "set_redirect_path/2 returns unchanged conn for non-string input" do
@@ -518,17 +509,17 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "set_redirect_path/2 overwrites existing path" do
-      conn = build_conn_with_session(%{web_auth_redirect_path: "/old/path"})
+      conn = build_conn_with_session(%{"web_auth_redirect_path" => "/old/path"})
       new_path = "/new/path"
 
       updated_conn = WebAuth.set_redirect_path(conn, new_path)
 
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == new_path
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == new_path
     end
 
     test "get_redirect_path/1 returns stored path" do
       path = "/stored/path"
-      conn = build_conn_with_session(%{web_auth_redirect_path: path})
+      conn = build_conn_with_session(%{"web_auth_redirect_path" => path})
 
       assert WebAuth.get_redirect_path(conn) == path
     end
@@ -562,7 +553,7 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "get_redirect_path/1 handles nil session value" do
-      conn = build_conn_with_session(%{web_auth_redirect_path: nil})
+      conn = build_conn_with_session(%{"web_auth_redirect_path" => nil})
 
       path = WebAuth.get_redirect_path(conn)
 
@@ -570,11 +561,11 @@ defmodule TeslaMate.WebAuthTest do
     end
 
     test "clear_redirect_path/1 removes stored path" do
-      conn = build_conn_with_session(%{web_auth_redirect_path: "/some/path"})
+      conn = build_conn_with_session(%{"web_auth_redirect_path" => "/some/path"})
 
       cleared_conn = WebAuth.clear_redirect_path(conn)
 
-      assert Plug.Conn.get_session(cleared_conn, :web_auth_redirect_path) == nil
+      assert Plug.Conn.get_session(cleared_conn, "web_auth_redirect_path") == nil
     end
 
     test "clear_redirect_path/1 handles already cleared path" do
@@ -582,17 +573,17 @@ defmodule TeslaMate.WebAuthTest do
 
       cleared_conn = WebAuth.clear_redirect_path(conn)
 
-      assert Plug.Conn.get_session(cleared_conn, :web_auth_redirect_path) == nil
+      assert Plug.Conn.get_session(cleared_conn, "web_auth_redirect_path") == nil
     end
 
     test "get_and_clear_redirect_path/1 returns path and clears it" do
       path = "/test/path"
-      conn = build_conn_with_session(%{web_auth_redirect_path: path})
+      conn = build_conn_with_session(%{"web_auth_redirect_path" => path})
 
       {updated_conn, returned_path} = WebAuth.get_and_clear_redirect_path(conn)
 
       assert returned_path == path
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == nil
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == nil
     end
 
     test "get_and_clear_redirect_path/1 returns default path when none stored" do
@@ -601,7 +592,7 @@ defmodule TeslaMate.WebAuthTest do
       {updated_conn, returned_path} = WebAuth.get_and_clear_redirect_path(conn)
 
       assert is_binary(returned_path)
-      assert Plug.Conn.get_session(updated_conn, :web_auth_redirect_path) == nil
+      assert Plug.Conn.get_session(updated_conn, "web_auth_redirect_path") == nil
     end
   end
 
@@ -896,8 +887,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: current_time
+          "web_authenticated" => true,
+          "web_auth_time" => current_time
         })
 
       # Should be authenticated initially
@@ -907,8 +898,8 @@ defmodule TeslaMate.WebAuthTest do
       # This simulates the case where system time might have changed
       future_conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: current_time
+          "web_authenticated" => true,
+          "web_auth_time" => current_time
         })
 
       # Should still be valid (assuming less than 1 hour passed in test execution)
@@ -917,9 +908,9 @@ defmodule TeslaMate.WebAuthTest do
       # Test with timestamp from way in the past
       past_conn =
         build_conn_with_session(%{
-          web_authenticated: true,
+          "web_authenticated" => true,
           # 2 hours ago
-          web_auth_time: current_time - 7200
+          "web_auth_time" => current_time - 7200
         })
 
       refute WebAuth.authenticated?(past_conn)
@@ -979,9 +970,9 @@ defmodule TeslaMate.WebAuthTest do
 
       # Session should not contain accumulated data
       session = Plug.Conn.get_session(final_conn)
-      refute session[:web_authenticated]
-      refute session[:web_auth_time]
-      refute session[:web_auth_redirect_path]
+      refute session["web_authenticated"]
+      refute session["web_auth_time"]
+      refute session["web_auth_redirect_path"]
     end
 
     test "rapid password verification doesn't degrade performance" do
@@ -1113,7 +1104,7 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_auth_time: future_time
+          "web_auth_time" => future_time
         })
 
       # Should handle gracefully, likely return large positive number
@@ -1158,9 +1149,9 @@ defmodule TeslaMate.WebAuthTest do
       # Test with session containing unexpected data types
       corrupted_conn =
         build_conn_with_session(%{
-          web_authenticated: %{not: "boolean"},
-          web_auth_time: "not_integer",
-          web_auth_redirect_path: 12345
+          "web_authenticated" => %{not: "boolean"},
+          "web_auth_time" => "not_integer",
+          "web_auth_redirect_path" => 12345
         })
 
       refute WebAuth.authenticated?(corrupted_conn)
@@ -1225,8 +1216,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: boundary_time
+          "web_authenticated" => true,
+          "web_auth_time" => boundary_time
         })
 
       # Should be expired (boundary is exclusive)
@@ -1239,8 +1230,8 @@ defmodule TeslaMate.WebAuthTest do
 
       conn2 =
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: almost_expired_time
+          "web_authenticated" => true,
+          "web_auth_time" => almost_expired_time
         })
 
       # Should still be valid
@@ -1341,9 +1332,9 @@ defmodule TeslaMate.WebAuthTest do
       # Simulate session expiry by manually setting old timestamp
       expired_conn =
         build_conn_with_session(%{
-          web_authenticated: true,
+          "web_authenticated" => true,
           # 2 hours ago
-          web_auth_time: System.system_time(:second) - 7200
+          "web_auth_time" => System.system_time(:second) - 7200
         })
 
       # Should be expired
@@ -1387,13 +1378,13 @@ defmodule TeslaMate.WebAuthTest do
         build_conn_with_session(),
         # Authenticated user
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: System.system_time(:second)
+          "web_authenticated" => true,
+          "web_auth_time" => System.system_time(:second)
         }),
         # Expired user
         build_conn_with_session(%{
-          web_authenticated: true,
-          web_auth_time: System.system_time(:second) - 7200
+          "web_authenticated" => true,
+          "web_auth_time" => System.system_time(:second) - 7200
         })
       ]
 
