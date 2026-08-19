@@ -2,20 +2,30 @@
   "name": "TeslaMate",
   "build": { "dockerfile": "Dockerfile" },
   "features": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-      "moby": false
-    }
+    // moby (OSS Docker engine) 在 Debian 12 (bookworm) / Ubuntu 24.04 上可用。
+    // 若升级到 Debian 13 (trixie) 或 Ubuntu 26.04 (resolute)，moby 包缺失，需改 "moby": false (改用 Docker CE)。
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "moby": true
+    },
+    "ghcr.io/rabdulwahhab/devcontainer-features/erlang-asdf:1": {
+      "version": "29.0.5"
+    },
+    "ghcr.io/rabdulwahhab/devcontainer-features/elixir-asdf:1": {
+      "version": "1.20.3-otp-29"
+    },
+    "ghcr.io/devcontainers-extra/features/node-asdf:0": {}
   },
-  "forwardPorts": [4000],
+  "forwardPorts": [4000, 3000],
   "postCreateCommand": ".devcontainer/init-db.sh",
   "postStartCommand": ".devcontainer/start-db.sh",
   "remoteEnv": {
-    "DATABASE_HOST": "host.docker.internal",
+    "DATABASE_HOST": "localhost",
     "DATABASE_USER": "postgres",
     "DATABASE_PASS": "postgres",
     "DATABASE_NAME": "teslamate_dev",
     "MIX_ENV": "dev",
-    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+    "WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
   },
   "customizations": {
     "vscode": {
