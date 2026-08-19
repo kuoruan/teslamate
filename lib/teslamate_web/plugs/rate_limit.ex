@@ -36,8 +36,7 @@ defmodule TeslaMateWeb.Plugs.RateLimit do
     if length(timestamps) >= max do
       conn
       |> put_resp_content_type("text/plain")
-      |> put_status(:too_many_requests)
-      |> send_resp("Too Many Requests")
+      |> send_resp(:too_many_requests, "Too Many Requests")
       |> halt()
     else
       :ets.insert(@table, {key, [now | timestamps]})

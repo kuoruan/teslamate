@@ -1,6 +1,6 @@
 defmodule TeslaMateWeb.MapController do
   use TeslaMateWeb, :controller
-  use Bitwise
+  import Bitwise
 
   alias TeslaMate.Maps.Tile
 
