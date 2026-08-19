@@ -41,13 +41,6 @@ defmodule TeslaMateWeb.WebAuthController do
         conn
         |> put_flash(:warning, gettext("Invalid input format"))
         |> redirect(to: auth_page(conn))
-
-      {:error, reason} ->
-        Logger.error("Authentication error, reason: #{reason}, remote ip: #{remote_ip}")
-
-        conn
-        |> put_flash(:warning, gettext("Authentication failed. Please try again."))
-        |> redirect(to: auth_page(conn))
     end
   end
 

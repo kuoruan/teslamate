@@ -159,8 +159,6 @@ defmodule TeslaMate.WebAuth do
     System.system_time(:second) - auth_time < @session_timeout_hours * 3600
   end
 
-  defp session_valid?(_), do: false
-
   @doc """
   获取客户端真实 IP 地址
   """

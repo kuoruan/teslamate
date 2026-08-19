@@ -5,16 +5,21 @@ defmodule TeslaMate.Maps.Tile do
   https://github.com/htoooth/Leaflet.ChineseTmsProviders
   """
 
-  use Tesla, only: [:get]
-
   require Logger
 
   alias TeslaMate.Maps.TileConverter
 
-  adapter Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000
+  defp client do
+    Tesla.client(
+      [
+        {Tesla.Middleware.FollowRedirects, max_redirects: 3},
+        {Tesla.Middleware.Logger, debug: true, level: &log_level/1}
+      ],
+      {Tesla.Adapter.Finch, name: TeslaMate.HTTP, receive_timeout: 30_000}
+    )
+  end
 
-  plug Tesla.Middleware.FollowRedirects, max_redirects: 3
-  plug Tesla.Middleware.Logger, debug: true, log_level: &log_level/1
+  defp get(url, opts), do: Tesla.get(client(), url, opts)
 
   @default_headers [
     {"user-agent",
@@ -90,7 +95,7 @@ defmodule TeslaMate.Maps.Tile do
 
     Logger.debug("Tile URL: #{url}")
 
-    case get(url, headers: headers) do
+    case Tesla.get(client(), url, headers: headers) do
       {:ok, %Tesla.Env{status: status, body: body, headers: response_headers}} ->
         {:ok, status, body, response_headers}
 
@@ -212,6 +217,7 @@ defmodule TeslaMate.Maps.Tile do
     if Map.has_key?(@tile_templates, source), do: source, else: @default_tile_source
   end
 
-  defp log_level(%Tesla.Env{} = env) when env.status >= 400, do: :warning
-  defp log_level(%Tesla.Env{}), do: :info
+  defp log_level({:ok, %Tesla.Env{} = env}) when env.status >= 400, do: :warning
+  defp log_level({:ok, %Tesla.Env{}}), do: :info
+  defp log_level({:error, _reason}), do: :error
 end

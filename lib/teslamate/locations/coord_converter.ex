@@ -214,11 +214,6 @@ defmodule TeslaMate.Locations.CoordConverter do
     iterate_conversion_loop(forward_func, target, curr, check_china, 0)
   end
 
-  defp iterate_conversion(forward_func, reverse_func, target, _check_china) do
-    curr = reverse_func.(target)
-    iterate_conversion_loop(forward_func, target, curr, false, 0)
-  end
-
   # 迭代转换循环，等到达到固定点或达到最大迭代次数
   defp iterate_conversion_loop(_forward_func, _target, curr, _check_china, 10), do: curr
 
