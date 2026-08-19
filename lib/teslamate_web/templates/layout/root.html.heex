@@ -135,11 +135,11 @@
                   "Auth Status"
                 )}</span>
               </.link>
-              <%= link to: Routes.web_auth_path(@conn, :logout), method: :delete, class: "navbar-item" do %>
+              <.link href={Routes.web_auth_path(@conn, :logout)} method={:delete} class="navbar-item">
                 <span class="icon"><i class="mdi mdi-logout"></i></span>&nbsp;<span>{gettext(
                   "Logout"
                 )}</span>
-              <% end %>
+              </.link>
             <% end %>
           </div>
         </div>
