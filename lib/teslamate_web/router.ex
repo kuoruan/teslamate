@@ -53,9 +53,9 @@ defmodule TeslaMateWeb.Router do
     end
   end
 
-  # 认证相关路由
   scope "/web-auth", TeslaMateWeb do
     pipe_through :browser
+    plug TeslaMateWeb.Plugs.RateLimit, max: 30, window_ms: 60_000
 
     post "/authenticate", WebAuthController, :authenticate
     post "/renew", WebAuthController, :renew
@@ -77,6 +77,8 @@ defmodule TeslaMateWeb.Router do
   end
 
   scope "/map", TeslaMateWeb do
+    plug TeslaMateWeb.Plugs.RateLimit, max: 60, window_ms: 60_000
+
     get "/tile/:zoom/:x/:y", MapController, :tile
   end
 

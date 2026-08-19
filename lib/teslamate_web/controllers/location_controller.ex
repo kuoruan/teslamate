@@ -17,7 +17,7 @@ defmodule TeslaMateWeb.LocationController do
           {:error, reason} ->
             conn
             |> put_status(:bad_request)
-            |> json(%{error: reason})
+            |> json(%{error: serialize_error(reason)})
         end
 
       _ ->
@@ -51,7 +51,11 @@ defmodule TeslaMateWeb.LocationController do
         end
 
       lang when is_binary(lang) ->
-        lang
+        if Regex.match?(~r/^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,4}){0,3}$/, lang) do
+          lang
+        else
+          default_lang
+        end
 
       _ ->
         default_lang
@@ -74,4 +78,24 @@ defmodule TeslaMateWeb.LocationController do
         |> String.trim()
     end
   end
+
+  # 将上游错误 reason 序列化为 JSON 安全值，避免 %Tesla.Env{} 触发
+  # Protocol.UndefinedError，同时不泄漏请求中的密钥 (query/headers)
+  defp serialize_error(reason) when is_list(reason) do
+    case Keyword.get(reason, :reason) do
+      text when is_binary(text) ->
+        env = Keyword.get(reason, :env)
+
+        if env && match?(%Tesla.Env{}, env) do
+          %{reason: text, status: env.status}
+        else
+          %{reason: text}
+        end
+
+      _ ->
+        inspect(reason)
+    end
+  end
+
+  defp serialize_error(reason), do: inspect(reason)
 end

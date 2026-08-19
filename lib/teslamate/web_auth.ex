@@ -6,13 +6,17 @@ defmodule TeslaMate.WebAuth do
   alias TeslaMateWeb.Router.Helpers, as: Routes
 
   @session_timeout_hours 1
-  @dummy_password "dummy"
 
   @session_keys %{
     authenticated: "web_authenticated",
     auth_time: "web_auth_time",
     redirect_path: "web_auth_redirect_path"
   }
+
+  @dummy_password "dummy"
+
+  @doc "会话超时小时数"
+  def session_timeout_hours, do: @session_timeout_hours
 
   @doc """
   验证 Web 访问密码
@@ -78,6 +82,10 @@ defmodule TeslaMate.WebAuth do
     authenticated_from_session?(session)
   end
 
+  def authenticated?(auth_time) when is_integer(auth_time) do
+    session_valid?(auth_time)
+  end
+
   def authenticated?(_), do: false
 
   # 从 session map 中检查认证状态
@@ -121,6 +129,10 @@ defmodule TeslaMate.WebAuth do
 
   def session_remaining_time(session) when is_map(session) do
     get_session_remaining_time(session)
+  end
+
+  def session_remaining_time(auth_time) when is_integer(auth_time) do
+    max(0, auth_time + @session_timeout_hours * 3600 - System.system_time(:second))
   end
 
   def session_remaining_time(_), do: 0

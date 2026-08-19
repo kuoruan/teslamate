@@ -13,10 +13,12 @@ defmodule TeslaMateWeb.WebAuthLive.Status do
     else
       # 只有已认证用户才能查看状态页面
       if WebAuth.authenticated?(session) do
+        auth_time = Map.get(session, "web_auth_time")
         remaining = WebAuth.session_remaining_time(session)
 
         assigns = %{
           page_title: gettext("Auth Status"),
+          auth_time: auth_time,
           session_remaining: remaining,
           session_remaining_formatted: format_time_remaining(remaining),
           last_updated: DateTime.utc_now()
@@ -24,10 +26,34 @@ defmodule TeslaMateWeb.WebAuthLive.Status do
 
         socket = assign(socket, assigns)
 
+        if connected?(socket) do
+          :timer.send_interval(60_000, :check_session)
+        end
+
         {:ok, socket}
       else
         {:ok, redirect(socket, to: Routes.live_path(socket, TeslaMateWeb.WebAuthLive.Index))}
       end
+    end
+  end
+
+  @impl true
+  def handle_info(:check_session, socket) do
+    # 会话过期则跳转登录页；auth_time 在 mount 时存入 assigns (非敏感时间戳)
+    auth_time = socket.assigns[:auth_time]
+
+    if WebAuth.authenticated?(auth_time) do
+      remaining = WebAuth.session_remaining_time(auth_time)
+
+      {:noreply,
+       assign(socket,
+         session_remaining: remaining,
+         session_remaining_formatted: format_time_remaining(remaining),
+         last_updated: DateTime.utc_now()
+       )}
+    else
+      {:noreply,
+       push_redirect(socket, to: Routes.live_path(socket, TeslaMateWeb.WebAuthLive.Index))}
     end
   end
 

@@ -1,12 +1,18 @@
 defmodule TeslaMateWeb.MapController do
   use TeslaMateWeb, :controller
+  use Bitwise
 
   alias TeslaMate.Maps.Tile
+
+  @max_zoom 22
 
   def tile(conn, %{"zoom" => zoom, "x" => x, "y" => y} = params) do
     with {zoom, ""} <- Integer.parse(zoom),
          {x, ""} <- Integer.parse(x),
-         {y, ""} <- Integer.parse(y) do
+         {y, ""} <- Integer.parse(y),
+         true <- zoom in 0..@max_zoom,
+         true <- x in 0..(bsl(1, zoom) - 1),
+         true <- y in 0..(bsl(1, zoom) - 1) do
       opts = Map.drop(params, ["zoom", "x", "y"])
 
       case Tile.get_image(zoom, x, y, conn.req_headers, opts) do
@@ -23,17 +29,31 @@ defmodule TeslaMateWeb.MapController do
     end
   end
 
-  # Helper to set response headers from upstream
+  # 只透传安全的上游响应头，避免 set-cookie 等敏感头跨域下发
+  @passthrough_headers ~w(
+    content-type
+    content-length
+    etag
+    last-modified
+    cache-control
+    expires
+    pragma
+    age
+  )
+
   defp put_upstream_resp_headers(conn, headers) do
     Enum.reduce(headers, conn, fn {name, value}, acc ->
-      adjusted_value =
-        case {String.downcase(name), value} do
-          # 如果响应头为 content-type，并且值为 application/octet-stream，设置为 image/png
-          {"content-type", "application/octet-stream"} -> "image/png"
-          _ -> value
-        end
+      if String.downcase(name) in @passthrough_headers do
+        adjusted_value =
+          case {String.downcase(name), value} do
+            {"content-type", "application/octet-stream"} -> "image/png"
+            _ -> value
+          end
 
-      put_resp_header(acc, name, adjusted_value)
+        put_resp_header(acc, name, adjusted_value)
+      else
+        acc
+      end
     end)
   end
 end

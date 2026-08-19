@@ -6,6 +6,7 @@ defmodule TeslaMate.Maps.TileConverter do
   """
 
   alias TeslaMate.Locations.BaiduMercator
+  alias TeslaMate.Locations.CoordConverter
 
   @pi :math.pi()
 
@@ -32,9 +33,11 @@ defmodule TeslaMate.Maps.TileConverter do
   """
   @spec wgs_to_bd(integer(), integer(), integer()) :: {integer(), integer(), integer()}
   def wgs_to_bd(zoom, x, y) do
-    coord = tile_to_coord(zoom, x, y)
+    # 瓦片坐标 -> WGS84 经纬度 -> GCJ02 -> BD09
+    wgs_coord = tile_to_coord(zoom, x, y)
+    bd09_coord = wgs_coord |> CoordConverter.wgs_to_gcj() |> CoordConverter.gcj_to_bd()
 
-    baidu_coord_to_tile(zoom, coord)
+    baidu_coord_to_tile(zoom, bd09_coord)
   end
 
   @doc """

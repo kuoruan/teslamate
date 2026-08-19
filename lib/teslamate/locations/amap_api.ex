@@ -35,15 +35,15 @@ defmodule TeslaMate.Locations.AmapApi do
     # 高德地图使用 GCJ-02 坐标系，不支持 WGS-84 直接查询
     gcj_coord = CoordConverter.wgs_to_gcj(wgs_coord)
 
-    params = [
-      key: key,
-      location: "#{gcj_coord.lon},#{gcj_coord.lat}",
-      output: :json,
-      extensions: :all,
-      radius: 500,
-      roadlevel: 0,
-      sig: sig
-    ]
+    params =
+      [
+        key: key,
+        location: "#{gcj_coord.lon},#{gcj_coord.lat}",
+        output: :json,
+        extensions: :all,
+        radius: 500,
+        roadlevel: 0
+      ] ++ if(sig, do: [sig: sig], else: [])
 
     with {:ok, address_raw} <- query("/v3/geocode/regeo", lang, params),
          {:ok, address} <-
@@ -95,7 +95,7 @@ defmodule TeslaMate.Locations.AmapApi do
         @amap_defaults.unknown_address
 
     business_areas = Map.get(address_component, "businessAreas")
-    business = get_in(business_areas, [Access.at(0), :name])
+    business = get_in(business_areas, [Access.at(0), "name"])
 
     street_number = Map.get(address_component, "streetNumber", %{})
     neighborhood = Map.get(address_component, "neighborhood", [])

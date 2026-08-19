@@ -19,6 +19,23 @@ defmodule TeslaMate.Locations.Geocoder do
 
   defp get(url, opts), do: Tesla.get(client(), url, opts)
 
+  # 格式化上游错误，避免将 %Tesla.Env{} 整体 inspect 进日志
+  # (env.query / env.headers 含 API key 与签名)
+  defp format_error(reason) when is_list(reason) do
+    case Keyword.get(reason, :reason) do
+      text when is_binary(text) ->
+        env = Keyword.get(reason, :env)
+
+        if env && match?(%Tesla.Env{}, env) do
+          "#{text} (status=#{env.status})"
+        else
+          text
+        end
+    end
+  end
+
+  defp format_error(reason), do: inspect(reason)
+
   def reverse_lookup(lat, lon, lang \\ "en") do
     with {:error, _} <- try_baidu_map(lat, lon, lang),
          {:error, _} <- try_amap(lat, lon, lang) do
@@ -42,7 +59,7 @@ defmodule TeslaMate.Locations.Geocoder do
         {:error, :no_baidu_credentials}
 
       {:error, reason} ->
-        Logger.warning("Baidu map reverse lookup failed: #{inspect(reason)}")
+        Logger.warning("Baidu map reverse lookup failed: #{format_error(reason)}")
         {:error, reason}
     end
   end
@@ -64,7 +81,7 @@ defmodule TeslaMate.Locations.Geocoder do
         {:error, :no_amap_credentials}
 
       {:error, reason} ->
-        Logger.warning("Amap reverse lookup failed: #{inspect(reason)}")
+        Logger.warning("Amap reverse lookup failed: #{format_error(reason)}")
         {:error, reason}
     end
   end

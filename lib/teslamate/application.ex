@@ -13,6 +13,8 @@ defmodule TeslaMate.Application do
 
     TeslaMate.DatabaseCheck.check_postgres_version()
 
+    TeslaMateWeb.Plugs.RateLimit.init_table()
+
     Supervisor.start_link(children(), strategy: :one_for_one, name: TeslaMate.Supervisor)
   end
 
