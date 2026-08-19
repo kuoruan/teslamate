@@ -53,7 +53,7 @@ defmodule TeslaMateWeb.WebAuthLive.Status do
        )}
     else
       {:noreply,
-       push_redirect(socket, to: Routes.live_path(socket, TeslaMateWeb.WebAuthLive.Index))}
+       push_navigate(socket, to: Routes.live_path(socket, TeslaMateWeb.WebAuthLive.Index))}
     end
   end
 
