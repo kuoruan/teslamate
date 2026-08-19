@@ -69,12 +69,19 @@ msgstr "Vergrendeld"
 msgid "Sentry Mode"
 msgstr "Bewakingsmodus"
 
-#: lib/teslamate_web/live/car_live/index.ex:15 lib/teslamate_web/live/charge_live/cost.html.heex:3 lib/teslamate_web/live/geofence_live/form.html.heex:3 lib/teslamate_web/live/geofence_live/index.html.heex:3 lib/teslamate_web/live/import_live/index.html.heex:3 lib/teslamate_web/live/settings_live/index.html.heex:3
+#: lib/teslamate_web/live/car_live/index.ex:15
+#: lib/teslamate_web/live/charge_live/cost.html.heex:3
+#: lib/teslamate_web/live/geofence_live/form.html.heex:3
+#: lib/teslamate_web/live/geofence_live/index.html.heex:3
+#: lib/teslamate_web/live/import_live/index.html.heex:3
+#: lib/teslamate_web/live/settings_live/index.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "Home"
 msgstr "Home"
 
-#: lib/teslamate_web/live/settings_live/index.ex:21 lib/teslamate_web/live/settings_live/index.html.heex:4 lib/teslamate_web/templates/layout/root.html.heex:123
+#: lib/teslamate_web/live/settings_live/index.ex:21
+#: lib/teslamate_web/live/settings_live/index.html.heex:4
+#: lib/teslamate_web/templates/layout/root.html.heex:124
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr "Instellingen"
@@ -119,7 +126,8 @@ msgstr "Temperatuur"
 msgid "Units"
 msgstr "Eenheden"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:165 lib/teslamate_web/live/geofence_live/form.html.heex:131
+#: lib/teslamate_web/live/charge_live/cost.html.heex:165
+#: lib/teslamate_web/live/geofence_live/form.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Back"
 msgstr "Terug"
@@ -129,7 +137,11 @@ msgstr "Terug"
 msgid "Geo-fence \"%{name}\" created"
 msgstr "Geo-hek \"%{name}\" aangemaakt"
 
-#: lib/teslamate_web/live/geofence_live/form.ex:110 lib/teslamate_web/live/geofence_live/form.html.heex:4 lib/teslamate_web/live/geofence_live/index.ex:22 lib/teslamate_web/live/geofence_live/index.html.heex:5 lib/teslamate_web/templates/layout/root.html.heex:115
+#: lib/teslamate_web/live/geofence_live/form.ex:110
+#: lib/teslamate_web/live/geofence_live/form.html.heex:4
+#: lib/teslamate_web/live/geofence_live/index.ex:22
+#: lib/teslamate_web/live/geofence_live/index.html.heex:5
+#: lib/teslamate_web/templates/layout/root.html.heex:116
 #, elixir-autogen, elixir-format
 msgid "Geo-Fences"
 msgstr "Geofences"
@@ -139,12 +151,15 @@ msgstr "Geofences"
 msgid "Idle Time Before Trying to Sleep"
 msgstr "Inactieve tijd voordat de auto probeert te slapen"
 
-#: lib/teslamate_web/live/geofence_live/form.html.heex:53 lib/teslamate_web/live/geofence_live/form.html.heex:59 lib/teslamate_web/live/geofence_live/index.html.heex:23
+#: lib/teslamate_web/live/geofence_live/form.html.heex:53
+#: lib/teslamate_web/live/geofence_live/form.html.heex:59
+#: lib/teslamate_web/live/geofence_live/index.html.heex:23
 #, elixir-autogen, elixir-format
 msgid "Name"
 msgstr "Naam"
 
-#: lib/teslamate_web/live/geofence_live/form.html.heex:26 lib/teslamate_web/live/geofence_live/index.html.heex:24
+#: lib/teslamate_web/live/geofence_live/form.html.heex:26
+#: lib/teslamate_web/live/geofence_live/index.html.heex:24
 #, elixir-autogen, elixir-format
 msgid "Position"
 msgstr "Positie"
@@ -154,12 +169,15 @@ msgstr "Positie"
 msgid "Radius"
 msgstr "Straal"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:168 lib/teslamate_web/live/geofence_live/form.html.heex:135
+#: lib/teslamate_web/live/charge_live/cost.html.heex:168
+#: lib/teslamate_web/live/geofence_live/form.html.heex:135
 #, elixir-autogen, elixir-format
 msgid "Save"
 msgstr "Opslaan"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:169 lib/teslamate_web/live/geofence_live/form.html.heex:136 lib/teslamate_web/live/signin_live/index.html.heex:85
+#: lib/teslamate_web/live/charge_live/cost.html.heex:169
+#: lib/teslamate_web/live/geofence_live/form.html.heex:136
+#: lib/teslamate_web/live/signin_live/index.html.heex:85
 #, elixir-autogen, elixir-format
 msgid "Saving..."
 msgstr "Opslaan..."
@@ -169,7 +187,8 @@ msgstr "Opslaan..."
 msgid "Time to Try Sleeping"
 msgstr "Tijd om te proberen te slapen"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:65 lib/teslamate_web/live/settings_live/index.html.heex:88
+#: lib/teslamate_web/live/settings_live/index.html.heex:65
+#: lib/teslamate_web/live/settings_live/index.html.heex:88
 #, elixir-autogen, elixir-format
 msgid "min"
 msgstr "min"
@@ -189,7 +208,8 @@ msgstr "Auto is ontgrendeld"
 msgid "Create"
 msgstr "Creëer"
 
-#: lib/teslamate_web/live/car_live/summary.ex:157 lib/teslamate_web/live/car_live/summary.html.heex:78
+#: lib/teslamate_web/live/car_live/summary.ex:157
+#: lib/teslamate_web/live/car_live/summary.html.heex:78
 #, elixir-autogen, elixir-format
 msgid "Preconditioning"
 msgstr "Voorconditionering"
@@ -199,7 +219,8 @@ msgstr "Voorconditionering"
 msgid "Sentry mode is enabled"
 msgstr "Bewakingsmodus is geactiveerd"
 
-#: lib/teslamate_web/live/car_live/summary.ex:159 lib/teslamate_web/live/car_live/summary.html.heex:102
+#: lib/teslamate_web/live/car_live/summary.ex:159
+#: lib/teslamate_web/live/car_live/summary.html.heex:102
 #, elixir-autogen, elixir-format
 msgid "Driver present"
 msgstr "Bestuurder aanwezig"
@@ -299,7 +320,8 @@ msgstr "Binnentemperatuur"
 msgid "Outside Temperature"
 msgstr "Buitentemperatuur"
 
-#: lib/teslamate_web/live/car_live/summary.html.heex:482 lib/teslamate_web/live/settings_live/index.html.heex:373
+#: lib/teslamate_web/live/car_live/summary.html.heex:482
+#: lib/teslamate_web/live/settings_live/index.html.heex:373
 #, elixir-autogen, elixir-format
 msgid "Version"
 msgstr "Versie"
@@ -319,7 +341,8 @@ msgstr "Ontgrendeld"
 msgid "Remaining Time"
 msgstr "Resterende tijd"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:348 lib/teslamate_web/templates/layout/root.html.heex:95
+#: lib/teslamate_web/live/settings_live/index.html.heex:348
+#: lib/teslamate_web/templates/layout/root.html.heex:95
 #, elixir-autogen, elixir-format
 msgid "Dashboards"
 msgstr "Dashboards"
@@ -329,12 +352,14 @@ msgstr "Dashboards"
 msgid "URLs"
 msgstr "URL's"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:215 lib/teslamate_web/live/settings_live/index.html.heex:329
+#: lib/teslamate_web/live/settings_live/index.html.heex:215
+#: lib/teslamate_web/live/settings_live/index.html.heex:329
 #, elixir-autogen, elixir-format
 msgid "Web App"
 msgstr "Web App"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:33 lib/teslamate_web/live/settings_live/index.html.heex:143
+#: lib/teslamate_web/live/settings_live/index.html.heex:33
+#: lib/teslamate_web/live/settings_live/index.html.heex:143
 #, elixir-autogen, elixir-format
 msgid "Enabled"
 msgstr "Ingeschakeld"
@@ -369,12 +394,14 @@ msgstr "Verminderd accubereik"
 msgid "≈ %{range} at 100%"
 msgstr "≈ %{range} op 100%"
 
-#: lib/teslamate_web/live/charge_live/cost.ex:18 lib/teslamate_web/live/charge_live/cost.html.heex:4
+#: lib/teslamate_web/live/charge_live/cost.ex:18
+#: lib/teslamate_web/live/charge_live/cost.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Charge Cost"
 msgstr "Laadkosten"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:132 lib/teslamate_web/live/geofence_live/form.html.heex:71
+#: lib/teslamate_web/live/charge_live/cost.html.heex:132
+#: lib/teslamate_web/live/geofence_live/form.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "Cost"
 msgstr "Kosten"
@@ -421,7 +448,8 @@ msgid_plural "Found %{count} files"
 msgstr[0] "%{count} bestand gevonden"
 msgstr[1] "%{count} bestanden gevonden"
 
-#: lib/teslamate_web/live/import_live/index.ex:38 lib/teslamate_web/live/import_live/index.html.heex:150
+#: lib/teslamate_web/live/import_live/index.ex:38
+#: lib/teslamate_web/live/import_live/index.html.heex:150
 #, elixir-autogen, elixir-format
 msgid "Import"
 msgstr "Importeren"
@@ -431,7 +459,8 @@ msgstr "Importeren"
 msgid "Time zone"
 msgstr "Tijdzone"
 
-#: lib/teslamate_web/live/signin_live/index.ex:13 lib/teslamate_web/live/signin_live/index.html.heex:71
+#: lib/teslamate_web/live/signin_live/index.ex:13
+#: lib/teslamate_web/live/signin_live/index.html.heex:71
 #, elixir-autogen, elixir-format
 msgid "Sign in"
 msgstr "Log in"
@@ -461,7 +490,8 @@ msgstr "Sessiekosten"
 msgid "Doors open"
 msgstr "Deuren open"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:140 lib/teslamate_web/live/geofence_live/form.html.heex:79
+#: lib/teslamate_web/live/charge_live/cost.html.heex:140
+#: lib/teslamate_web/live/geofence_live/form.html.heex:79
 #, elixir-autogen, elixir-format
 msgid "Per kWh"
 msgstr "Per kWh"
@@ -513,7 +543,8 @@ msgstr "Documentatie"
 msgid "GitHub"
 msgstr "GitHub"
 
-#: lib/teslamate_web/live/settings_live/index.html.heex:383 lib/teslamate_web/templates/layout/root.html.heex:194
+#: lib/teslamate_web/live/settings_live/index.html.heex:383
+#: lib/teslamate_web/templates/layout/root.html.heex:215
 #, elixir-autogen, elixir-format
 msgid "Update available"
 msgstr "Update beschikbaar"
@@ -528,7 +559,8 @@ msgstr "Deuren zijn open"
 msgid "Trunk is open"
 msgstr "Kofferbak is open"
 
-#: lib/teslamate_web/live/charge_live/cost.html.heex:141 lib/teslamate_web/live/geofence_live/form.html.heex:80
+#: lib/teslamate_web/live/charge_live/cost.html.heex:141
+#: lib/teslamate_web/live/geofence_live/form.html.heex:80
 #, elixir-autogen, elixir-format
 msgid "Per Minute"
 msgstr "Per minuut"
@@ -578,22 +610,22 @@ msgstr ""
 msgid "Downloading update"
 msgstr ""
 
-#: lib/teslamate_web/templates/layout/root.html.heex:151
+#: lib/teslamate_web/templates/layout/root.html.heex:172
 #, elixir-autogen, elixir-format
 msgid "No encryption key provided"
 msgstr ""
 
-#: lib/teslamate_web/templates/layout/root.html.heex:171
+#: lib/teslamate_web/templates/layout/root.html.heex:192
 #, elixir-autogen, elixir-format, fuzzy
 msgid "For more information, see the updated installation guides on %{link}"
 msgstr ""
 
-#: lib/teslamate_web/templates/layout/root.html.heex:164
+#: lib/teslamate_web/templates/layout/root.html.heex:185
 #, elixir-autogen, elixir-format
 msgid "The automatically generated encryption key used for the current session can be found <strong>in the application logs</strong>."
 msgstr ""
 
-#: lib/teslamate_web/templates/layout/root.html.heex:157
+#: lib/teslamate_web/templates/layout/root.html.heex:178
 #, elixir-autogen, elixir-format, fuzzy
 msgid "To ensure that your <strong>Tesla API tokens are stored securely</strong>, an encryption key must be provided to TeslaMate via the <code>ENCRYPTION_KEY</code> environment variable. Otherwise, a <strong>login will be required after every restart</strong>."
 msgstr ""
@@ -688,7 +720,8 @@ msgstr ""
 msgid "Installing %{percent}%"
 msgstr ""
 
-#: lib/teslamate_web/live/car_live/summary.html.heex:14 lib/teslamate_web/live/car_live/summary.html.heex:16
+#: lib/teslamate_web/live/car_live/summary.html.heex:14
+#: lib/teslamate_web/live/car_live/summary.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "Maximize map"
 msgstr ""
@@ -820,7 +853,8 @@ msgstr ""
 msgid "row belongs to a different vehicle"
 msgstr ""
 
-#: lib/teslamate_web/live/car_live/summary.ex:135 lib/teslamate_web/live/car_live/summary.ex:140
+#: lib/teslamate_web/live/car_live/summary.ex:135
+#: lib/teslamate_web/live/car_live/summary.ex:140
 #, elixir-autogen, elixir-format
 msgid "VIN %{vin}"
 msgstr ""
@@ -840,12 +874,13 @@ msgstr "Als je je wachtwoord bent vergeten, neem contact op met de beheerder"
 msgid "Input your access password"
 msgstr "Voer je toegangswachtwoord in"
 
-#: lib/teslamate_web/live/web_auth_live/index.html.heex:9 lib/teslamate_web/live/web_auth_live/index.html.heex:45
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:9
+#: lib/teslamate_web/live/web_auth_live/index.html.heex:45
 #, elixir-autogen, elixir-format
 msgid "Login"
 msgstr "Inloggen"
 
-#: lib/teslamate_web/templates/layout/root.html.heex:131
+#: lib/teslamate_web/templates/layout/root.html.heex:143
 #, elixir-autogen, elixir-format
 msgid "Logout"
 msgstr "Uitloggen"
@@ -855,38 +890,38 @@ msgstr "Uitloggen"
 msgid "Web Access Authentication"
 msgstr "Web toegang authenticatie"
 
-#: lib/teslamate_web/live/web_auth_live/status.ex:43 lib/teslamate_web/live/web_auth_live/status.ex:46
+#: lib/teslamate_web/live/web_auth_live/status.ex:69
+#: lib/teslamate_web/live/web_auth_live/status.ex:72
 #, elixir-autogen, elixir-format
 msgid "%{count} hour"
 msgid_plural "%{count} hours"
 msgstr[0] "%{count} uur"
 msgstr[1] ""
 
-#: lib/teslamate_web/live/web_auth_live/status.ex:43 lib/teslamate_web/live/web_auth_live/status.ex:49
+#: lib/teslamate_web/live/web_auth_live/status.ex:69
+#: lib/teslamate_web/live/web_auth_live/status.ex:75
 #, elixir-autogen, elixir-format
 msgid "%{count} minute"
 msgid_plural "%{count} minutes"
 msgstr[0] "%{count} minuut"
 msgstr[1] ""
 
-#: lib/teslamate_web/live/web_auth_live/status.ex:52
+#: lib/teslamate_web/live/web_auth_live/status.ex:78
 #, elixir-autogen, elixir-format
 msgid "%{count} second"
 msgid_plural "%{count} seconds"
 msgstr[0] "%{count} seconde"
 msgstr[1] ""
 
-#: lib/teslamate_web/live/web_auth_live/status.ex:19 lib/teslamate_web/live/web_auth_live/status.html.heex:9 lib/teslamate_web/templates/layout/root.html.heex:128
+#: lib/teslamate_web/live/web_auth_live/status.ex:20
+#: lib/teslamate_web/live/web_auth_live/status.html.heex:9
+#: lib/teslamate_web/templates/layout/root.html.heex:134
 #, elixir-autogen, elixir-format
 msgid "Auth Status"
 msgstr "Authenticatiestatus"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:49
-#, elixir-autogen, elixir-format
-msgid "Authentication failed. Please try again."
-msgstr "Authenticatie mislukt. Probeer opnieuw."
-
-#: lib/teslamate_web/live/web_auth_live/status.ex:34 lib/teslamate_web/live/web_auth_live/status.ex:57
+#: lib/teslamate_web/live/web_auth_live/status.ex:60
+#: lib/teslamate_web/live/web_auth_live/status.ex:83
 #, elixir-autogen, elixir-format
 msgid "Expired"
 msgstr "Verlopen"
@@ -906,12 +941,12 @@ msgstr "Ongeldig wachtwoord"
 msgid "Last Activity"
 msgstr "Laatste activiteit"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:59
+#: lib/teslamate_web/controllers/web_auth_controller.ex:52
 #, elixir-autogen, elixir-format
 msgid "Password is required"
 msgstr "Wachtwoord is verplicht"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:83
+#: lib/teslamate_web/controllers/web_auth_controller.ex:76
 #, elixir-autogen, elixir-format
 msgid "Please login first"
 msgstr "Log eerst in"
@@ -931,7 +966,7 @@ msgstr "Sessie verloopt binnenkort"
 msgid "Session Remaining Time"
 msgstr "Resterende sessietijd"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:75
+#: lib/teslamate_web/controllers/web_auth_controller.ex:68
 #, elixir-autogen, elixir-format
 msgid "Session renewed successfully"
 msgstr "Sessie succesvol vernieuwd"
@@ -941,7 +976,7 @@ msgstr "Sessie succesvol vernieuwd"
 msgid "Successfully authenticated"
 msgstr "Succesvol geauthenticeerd"
 
-#: lib/teslamate_web/controllers/web_auth_controller.ex:98
+#: lib/teslamate_web/controllers/web_auth_controller.ex:91
 #, elixir-autogen, elixir-format
 msgid "Successfully logged out"
 msgstr "Succesvol uitgelogd"
