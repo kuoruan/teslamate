@@ -36,6 +36,14 @@ defmodule TeslaMateWeb.Router do
     plug TeslaMateWeb.Plugs.ApiAuth
   end
 
+  pipeline :web_auth_rate_limit do
+    plug TeslaMateWeb.Plugs.RateLimit, max: 30, window_ms: 60_000
+  end
+
+  pipeline :map_rate_limit do
+    plug TeslaMateWeb.Plugs.RateLimit, max: 60, window_ms: 60_000
+  end
+
   scope "/", TeslaMateWeb do
     pipe_through [:browser, :web_auth]
 
@@ -54,8 +62,7 @@ defmodule TeslaMateWeb.Router do
   end
 
   scope "/web-auth", TeslaMateWeb do
-    pipe_through :browser
-    plug TeslaMateWeb.Plugs.RateLimit, max: 30, window_ms: 60_000
+    pipe_through [:browser, :web_auth_rate_limit]
 
     post "/authenticate", WebAuthController, :authenticate
     post "/renew", WebAuthController, :renew
@@ -77,7 +84,7 @@ defmodule TeslaMateWeb.Router do
   end
 
   scope "/map", TeslaMateWeb do
-    plug TeslaMateWeb.Plugs.RateLimit, max: 60, window_ms: 60_000
+    pipe_through :map_rate_limit
 
     get "/tile/:zoom/:x/:y", MapController, :tile
   end
